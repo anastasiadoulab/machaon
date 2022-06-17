@@ -1,8 +1,9 @@
 # Machaon
 
-This repository contains an implementation for the method presented in the  paper "Identifying 
+This repository contains an implementation for the method presented in the paper <b>"Identifying   
 and profiling structural similarities between Spike of SARS-CoV-2 and other viral or host 
-proteins with Machaon".
+proteins   
+with Machaon".<b/>
 
 <u>Please consult this time-saving manual before you use Machaon</u>. It contains an in-depth    
 explanation about installing, setting up and using this method.
