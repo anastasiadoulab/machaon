@@ -1,0 +1,49 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="executionhandler" class="class-name">Class ExecutionHandler</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+Handles executions for sets of tasks that contain extremely long executing processes.
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="cores"><span class="param-name">cores</span>: <span class="arg-description">
+CPU cores that will be allocated for the parallel execution. (int)
+</span></li>
+<li data-search="max_seconds"><span class="param-name">max_seconds</span>: <span class="arg-description">
+Maximum waiting time for a process. (int)
+</span></li>
+</ul>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="progress_bar"><span class="attr-name">progress_bar [default: None]</span>: <span class="attr-description">
+X
+</span></li>
+<li data-search="max_wait_time"><span class="attr-name">max_wait_time [default: max_seconds]</span>: <span class="attr-description">
+Maximum waiting time in seconds for a lagging process (int)
+</span></li>
+<li data-search="cores"><span class="attr-name">cores [default: cores]</span>: <span class="attr-description">
+User-specified maximum processes (int)
+</span></li>
+<li data-search="chunk_size"><span class="attr-name">chunk_size [default: 1000]</span>: <span class="attr-description">
+The data input to the parallelized processes is divided by this chunk size.
+</span></li>
+</ul>
+</div>
+<div data-search="parallelize" class="method-section"><span class="method-name" data-search="parallelize">parallelize()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Executes a function in parallel. The input is divided into chunks, each chunk served in a serial manner.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="func"><span class="param-name">func</span>: <span class="arg-description">
+The function to be parallelized.
+</span></li>
+<li data-search="entries"><span class="param-name">entries</span>: <span class="arg-description">
+The input data for the function that will run in parallel.
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="results"><span class="return-name">results</span>: <span class="return-description">
+The results of all spawned processes.
+</span></li>
+</ul>
+</div>
+</div></body>

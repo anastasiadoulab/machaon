@@ -1,0 +1,179 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="evaluator" class="class-name">Class Evaluator</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+This is the evaluation module of Machaon.
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="viral"><span class="param-name">viral [default: False]</span>: <span class="arg-description">
+Whether the data for evaluation are viral or not (This is to prevent the search in the viral data part of local resources. Performance related.) (boolean)
+</span></li>
+</ul>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="reference_data"><span class="attr-name">reference_data [default: defaultdict()]</span>: <span class="attr-description">
+Evaluation data for the reference protein. (dict) (see load_data())
+</span></li>
+<li data-search="candidate_data"><span class="attr-name">candidate_data [default: defaultdict()]</span>: <span class="attr-description">
+Evaluation data for the candidate protein. (dict) (see load_data())
+</span></li>
+<li data-search="_aligner"><span class="attr-name">_aligner [default: StructureAligner()]</span>: <span class="attr-description">
+StructureAligner object
+</span></li>
+<li data-search="root_disk"><span class="attr-name">root_disk [default: '']</span>: <span class="attr-description">
+Current setting of root disk where the third-party data and the target dataset reside. (string)
+</span></li>
+<li data-search="pdb_dataset_path"><span class="attr-name">pdb_dataset_path [default: '']</span>: <span class="attr-description">
+Full PDB directory path (string)
+</span></li>
+<li data-search="viral"><span class="attr-name">viral [default: viral]</span>: <span class="attr-description">
+Whether the data for evaluation are viral or not (This is to prevent the search in the viral data part of local resources. Performance related.) (boolean)
+</span></li>
+<li data-search="verbose"><span class="attr-name">verbose [default: True]</span>: <span class="attr-description">
+Toggle verbose output (boolean)
+</span></li>
+<li data-search="_max_secondary_structure_length"><span class="attr-name">_max_secondary_structure_length [default: 1500]</span>: <span class="attr-description">
+Maximum secondary length to be aligned. (int)
+</span></li>
+<li data-search="override_pdb_id"><span class="attr-name">override_pdb_id [default: '']</span>: <span class="attr-description">
+Override reference pdb id with another for retrieving Uniprot accession number. Useful for custom PDB files and filenames.
+</span></li>
+</ul>
+</div>
+<div data-search="set_root_disk" class="method-section"><span class="method-name" data-search="set_root_disk">set_root_disk()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Sets all the required directories according to the provided root directory path.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="root_disk"><span class="param-name">root_disk</span>: <span class="arg-description">
+Directory path where the third-party data and the target dataset reside. (string)
+</span></li>
+</ul>
+</div>
+<div data-search="set_pdb_path" class="method-section"><span class="method-name" data-search="set_pdb_path">set_pdb_path()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Sets full PDB directory path
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full PDB directory path (string)
+</span></li>
+</ul>
+</div>
+<div data-search="load_data" class="method-section"><span class="method-name" data-search="load_data">load_data()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Loads relevant data for a protein.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_id"><span class="param-name">pdb_id</span>: <span class="arg-description">
+PDB ID (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB Chain ID (string)
+</span></li>
+<li data-search="refseq_id"><span class="param-name">refseq_id [default: '']</span>: <span class="arg-description">
+RefSeq ID (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="data"><span class="return-name">data</span>: <span class="return-description">
+A dictionary with the following contents (at best/if all data are available):<ul>
+<li>'1D': full protein sequence</li>
+<li>'1DPDB': protein sequence that is present in the PDB file (might contain gap characters due to missing data)</li>
+<li>'2D': secondary structure sequence of DSSP labels as estimated by PDB file (might contain gap characters due to missing data)</li>
+<li>'fingerprint': RDKit object of a molecular fingerprint </li>
+<li>'5UTR': 5'-UTR sequence</li>
+<li>'CDS': CDS sequence</li>
+<li>'3UTR': 3'-UTR sequence</li>
+</ul>
+</span></li>
+</ul>
+</div>
+<div data-search="get_protein_sequence" class="method-section"><span class="method-name" data-search="get_protein_sequence">get_protein_sequence()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves full protein sequence from UniProt.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="uniprot_accession"><span class="param-name">uniprot_accession</span>: <span class="arg-description">
+UniProt Accession identifier (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="sequence"><span class="return-name">sequence</span>: <span class="return-description">
+Protein sequence (string)
+</span></li>
+</ul>
+</div>
+<div data-search="get_viral_information" class="method-section"><span class="method-name" data-search="get_viral_information">get_viral_information()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Method used for viral proteins only. Retrieves gene and RefSeq id from UniProt.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="uniprot_accession"><span class="param-name">uniprot_accession</span>: <span class="arg-description">
+UniProt Accession identifier (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="output"><span class="return-name">output</span>: <span class="return-description">
+A dictionary that has the keys 'geneid' and 'refseqid' and their corresponding values. (empty dict if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="load_go_data" class="method-section"><span class="method-name" data-search="load_go_data">load_go_data()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Reads Gene Ontology information from enrichment data.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data_row"><span class="param-name">data_row</span>: <span class="arg-description">
+Candidate enriched entry (pandas dataframe)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+Dictionary with the following keys:
+<ul>
+<li>'molecularFunction'</li>
+<li>'cellularComponent'</li>
+<li>'biologicalProcess'</li>
+</ul>
+Each key has a list of strings with GO term IDs.
+</span></li>
+</ul>
+</div>
+<div data-search="align_sequences" class="method-section"><span class="method-name" data-search="align_sequences">align_sequences()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Performs alignments on currently loaded sequences. (see load_data())
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="sections"><span class="param-name">sections</span>: <span class="arg-description">
+The selection of sequence types that are going to be aligned (keys of the loaded data dictionary). (list of strings)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+A dictionary with the alignment results that has the <i>sections</i> argument as keys and tupples of (&lt;score&gt;,&lt;identity&gt;,&lt;excluded-gap identity&gt;) as values.
+</span></li>
+</ul>
+</div>
+<div data-search="compare_gene_ontology" class="method-section"><span class="method-name" data-search="compare_gene_ontology">compare_gene_ontology()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Compares the currently loaded Gene Ontology information. (see load_data())
+</span><br/><br/>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+List that holds a value per GO term type (list of floats) (empty if there are no data available)
+</span></li>
+</ul>
+</div>
+<div data-search="calculate_tm_score" class="method-section"><span class="method-name" data-search="calculate_tm_score">calculate_tm_score()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Performs 3D structural comparison between a reference structure and a candidate one. (Template Modeling Score, TM-Score)
+</span><br/><br/>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+A tupple with (&lt;score&gt;,&lt;candidate structure length&gt;) as values. ((-1,-1) if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="compute_chemical_similarity" class="method-section"><span class="method-name" data-search="compute_chemical_similarity">compute_chemical_similarity()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Compares loaded molecular fingerprints (Tanimoto Index).
+</span><br/><br/>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+Tanimoto Index (float)
+</span></li>
+</ul>
+</div>
+</div></body>

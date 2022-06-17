@@ -1,0 +1,484 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="structurealigner" class="class-name">Class StructureAligner</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+This class is responsible for the retrieval of protein structures/sequences and RNA sequences, the generation of mixed sequences and performing alignments.
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="root_disk"><span class="attr-name">root_disk [default: '']</span>: <span class="attr-description">
+Current setting of root disk where the third-party data and the target dataset reside. (string)
+</span></li>
+<li data-search="verbose"><span class="attr-name">verbose [default: False]</span>: <span class="attr-description">
+Toggle verbose output. (boolean)
+</span></li>
+<li data-search="structure_data_dir"><span class="attr-name">structure_data_dir [default: '']</span>: <span class="attr-description">
+Structure sequence data cache directory (see set_root_disk()) (string)
+</span></li>
+<li data-search="dssp_cache_dir"><span class="attr-name">dssp_cache_dir [default: '']</span>: <span class="attr-description">
+DSSP data cache directory (see set_root_disk()) (string)
+</span></li>
+<li data-search="stride_cache_dir"><span class="attr-name">stride_cache_dir [default: '']</span>: <span class="attr-description">
+STRIDE data cache directory (see set_root_disk()) (string)
+</span></li>
+<li data-search="pdb_dataset_path"><span class="attr-name">pdb_dataset_path [default: '']</span>: <span class="attr-description">
+PDB directory path (relative) (string)
+</span></li>
+<li data-search="dssp_executable_path"><span class="attr-name">dssp_executable_path [default: './mkdssp']</span>: <span class="attr-description">
+DSSP executable path (string)
+</span></li>
+<li data-search="stride_executable_path"><span class="attr-name">stride_executable_path [default: './stride']</span>: <span class="attr-description">
+STRIDE executable path (string)
+</span></li>
+<li data-search="_max_sequence_size"><span class="attr-name">_max_sequence_size [default: 10000000]</span>: <span class="attr-description">
+Maximum sequence length for alignment (int)
+</span></li>
+<li data-search="_dssp_notations"><span class="attr-name">_dssp_notations [default: ['H', 'B', 'E', 'G', 'I', 'P', 'T', 'S', '.']]</span>: <span class="attr-description">
+DSSP labels
+</span></li>
+<li data-search="_hydropathy"><span class="attr-name">_hydropathy</span>: <span class="attr-description">
+Mapping between amino acid labels and hydrophobicity cluster labels. (dict)
+</span></li>
+<li data-search="_lettercode"><span class="attr-name">_lettercode</span>: <span class="attr-description">
+Mapping between amino acid 3-letter and 1-letter codes. (dict)
+</span></li>
+<li data-search="_label_mix"><span class="attr-name">_label_mix [default: []]</span>: <span class="attr-description">
+All possible DSSP-Hydropathy labels combinations (list of tuples)
+</span></li>
+</ul>
+</div>
+<div data-search="set_root_disk" class="method-section"><span class="method-name" data-search="set_root_disk">set_root_disk()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Sets all the required directories according to the provided root directory path.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="root_disk"><span class="param-name">root_disk</span>: <span class="arg-description">
+Directory path where the third-party data and the target dataset reside. (string)
+</span></li>
+</ul>
+</div>
+<div data-search="get_structure" class="method-section"><span class="method-name" data-search="get_structure">get_structure()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves PDB primary and secondary protein structures. Note that PDB data might be incomplete so the information would be partial. Data are cached.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="structure_info"><span class="param-name">structure_info</span>: <span class="arg-description">
+Composite input : PDB ID and PDB chain ID (list of strings)
+</span></li>
+<li data-search="available_residues"><span class="param-name">available_residues</span>: <span class="arg-description">
+Available residues in the PDB (see PDBHandler.get_residue_range()) (dict)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="secondary_structure"><span class="return-name">secondary_structure</span>: <span class="return-description">
+Protein secondary structure from PDB data (string) (empty string if is not found)
+</span></li>
+<li data-search="primary_structure"><span class="return-name">primary_structure</span>: <span class="return-description">
+Protein sequence from PDB data (string) (empty string if is not found)
+</span></li>
+</ul>
+</div>
+<div data-search="get_pdb_primary_sequence" class="method-section"><span class="method-name" data-search="get_pdb_primary_sequence">get_pdb_primary_sequence()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves protein sequence from a PDB chain.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_id"><span class="param-name">pdb_id</span>: <span class="arg-description">
+PDB id (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+Chain id (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="str"><span class="return-name">str</span>: <span class="return-description">
+Protein sequence (string)
+</span></li>
+</ul>
+</div>
+<div data-search="create_hydrophobicity_sequence" class="method-section"><span class="method-name" data-search="create_hydrophobicity_sequence">create_hydrophobicity_sequence()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Creates a sequence that encodes hydrophobicity information based on group labels derived from Hydropathy Index.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="primary_sequence"><span class="param-name">primary_sequence</span>: <span class="arg-description">
+Protein sequence from PDB data (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="hydrophobicity_sequence"><span class="return-name">hydrophobicity_sequence</span>: <span class="return-description">
+Hydrophobicity representation
+</span></li>
+</ul>
+</div>
+<div data-search="create_mixed_sequence" class="method-section"><span class="method-name" data-search="create_mixed_sequence">create_mixed_sequence()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Creates a sequence that encodes secondary structure and hydrophobicity information in an ASCII representation. (see also create_hydrophobicity_sequence())
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="primary_sequence"><span class="param-name">primary_sequence</span>: <span class="arg-description">
+Protein sequence from PDB data (string)
+</span></li>
+<li data-search="secondary_sequence"><span class="param-name">secondary_sequence</span>: <span class="arg-description">
+Protein secondary structure from PDB data (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="str"><span class="return-description">
+Mixed representation
+</span></li>
+<li data-search="hydrophobicity_sequence"><span class="return-name">hydrophobicity_sequence</span>: <span class="return-description">
+The converted protein sequence to hydropathy group labels mixed sequence
+</span></li>
+</ul>
+</div>
+<div data-search="read_ref_seq_id" class="method-section"><span class="method-name" data-search="read_ref_seq_id">read_ref_seq_id()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Looks for relevant RefSeq IDs (NM / XM) in the local static UniProt mapping resources. Checks UniProt Accession IDs of isoforms.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="uniprot_id"><span class="param-name">uniprot_id</span>: <span class="arg-description">
+UniProt Accession identifier (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="ref_seq_transcript_id"><span class="return-name">ref_seq_transcript_id</span>: <span class="return-description">
+RefSeq ID (string) (empty string if is not found)
+</span></li>
+</ul>
+</div>
+<div data-search="fetch_transcript_sequence" class="method-section"><span class="method-name" data-search="fetch_transcript_sequence">fetch_transcript_sequence()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves a transcript sequence from local static RefSeq resources.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="ref_seq_transcript_id"><span class="param-name">ref_seq_transcript_id</span>: <span class="arg-description">
+RefSeq ID (string) 
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="transcript_sequence"><span class="return-name">transcript_sequence</span>: <span class="return-description">
+(string) (empty string if is not found)
+</span></li>
+</ul>
+</div>
+<div data-search="fetch_transcript_cds" class="method-section"><span class="method-name" data-search="fetch_transcript_cds">fetch_transcript_cds()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves the base range of coding region sequence (CDS) from local static RefSeq resources.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="ref_seq_transcript_id"><span class="param-name">ref_seq_transcript_id</span>: <span class="arg-description">
+RefSeq ID (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="cds_range"><span class="return-name">cds_range</span>: <span class="return-description">
+The range of CDS (list of int) ([-1, -1] if the range is not found)
+</span></li>
+</ul>
+</div>
+<div data-search="fetch_transcript_parts" class="method-section"><span class="method-name" data-search="fetch_transcript_parts">fetch_transcript_parts()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Gets the sequences of 5'-UTR, CDS, 3'-UTR
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="ref_seq_transcript_id"><span class="param-name">ref_seq_transcript_id</span>: <span class="arg-description">
+RefSeq ID (string) 
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="parts"><span class="return-name">parts</span>: <span class="return-description">
+the three segments of transcript sequence according to the CDS range (list of strings)
+</span></li>
+</ul>
+</div>
+<div data-search="get_pdb_sequences" class="method-section"><span class="method-name" data-search="get_pdb_sequences">get_pdb_sequences()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructs protein sequence and secondary structure from PDB data. Missing residues are represented as gaps ("-").
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_id"><span class="param-name">pdb_id</span>: <span class="arg-description">
+PDB ID (string) 
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string) 
+</span></li>
+<li data-search="available_residues"><span class="param-name">available_residues</span>: <span class="arg-description">
+Available residues in the PDB (see PDBHandler.get_residue_range()) (dict)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="str"><span class="return-name">secondary_structure</span>: <span class="return-description">
+Protein secondary structure (string) (empty string if is not found)
+</span></li>
+<li data-search="str"><span class="return-name">primary structure</span>: <span class="return-description">
+Protein sequence (string) (empty string if is not found)
+</span></li>
+</ul>
+</div>
+<div data-search="parse_structures_by_dssp" class="method-section"><span class="method-name" data-search="parse_structures_by_dssp">parse_structures_by_dssp()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Parsing the primary and secondary structures from the DSSP'a output.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="dssp_data_path"><span class="param-name">dssp_data_path</span>: <span class="arg-description">
+Cache data path for DSSP outputs (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string) 
+</span></li>
+<li data-search="available_residues"><span class="param-name">available_residues</span>: <span class="arg-description">
+Available residues in the PDB (see PDBHandler.get_residue_range()) (dict)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="primary_structure"><span class="return-name">primary_structure</span>: <span class="return-description">
+Protein sequence from PDB data (string) (empty string if is not found)
+</span></li>
+<li data-search="secondary_structure"><span class="return-name">secondary_structure</span>: <span class="return-description">
+Protein secondary structure from PDB data (string) (empty string if is not found)
+</span></li>
+</ul>
+</div>
+<div data-search="get_alignment_info" class="method-section"><span class="method-name" data-search="get_alignment_info">get_alignment_info()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Calculates matches and mismatches  of an alignment.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="alignment"><span class="param-name">alignment</span>: <span class="arg-description">
+Aligned sequences (list of strings)
+</span></li>
+<li data-search="gap_included"><span class="param-name">gap_included [default: True]</span>: <span class="arg-description">
+Count gaps as mismatches (boolean)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="matches"><span class="return-name">matches</span>: <span class="return-description">
+Number of matches (int)
+</span></li>
+<li data-search="mismatches"><span class="return-name">mismatches</span>: <span class="return-description">
+Number of mismatches (int)
+</span></li>
+<li data-search="gaps"><span class="return-name">gaps</span>: <span class="return-description">
+Number of gaps (int)
+</span></li>
+</ul>
+</div>
+<div data-search="get_alignment_mask" class="method-section"><span class="method-name" data-search="get_alignment_mask">get_alignment_mask()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructs a bit-mask for an alignment. One for a match and zero for a mismatch. Ignores gaps.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="alignment"><span class="param-name">alignment</span>: <span class="arg-description">
+Aligned sequences (list of strings)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="mask"><span class="return-name">mask</span>: <span class="return-description">
+(list of int)
+</span></li>
+</ul>
+</div>
+<div data-search="calculate_identity" class="method-section"><span class="method-name" data-search="calculate_identity">calculate_identity()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Calculates sequence identity based on a provided alignment.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="alignment"><span class="param-name">alignment</span>: <span class="arg-description">
+Aligned sequences (list of strings)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="identity"><span class="return-name">identity</span>: <span class="return-description">
+Sequence identity (float)
+</span></li>
+<li data-search="no_gap_identity"><span class="return-name">no_gap_identity</span>: <span class="return-description">
+Gap-included sequence identity (float)
+</span></li>
+<li data-search="gaps"><span class="return-name">gaps</span>: <span class="return-description">
+Number of gaps (int)
+</span></li>
+</ul>
+</div>
+<div data-search="align" class="method-section"><span class="method-name" data-search="align">align()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Performs global sequence alignment: match score=5, mismatch score=-4 similar to EDNAMAT scoring matrix, open gap penalty=-10, gap extension penalty=-0,5,  <br/>
+no end-gap penalty, for protein sequence alignment type, BLOSUM62 matrix is used.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="reference_sequence"><span class="param-name">reference_sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+<li data-search="sequence"><span class="param-name">sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+<li data-search="data_type"><span class="param-name">data_type</span>: <span class="arg-description">
+'PROTEIN' (BLOSUM62 scoring is used) or 'OTHER' (string)
+</span></li>
+<li data-search="config"><span class="param-name">config [default: {}]</span>: <span class="arg-description">
+Dictionary for options. Available options: <ul>
+<li>'removeGaps': gaps are removed from sequences before alignment</li>
+<li>'compressGaps': multiple contiguous gaps are squeezed to a single one before alignment</li>
+<li>'gapChars': Replace gap char "-" with 2 different characters of choice before alignment (list of string) (recommended since the gap chars inserted by the alignment <br/>
+process refer to a misalignment not missing data, it also affects the sequence identity calculation)</li>
+</ul>
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="score"><span class="return-name">score</span>: <span class="return-description">
+Alignment score (float or False if there is a failure)
+</span></li>
+<li data-search="alignment"><span class="return-name">alignment</span>: <span class="return-description">
+Aligned sequences (list of string or False if there is a failure) 
+</span></li>
+<li data-search="alignment_result"><span class="return-name">alignment_result</span>: <span class="return-description">
+Formatted result of alignment (list of string or empty string if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="get_reference_sequence_alignment" class="method-section"><span class="method-name" data-search="get_reference_sequence_alignment">get_reference_sequence_alignment()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves the character range of the sequence's aligned part excluding gap character insertions.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="alignment_result"><span class="param-name">alignment_result</span>: <span class="arg-description">
+Formatted result of alignment (list of string) 
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="aligned_range"><span class="return-name">aligned_range</span>: <span class="return-description">
+original start and end indices of the aligned part (list of int)
+</span></li>
+<li data-search="gaps"><span class="return-name">gaps</span>: <span class="return-description">
+Number of gaps (int)
+</span></li>
+</ul>
+</div>
+<div data-search="local_align" class="method-section"><span class="method-name" data-search="local_align">local_align()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Performs local sequence alignment: match score=5, mismatch score=-4, open gap penalty=-10, gap extension penalty=-0,5
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="reference_sequence"><span class="param-name">reference_sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+<li data-search="sequence"><span class="param-name">sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+<li data-search="gap_chars"><span class="param-name">gap_chars [default: []]</span>: <span class="arg-description">
+Replace gap char "-" with 2 different characters of choice before alignment (list of string) 
+</span></li>
+<li data-search="compress_gaps"><span class="param-name">compress_gaps [default: False]</span>: <span class="arg-description">
+Multiple contiguous gaps are squeezed to a single one before alignment
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="score"><span class="return-name">score</span>: <span class="return-description">
+Alignment score (float or False if there is a failure)
+</span></li>
+<li data-search="alignment"><span class="return-name">alignment</span>: <span class="return-description">
+Aligned sequences (list of string or False if there is a failure) 
+</span></li>
+<li data-search="alignment_result"><span class="return-name">alignment_result</span>: <span class="return-description">
+Formatted result of alignment (list of string or empty string if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="call_dssp" class="method-section"><span class="method-name" data-search="call_dssp">call_dssp()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Calculates the secondary structure with DSSP method.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_id"><span class="param-name">pdb_id</span>: <span class="arg-description">
+PDB ID (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+Secondary structure sequence with DSSP labels. (string or False if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="call_stride" class="method-section"><span class="method-name" data-search="call_stride">call_stride()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Estimates the secondary structure with STRIDE method.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_id"><span class="param-name">pdb_id</span>: <span class="arg-description">
+PDB ID (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string)
+</span></li>
+<li data-search="output_dir"><span class="param-name">output_dir</span>: <span class="arg-description">
+Explicit configuration for output directory (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+Secondary structure sequence with DSSP labels. (string or False if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="get_structures_by_stride" class="method-section"><span class="method-name" data-search="get_structures_by_stride">get_structures_by_stride()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Calculates the secondary structure with STRIDE method.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_id"><span class="param-name">pdb_id</span>: <span class="arg-description">
+PDB ID (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string)
+</span></li>
+<li data-search="residue_range"><span class="param-name">residue_range</span>: <span class="arg-description">
+Available residues in the PDB (one-based) (list of int)
+</span></li>
+<li data-search="output_dir"><span class="param-name">output_dir [default: '']</span>: <span class="arg-description">
+Explicit configuration for output directory (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="primary_structure"><span class="return-name">primary_structure</span>: <span class="return-description">
+Protein sequence from PDB data (string) (empty string if is not found)
+</span></li>
+<li data-search="secondary_structure"><span class="return-name">secondary_structure</span>: <span class="return-description">
+Protein secondary structure from PDB data (string) (empty string if is not found)
+</span></li>
+</ul>
+</div>
+<div data-search="get_alignment_positions" class="method-section"><span class="method-name" data-search="get_alignment_positions">get_alignment_positions()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieve alignment positions.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="alignment"><span class="param-name">alignment</span>: <span class="arg-description">
+List with alignment information (as returned by BioPython pairwise2.align):
+<ul>
+<li>[0] - sequence A</li>
+<li>[1] - sequence B</li>
+<li>[2] - score</li>
+<li>[3] - sequence B alignment start</li>
+<li>[4] - sequence B alignment end</li>
+</ul>
+</span></li>
+<li data-search="sequence_b"><span class="param-name">sequence_b</span>: <span class="arg-description">
+The second sequence of the alignment (string)
+</span></li>
+<li data-search="total_residue_range"><span class="param-name">total_residue_range</span>: <span class="arg-description">
+A continuous range of residue position numbers (one-based indexing).(list of ints)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="aligned_range"><span class="return-name">aligned_range</span>: <span class="return-description">
+Relative element positions of the sequence.
+</span></li>
+<li data-search="actual_range"><span class="return-name">actual_range</span>: <span class="return-description">
+Residue positions
+</span></li>
+<li data-search="gaps"><span class="return-name">gaps</span>: <span class="return-description">
+Number of gaps
+</span></li>
+<li data-search="range_length"><span class="return-name">range_length</span>: <span class="return-description">
+Total aligned elements of the sequence
+</span></li>
+</ul>
+</div>
+<div data-search="get_all_sequences" class="method-section"><span class="method-name" data-search="get_all_sequences">get_all_sequences()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves primary, secondary, hydrophobicity, mixed sequences based on PDB data.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="structure_info"><span class="param-name">structure_info</span>: <span class="arg-description">
+Composite input: PDB ID and chain ID. (list of strings)
+</span></li>
+<li data-search="available_residues"><span class="param-name">available_residues</span>: <span class="arg-description">
+Available residues in the PDB (see PDBHandler.get_residue_range()) (dict)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="all_sequences"><span class="return-name">dictionary</span>: <span class="return-description">
+A dictionary with keys: 'primary', 'secondary', 'hydrophobicity', 'mixed'. Each key corresponds to a sequence (string).
+</span></li>
+</ul>
+</div>
+</div></body>

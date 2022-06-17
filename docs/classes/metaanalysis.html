@@ -1,0 +1,134 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="metaanalysis" class="class-name">Class MetaAnalysis</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+This is the meta-analysis module of Machaon.
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="root_disk"><span class="attr-name">root_disk [default: '']</span>: <span class="attr-description">
+Current setting of root disk where the third-party data and the target dataset reside. (string)
+</span></li>
+<li data-search="debugging"><span class="attr-name">debugging [default: False]</span>: <span class="attr-description">
+Toggle debugging mode (single core execution). (boolean)
+</span></li>
+<li data-search="reference_pdbid"><span class="attr-name">reference_pdbid [default: []]</span>: <span class="attr-description">
+PDB ID (string)
+</span></li>
+<li data-search="reference_chain_id"><span class="attr-name">reference_chain_id [default: []]</span>: <span class="attr-description">
+PDB Chain ID (string)
+</span></li>
+<li data-search="reference_segments"><span class="attr-name">reference_segments [default: []]</span>: <span class="attr-description">
+Reference segment names (list of strings)
+</span></li>
+<li data-search="is_reference_viral"><span class="attr-name">is_reference_viral [default: []]</span>: <span class="attr-description">
+Whether the reference is viral or not. (boolean)
+</span></li>
+<li data-search="output_path"><span class="attr-name">output_path [default: '']</span>: <span class="attr-description">
+Machaon's output directory for comparison results. (string)
+</span></li>
+<li data-search="pdb_dataset_path"><span class="attr-name">pdb_dataset_path [default: '']</span>: <span class="attr-description">
+Full PDB data directory path (string)
+</span></li>
+<li data-search="go_output_path"><span class="attr-name">go_output_path [default: '']</span>: <span class="attr-description">
+Output directory for Gene Ontology meta-analysis (string)
+</span></li>
+<li data-search="cores"><span class="attr-name">cores [default: 1]</span>: <span class="attr-description">
+User-specified maximum processes (int)
+</span></li>
+<li data-search="override_pdb_id"><span class="attr-name">override_pdb_id [default: '']</span>: <span class="attr-description">
+Useful when you want to introduce an alternative version of PDB as reference (e.g. a pre-processed version for 6VXX.pdb, "6VXXp.pdb") (string)
+</span></li>
+<li data-search="alignment_levels"><span class="attr-name">alignment_levels [default: ['primary', 'secondary', 'mixed', 'hydrophobicity']]</span>: <span class="attr-description">
+Available levels of alignment for Gene Ontology analysis.
+</span></li>
+<li data-search="go_alignment_level"><span class="attr-name">go_alignment_level [default: 'secondary']</span>: <span class="attr-description">
+Options for Gene Ontology multiple alignment-based meta-analysis: 'primary', 'secondary', 'hydrophobicity', 'mixed'.
+</span></li>
+<li data-search="segments"><span class="attr-name">segments [default: []]</span>: <span class="attr-description">
+The user-specified segments (list of lists, each list contains residue positions [one-based indexing]).
+</span></li>
+<li data-search="known_areas"><span class="attr-name">known_areas [default: []]</span>: <span class="attr-description">
+The user-specified resdiue positions that correspond to known areas like binding sites(list of lists, each list contains residue positions [one-based indexing]).<br/>
+This is used for highlighting correlated peaks with different color on Gene Ontology meta-analysis plots.
+</span></li>
+</ul>
+</div>
+<div data-search="evaluate" class="method-section" style="width: 70%"><span class="method-name" data-search="evaluate">evaluate()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Evaluate a candidate entry.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input:  list: [reference data (dict) (see load_data() in Evaluator class), candidate entry (pandas dataframe row), boolean which is True for viral data, boolean which is True if TM-Align executable exists] 
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+Tab-separated valuation result (string)
+</span></li>
+</ul>
+</div>
+<div data-search="evaluate_results" class="method-section"><span class="method-name" data-search="evaluate_results">evaluate_results()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Coordinates the evaluation of the candidate entries in the final output of the comparisons (protein 1D/2D/3D, gene coding region & UTRs, Tanimoto Index).
+</span><br/><br/>
+</div>
+<div data-search="store_property_alignment" class="method-section"><span class="method-name" data-search="store_property_alignment">store_property_alignment()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Stores alignment details in the dictionary with the aggregated information (see aggregate_go_information()).
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description" style="width: 70%;">
+Composite input: [aggregation_dict (dictionary), pdb_id (string), alignment_info (alignment details, see StructureAligner.get_alignment_positions() alignment argument), sequence (string), 
+reference_residue_range(list of ints), total_residue_range (list of ints), aligner (StructureAligner object) ]
+</span></li>
+</ul>
+</div>
+<div data-search="align_candidate_by_property" class="method-section"><span class="method-name" data-search="align_candidate_by_property">align_candidate_by_property()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Performs alignments and groups them by Gene Ontology property.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input: list: [candidate entry (pandas dataframe row), reference_sequences (dictionary see StructureAligner.get_all_sequences()), reference_residues ]  
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="property_alignments"><span class="return-name">property_alignments</span>: <span class="return-description">
+Dictionary with alignment bitmask and sequence identity per alignment and property. 
+</span></li>
+</ul>
+</div>
+<div data-search="aggregate_go_information" class="method-section" style="width: 80%"><span class="method-name" data-search="aggregate_go_information">aggregate_go_information()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Coordinates Gene Ontology-based multiple alignments and stores into a dictionary. This dictionary is also save into a file via object serialization (Pickle package). 
+The structure of the dictionary: alignment_info[&lt;propertyType&gt;][&lt;go_id&gt;][&lt;alignment_level&gt;] and each entry has 'identity', 'mask' and 'alignment' keys.
+'mask' entry contains a bitmask of the aligned areas, 'alignment' holds the alignment object (see StructureAligner.get_alignment_positions()) and 'identity' refers to the 
+sequence identity metric.
+</span><br/><br/>
+</div>
+<div data-search="get_available_go_information" class="method-section"><span class="method-name" data-search="get_available_go_information">get_available_go_information()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Aggregates Gene Ontology information and quantifies the presence of the properties in the final output of comparisons.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input: reference PDB ID, reference PDB chain ID, suffix (for constrained mode results) (list of strings)
+</span></li>
+</ul>
+</div>
+<div data-search="plot_correlations" class="method-section"><span class="method-name" data-search="plot_correlations">plot_correlations()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Plots property correlations with residue positions of the reference proteins based on multiple alignments on chosen level (see class attribute: go_alignment_level).
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input: list [multiple alignment mask, average span (for drawing Exponential Weighted Moving Average - EWMA), total binding sites, binding sites alignment bitmask, figure output filename]
+</span></li>
+</ul>
+</div>
+<div data-search="perform_go_meta_analysis" class="method-section"><span class="method-name" data-search="perform_go_meta_analysis">perform_go_meta_analysis()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Coordinates Gene Ontology meta-analysis.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input: list [PDB ID, PDB chain ID, suffix (for constrained mode results), reference sequence length, GO property type, GO terms]
+</span></li>
+</ul>
+</div>
+</div></body>

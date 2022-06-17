@@ -1,0 +1,247 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="candidatesampler" class="class-name">Class CandidateSampler</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+This class determines the final set of candidate proteins as the output of the structural comparisons.
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="root_disk"><span class="attr-name">root_disk [default: '']</span>: <span class="attr-description">
+Current setting of root disk where the third-party data and the target dataset reside. (string)
+</span></li>
+<li data-search="debugging"><span class="attr-name">debugging [default: False]</span>: <span class="attr-description">
+Toggle debugging mode (single core execution). (boolean)
+</span></li>
+<li data-search="cores"><span class="attr-name">cores [default: 1]</span>: <span class="attr-description">
+User-specified maximum processes (int)
+</span></li>
+<li data-search="reference_pdb_id"><span class="attr-name">reference_pdb_id [default: '']</span>: <span class="attr-description">
+Reference PDB ID (string)
+</span></li>
+<li data-search="reference_chain_id"><span class="attr-name">reference_chain_id [default: '']</span>: <span class="attr-description">
+Reference PDB chain ID (string)
+</span></li>
+<li data-search="reference_gene_id"><span class="attr-name">reference_gene_id [default: '']</span>: <span class="attr-description">
+Reference gene ID (string)
+</span></li>
+<li data-search="reference_segments"><span class="attr-name">reference_segments [default: []]</span>: <span class="attr-description">
+Reference segment names (list of strings)
+</span></li>
+<li data-search="no_enrichment"><span class="attr-name">no_enrichment [default: False]</span>: <span class="attr-description">
+Prevents the enrichment of the results (for the 'no-third-party-data' option).
+</span></li>
+<li data-search="excluded_organisms"><span class="attr-name">excluded_organisms [default: []]</span>: <span class="attr-description">
+Excluded organisms (list of strings)
+</span></li>
+<li data-search="excluded_gene_names"><span class="attr-name">excluded_gene_names [default: []]</span>: <span class="attr-description">
+Excluded gene names (list of strings)
+</span></li>
+<li data-search="excluded_pdb_ids"><span class="attr-name">excluded_pdb_ids [default: []]</span>: <span class="attr-description">
+Excluded PDB IDs  (list of strings)
+</span></li>
+<li data-search="_suffixed_filename"><span class="attr-name">_suffixed_filename [default: '']</span>: <span class="attr-description">
+File name after addition of suffixes (string)
+</span></li>
+<li data-search="plots_output_path"><span class="attr-name">plots_output_path [default: 'plots']</span>: <span class="attr-description">
+Outpath for storing generated plots (string)
+</span></li>
+<li data-search="metrics_path"><span class="attr-name">metrics_path [default: '']</span>: <span class="attr-description">
+Outpath for storing computed metrics (string)
+</span></li>
+<li data-search="output_path"><span class="attr-name">output_path [default: '']</span>: <span class="attr-description">
+Outpath for storing computed metrics (string)
+</span></li>
+<li data-search="pdb_dataset_path"><span class="attr-name">pdb_dataset_path [default: '']</span>: <span class="attr-description">
+Outpath for storing final candidate entries (string)
+</span></li>
+<li data-search="_min_dataset_size"><span class="attr-name">_min_dataset_size [default: 300]</span>: <span class="attr-description">
+Minimum dataset size for clustering (int)
+</span></li>
+<li data-search="max_result_size"><span class="attr-name">max_result_size [default: 250]</span>: <span class="attr-description">
+Maximum dataset size for enrichment (int)
+</span></li>
+<li data-search="_enricher"><span class="attr-name">_enricher [default: Enricher()]</span>: <span class="attr-description">
+Enricher object
+</span></li>
+<li data-search="_column_headers"><span class="attr-name">_column_headers [default: ['b-phipsi', 'w-rdist', 't-alpha']]</span>: <span class="attr-description">
+Headers for metrics (list of strings)
+</span></li>
+<li data-search="_metric_order"><span class="attr-name">_metric_order [default: [True, True, True]]</span>: <span class="attr-description">
+Ordering for metrics (list of booleans)
+</span></li>
+<li data-search="_min_clustering_size"><span class="attr-name">_min_clustering_size [default: 100]</span>: <span class="attr-description">
+Minimum clustering size for HDBSCAN (int)
+</span></li>
+<li data-search="_maximum_candidates_limit"><span class="attr-name">_maximum_candidates_limit [default: 100]</span>: <span class="attr-description">
+Number of top entries for the final enriched output. (int)
+</span></li>
+<li data-search="_max_clustering_attempts"><span class="attr-name">_max_clustering_attempts [default: 3]</span>: <span class="attr-description">
+Maximum clustering attempts (int)
+</span></li>
+<li data-search="_extra_merging_columns"><span class="attr-name">_extra_merging_columns [default: []]</span>: <span class="attr-description">
+Extra columns to be considered when merging sets of candidate entries. (string)
+</span></li>
+<li data-search="keep_duplicates"><span class="attr-name">keep_duplicates [default: False]</span>: <span class="attr-description">
+Keep duplicate entries (do not filter by gene id) (boolean)
+</span></li>
+<li data-search="maximum_unsampled_dataset"><span class="attr-name">maximum_unsampled_dataset [default: 10000]</span>: <span class="attr-description">
+Maximum dataset size that will not be sampled (int)
+</span></li>
+<li data-search="min_clustering_probability"><span class="attr-name">min_clustering_probability [default: 0.1]</span>: <span class="attr-description">
+Samples with culstering probabilities under this threshold will be considered as noise (float)
+</span></li>
+<li data-search="override_pdb_id"><span class="attr-name">override_pdb_id [default: '']</span>: <span class="attr-description">
+Useful when you want to introduce an alternative version of PDB as reference (e.g. a pre-processed version for 6VXX.pdb, "6VXXp.pdb") (string)
+</span></li>
+</ul>
+</div>
+<div data-search="filter_enriched_entry" class="method-section"><span class="method-name" data-search="filter_enriched_entry">filter_enriched_entry()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Filters a candidate according to user-specified criteria.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Candidate data (tupple)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="condition"><span class="return-name">condition</span>: <span class="return-description">
+X
+</span></li>
+</ul>
+</div>
+<div data-search="filter_out" class="method-section"><span class="method-name" data-search="filter_out">filter_out()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Filters candidates in parallel according to user-specified criteria.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="samples"><span class="param-name">samples</span>: <span class="arg-description">
+Candidates (pandas dataframe)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="samples"><span class="return-name">samples</span>: <span class="return-description">
+Filtered set of candidates (pandas dataframe)
+</span></li>
+</ul>
+</div>
+<div data-search="set_segments" class="method-section"><span class="method-name" data-search="set_segments">set_segments()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Setting the reference segments
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="segment_type"><span class="param-name">segment_type</span>: <span class="arg-description">
+The choices are 'domain' or 'segment'. (string)
+</span></li>
+<li data-search="target_segments"><span class="param-name">target_segments [default: []]</span>: <span class="arg-description">
+The user-specified segments (list of lists, each list contains residue positions (one-based indexing).
+</span></li>
+</ul>
+</div>
+<div data-search="get_top_samples" class="method-section"><span class="method-name" data-search="get_top_samples">get_top_samples()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Selects the top highest ordered entries per metric and returns their intersection.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data"><span class="param-name">data</span>: <span class="arg-description">
+Candidates (pandas dataframe)
+</span></li>
+<li data-search="percentage"><span class="param-name">percentage [default: 0.01]</span>: <span class="arg-description">
+Percentage of the top samples that will be selected. (float)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="filtered"><span class="return-name">filtered</span>: <span class="return-description">
+A set of the top selected samples (pandas dataframe)
+</span></li>
+</ul>
+</div>
+<div data-search="rank_samples" class="method-section"><span class="method-name" data-search="rank_samples">rank_samples()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Ranks the candidate entries with Borda Count rank aggregation algorithm.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data"><span class="param-name">data</span>: <span class="arg-description">
+Candidates (pandas dataframes)
+</span></li>
+<li data-search="merging_columns"><span class="param-name">merging_columns</span>: <span class="arg-description">
+Merging columns for aggregation of the metric-based individual ranks.
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="sorted_set"> <span class="return-description">
+An ordered set according to the ranking aggregation result. (pandas dataframe)
+</span></li>
+</ul>
+</div>
+<div data-search="select_candidates" class="method-section"><span class="method-name" data-search="select_candidates">select_candidates()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Selects the candidates according to the metrics.
+</span><br/><br/>
+</div>
+<div data-search="visualize_candidates" class="method-section"><span class="method-name" data-search="visualize_candidates">visualize_candidates()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Generates a visualization of the candidate samples with UMAP.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="metric_values"><span class="param-name">metric_values</span>: <span class="arg-description">
+The metric values of the candidates. (pandas dataframe)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="embedding"><span class="return-name">embedding</span>: <span class="return-description">
+A dimensionality-reduced representation of the candidate samples. (numpy array)
+</span></li>
+</ul>
+</div>
+<div data-search="cluster_data" class="method-section"><span class="method-name" data-search="cluster_data">cluster_data()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Clusters the candidate entries.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="metric_values"><span class="param-name">metric_values</span>: <span class="arg-description">
+The metric values of the candidates. (pandas dataframe)
+</span></li>
+<li data-search="min_cluster_size"><span class="param-name">min_cluster_size [default: 100]</span>: <span class="arg-description">
+Minimum cluster size setting (int)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="clustering_info"><span class="return-name">clustering_info</span>: <span class="return-description">
+A dictionary with the clustering results:<ul>
+<li>'totalClusters': the number of clusters</li>
+<li>'labels': the cluster label per candidate sample</li>
+<li>'probabilities':  the clustering probabilities per candidate sample</li>
+<li>'outlierScores':  the outlier scores per candidate sample</li>
+<li>'minClusterSize': minimum cluster size</li>
+</ul>
+</span></li>
+</ul>
+</div>
+<div data-search="plot_clusters" class="method-section"><span class="method-name" data-search="plot_clusters">plot_clusters()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Plots the clustering result with UMAP.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="samples"><span class="param-name">samples</span>: <span class="arg-description">
+Candidates (pandas dataframe)
+</span></li>
+<li data-search="embedding"><span class="param-name">embedding</span>: <span class="arg-description">
+A dimensionality-reduced representation of the samples. (numpy array)
+</span></li>
+<li data-search="clustering_info"><span class="param-name">clustering_info</span>: <span class="arg-description">
+A dictionary with the clustering results (pandas dataframe) (see cluster_data())
+</span></li>
+<li data-search="file_suffix"><span class="param-name">file_suffix [default: '']</span>: <span class="arg-description">
+Suffix for the filename of the output (string)
+</span></li>
+</ul>
+</div>
+<div data-search="enrich_samples" class="method-section"><span class="method-name" data-search="enrich_samples">enrich_samples()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Enriches the candidate entries with third-party information.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="samples"><span class="param-name">samples</span>: <span class="arg-description">
+Candidates (pandas dataframe)
+</span></li>
+<li data-search="reference_entry"><span class="param-name">reference_entry</span>: <span class="arg-description">
+Reference (pandas dataframe)
+</span></li>
+<li data-search="column_headers"><span class="param-name">column_headers</span>: <span class="arg-description">
+Column headers that will be included in the final output. (list of strings)
+</span></li>
+</ul>
+</div>
+</div></body>

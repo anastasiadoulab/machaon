@@ -1,0 +1,8 @@
+services:
+  machaon:
+    build: .
+    volumes:
+       - ./config:/opt/config
+       - MY_BIG_STORAGE_PATH:/opt/storage # select the data root folder for Machaon (the location of source and cache data)
+    image: machaon:v1
+    tty: true

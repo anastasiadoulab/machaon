@@ -1,0 +1,35 @@
+name: machaon
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - beautifulsoup4=4.10.0
+  - biopython=1.79
+  - joblib=1.1.0
+  - hdbscan=0.8.27
+  - matplotlib=3.4.3
+  - pip
+  - python=3.8.8
+  - requests=2.26.0
+  - seaborn=0.11.2
+  - setuptools=58.2.0
+  - pip:
+    - dsspparser==0.12
+    - kaleido==0.2.1
+    - llvmlite==0.37.0
+    - lxml==4.6.3
+    - numpy==1.20.3
+    - open3d==0.13.0
+    - pandas==1.3.4
+    - pebble==4.6.3
+    - plotly==5.3.1
+    - pyyaml==6.0
+    - ranky==0.2.3
+    - rdkit-pypi==2021.3.5.1
+    - scikit-learn==1.0
+    - scipy==1.7.1
+    - sklearn==0.0
+    - tqdm==4.62.3
+    - umap-learn==0.5.1
+    - urllib3==1.26.7
+    - wordcloud==1.8.1

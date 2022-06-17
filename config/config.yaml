@@ -1,0 +1,646 @@
+---
+configurations:
+  - rootDisk: "/structural-data"
+    referencePDBID: "6VXX"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_vir"
+    outputPath: "../output/6VXX_A_whole"
+    excludedOrganisms:
+      - "severe acute respiratory syndrome coronavirus2"
+      - "severe acute respiratory syndrome coronavirus 2"
+      - "covid-19 virus"
+    isReferenceViral: True
+    GOProperty: "biologicalProcess"
+    GOTargetProperties:
+      - "fusion of virus membrane with host plasma membrane"
+    ignore: True
+    GOAnalysisOnly: True
+  - rootDisk: "/structural-data"
+    referencePDBID: "6VXX"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_COV"
+    outputPath: "../output_latest/6VXX_A_cov"
+    isReferenceViral: True
+    ignore: True
+  - rootDisk: "/structural-data"
+    referencePDBID: "6VXX"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "segment"
+    pdbDatasetPath: "PDBs_vir"
+    outputPath: "../output/6VXX_A_segment"
+    excludedOrganisms:
+      - "severe acute respiratory syndrome coronavirus2"
+      - "severe acute respiratory syndrome coronavirus 2"
+      - "covid-19 virus"
+    isReferenceViral: True
+#    GOProperty: "biologicalProcess"
+#    GOTargetProperties:
+#      - "fusion of virus membrane with host plasma membrane"
+    ignore: True
+  - rootDisk: "/structural-data"
+    referencePDBID: "6VXX"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_test"
+    outputPath: "../output/6VXX_A_whole_test"
+    excludedOrganisms:
+      - "severe acute respiratory syndrome coronavirus2"
+      - "severe acute respiratory syndrome coronavirus 2"
+      - "covid-19 virus"
+    isReferenceViral: True
+    GOProperty: "biologicalProcess"
+    GOTargetProperties:
+      - "fusion of virus membrane with host plasma membrane"
+    ignore: True
+  - rootDisk: "/structural-data"
+    referencePDBID: "1982"
+    referenceChainID: "A"
+    referenceGeneID: "0"
+    comparisonMode: "segment"
+    referenceSequenceLength: 1
+    pdbDatasetPath: "PDBs_SHREC18"
+    outputPath: "../output_shrec/1982_A_segment"
+    isReferenceViral: False
+    noThirdPartyData: True
+    alignmentLevel: 'hydrophobicity'
+    pdbValidation: False
+    isNonRedundantSet: True
+    ignore: True
+  - rootDisk: "/structural-data"
+    referencePDBID: "7T9K"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_vir"
+    outputPath: "../output/7T9K_A_whole"
+    excludedOrganisms:
+      - "severe acute respiratory syndrome coronavirus2"
+      - "severe acute respiratory syndrome coronavirus 2"
+      - "covid-19 virus"
+    isReferenceViral: True
+    GOProperty: "biologicalProcess"
+    GOTargetProperties:
+      - "fusion of virus membrane with host plasma membrane"
+    ignore: True
+    date: '1-1-2022'
+  - rootDisk: "/structural-data"
+    referencePDBID: "7V7Q"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_vir"
+    outputPath: "../output/7V7Q_A_whole"
+    excludedOrganisms:
+      - "severe acute respiratory syndrome coronavirus2"
+      - "severe acute respiratory syndrome coronavirus 2"
+      - "covid-19 virus"
+    isReferenceViral: True
+    GOProperty: "biologicalProcess"
+    GOTargetProperties:
+      - "fusion of virus membrane with host plasma membrane"
+    ignore: True
+    date: '1-1-2022'
+  - rootDisk: "/structural-data"
+    referencePDBID: "7T9K"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_vir"
+    outputPath: "../output/7T9K_A_whole"
+    isReferenceViral: True
+    GOSearch: "ubiquit"
+    ignore: True
+    date: '11-1-2022'
+    GOAnalysisOnly: False
+  - rootDisk: "/structural-data"
+    referencePDBID: "7V7Q"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_vir"
+    outputPath: "../output/7V7Q_A_whole"
+    isReferenceViral: True
+    GOSearch: "ubiquit"
+    ignore: True
+    date: '12-1-2022'
+    GOAnalysisOnly: False
+  - rootDisk: "/structural-data"
+    referencePDBID: "6VXXp"
+    overridePDBID: '6VXX'
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_vir"
+    outputPath: "../output/6VXXp_A_whole"
+    excludedOrganisms:
+      - "severe acute respiratory syndrome coronavirus2"
+      - "severe acute respiratory syndrome coronavirus 2"
+      - "covid-19 virus"
+    isReferenceViral: True
+    GOProperty: "biologicalProcess"
+    GOTargetProperties:
+      - "fusion of virus membrane with host plasma membrane"
+    ignore: True
+  - rootDisk: "/structural-data"
+    referencePDBID: "7V7Q"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_vir"
+    outputPath: "../output/7V7Q_A_whole"
+    excludedOrganisms:
+      - "severe acute respiratory syndrome coronavirus2"
+      - "severe acute respiratory syndrome coronavirus 2"
+      - "covid-19 virus"
+    isReferenceViral: True
+    GOProperty: "biologicalProcess"
+    GOTargetProperties:
+      - "virion attachment to host cell"
+      - "receptor-mediated virion attachment to host cell"
+    ignore: True
+    GOAnalysisOnly: True
+  - rootDisk: "/structural-data"
+    referencePDBID: "6VXX"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_vir"
+    outputPath: "../output/6VXX_A_whole"
+    excludedOrganisms:
+      - "severe acute respiratory syndrome coronavirus2"
+      - "severe acute respiratory syndrome coronavirus 2"
+      - "covid-19 virus"
+    isReferenceViral: True
+    GOProperty: "biologicalProcess"
+    GOTargetProperties:
+      - "virion attachment to host cell"
+      - "receptor-mediated virion attachment to host cell"
+    ignore: True
+    GOAnalysisOnly: True
+  - rootDisk: "/structural-data"
+    referencePDBID: "7T9K"
+    referenceChainID: "A"
+    referenceGeneID: "43740568"
+    referenceSequenceLength: 1273
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs_vir"
+    outputPath: "../output/7T9K_A_whole"
+    excludedOrganisms:
+      - "severe acute respiratory syndrome coronavirus2"
+      - "severe acute respiratory syndrome coronavirus 2"
+      - "covid-19 virus"
+    isReferenceViral: True
+    GOProperty: "biologicalProcess"
+    GOTargetProperties:
+      - "virion attachment to host cell"
+      - "receptor-mediated virion attachment to host cell"
+    ignore: True
+    GOAnalysisOnly: True
+  - rootDisk: "/structural-data"
+    referencePDBID:
+      - 'd1a4ya'
+      - 'd1a5ta1'
+      - 'd1a8ra'
+      - 'd1a9xa2'
+      - 'd1aila'
+      - 'd1apxa'
+      - 'd1bara'
+      - 'd1baza'
+      - 'd1bvp11'
+      - 'd1c7ka'
+      - 'd1ckqa'
+      - 'd1cnt1'
+      - 'd1coya2'
+      - 'd1cuka1'
+      - 'd1dcza'
+      - 'd1dj0a'
+      - 'd1ekxa1'
+      - 'd1f0la1'
+      - 'd1f2ka'
+      - 'd1f39a'
+      - 'd1f7ua2'
+      - 'd1f9za'
+      - 'd1flga'
+      - 'd1fpza'
+      - 'd1g8kb'
+      - 'd1gaia'
+      - 'd1gofa2'
+      - 'd1grja1'
+      - 'd1hb6a'
+      - 'd1htoa2'
+      - 'd1hyha2'
+      - 'd1i4k1'
+      - 'd1iaza'
+      - 'd1ic8a2'
+      - 'd1iowa2'
+      - 'd1iq4a'
+      - 'd1iq8a3'
+      - 'd1ix5a'
+      - 'd1j5em'
+      - 'd1jixa'
+      - 'd1jlja'
+      - 'd1kbla2'
+      - 'd1khua'
+      - 'd1knca'
+      - 'd1kp8a1'
+      - 'd1kp8a3'
+      - 'd1kx5c'
+      - 'd1l1sa'
+      - 'd1l8aa3'
+      - 'd1l9la'
+      - 'd1lama2'
+      - 'd1llaa2'
+      - 'd1lo7a'
+      - 'd1loxa2'
+      - 'd1m4ia'
+      - 'd1m6ia3'
+      - 'd1moqa'
+      - 'd1mxia'
+      - 'd1n89a'
+      - 'd1nfoa'
+      - 'd1nhxa1'
+      - 'd1ni7a1'
+      - 'd1oaca4'
+      - 'd1oc7a'
+      - 'd1okba'
+      - 'd1ospo'
+      - 'd1pcfa1'
+      - 'd1pcqo'
+      - 'd1ps9a2'
+      - 'd1pxza'
+      - 'd1q5na'
+      - 'd1qdqa'
+      - 'd1quua1'
+      - 'd1qzfa1'
+      - 'd1r5la2'
+      - 'd1rlwa'
+      - 'd1rm6a1'
+      - 'd1ru0a'
+      - 'd1s28a1'
+      - 'd1s2pa'
+      - 'd1sfpa'
+      - 'd1shux'
+      - 'd1skyb1'
+      - 'd1skyb2'
+      - 'd1susa'
+      - 'd1sv0a1'
+      - 'd1tdqb'
+      - 'd1tkea2'
+      - 'd1tkla'
+      - 'd1tqya1'
+      - 'd1tt8a'
+      - 'd1u55a'
+      - 'd1urua'
+      - 'd1v37a'
+      - 'd1v3ea'
+      - 'd1v6ca'
+      - 'd1vl1a'
+      - 'd1vq821'
+      - 'd1w1ha'
+      - 'd1w96a2'
+      - 'd1wc2a1'
+      - 'd1whqa1'
+      - 'd1wn5a1'
+      - 'd1wova1'
+      - 'd1x42a1'
+      - 'd1y14b2'
+      - 'd1yfsa2'
+      - 'd1ynjk1'
+      - 'd1yqya2'
+      - 'd2af8a'
+      - 'd2bvfa1'
+      - 'd2f2fb1'
+      - 'd2f4za1'
+      - 'd2fe1a1'
+      - 'd2fg9a1'
+      - 'd2hhpa1'
+      - 'd2ho2a1'
+      - 'd2iwxa'
+      - 'd2j1kc1'
+      - 'd2para'
+      - 'd2pgda1'
+      - 'd2pila'
+      - 'd2we5a'
+      - 'd2zjrq1'
+      - 'd2zjru1'
+      - 'd3abza3'
+      - 'd3b82a4'
+      - 'd3buxb2'
+      - 'd3claa'
+      - 'd3cx5a1'
+      - 'd3ioga'
+      - 'd3o0gd'
+      - 'd3proc1'
+      - 'd3tg0a'
+      - 'd4k3la1'
+      - 'd4nbpa'
+      - 'd4ubpc1'
+      - 'd4x1ca'
+      - 'd5ws7a'
+    referenceChainID:
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - '1'
+      - 'A'
+      - 'A'
+      - '1'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'B'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - '1'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'M'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'C'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'O'
+      - 'A'
+      - 'O'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'X'
+      - 'B'
+      - 'B'
+      - 'A'
+      - 'A'
+      - 'B'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - '2'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'B'
+      - 'A'
+      - 'K'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'B'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'C'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'Q'
+      - 'U'
+      - 'A'
+      - 'A'
+      - 'B'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'D'
+      - 'C'
+      - 'A'
+      - 'A'
+      - 'A'
+      - 'C'
+      - 'A'
+      - 'A'
+    referenceSequenceLength: 460
+    comparisonMode: "whole"
+    pdbDatasetPath: "pdb70b"
+    outputPath: "DALI-benchmark/output_pdb70b"
+    isReferenceViral: False
+    ignore: True
+    noThirdPartyData: True
+    isNonRedundantSet: True
+    excludedPDBIDs:
+      - "d1grja1"
+      - "d1cuka1"
+      - "d1quua1"
+      - "d1hb6a"
+      - "d1aila"
+      - "d1kx5c"
+      - "d1nfoa"
+      - "d1cnt1"
+      - "d2af8a"
+      - "d1ic8a2"
+      - "d1baza"
+      - "d3buxb2"
+      - "d1n89a"
+      - "d1sv0a1"
+      - "d1l9la"
+      - "d1skyb1"
+      - "d3o0gd"
+      - "d1a5ta1"
+      - "d1llaa2"
+      - "d1apxa"
+      - "d2pgda1"
+      - "d1gaia"
+      - "d1bvp11"
+      - "d1q5na"
+      - "d1kp8a1"
+      - "d1wova1"
+      - "d1vq821"
+      - "d1ynjk1"
+      - "d1knca"
+      - "d1j5em"
+      - "d2hhpa1"
+      - "d2para"
+      - "d1urua"
+      - "d1f0la1"
+      - "d1rlwa"
+      - "d1loxa2"
+      - "d1gofa2"
+      - "d2j1kc1"
+      - "d1sfpa"
+      - "d1khua"
+      - "d1g8kb"
+      - "d1pcqo"
+      - "d1i4k1"
+      - "d1bara"
+      - "d2fg9a1"
+      - "d1skyb2"
+      - "d1wc2a1"
+      - "d1w1ha"
+      - "d1s2pa"
+      - "d1v3ea"
+      - "d1flga"
+      - "d2ho2a1"
+      - "d1ospo"
+      - "d1pxza"
+      - "d1dcza"
+      - "d1f39a"
+      - "d4ubpc1"
+      - "d1iaza"
+      - "d1iq8a3"
+      - "d3abza3"
+      - "d1ps9a2"
+      - "d1oc7a"
+      - "d1kbla2"
+      - "d1a4ya"
+      - "d1r5la2"
+      - "d1okba"
+      - "d1a9xa2"
+      - "d1f7ua2"
+      - "d1w96a2"
+      - "d1v6ca"
+      - "d3claa"
+      - "d1fpza"
+      - "d1l8aa3"
+      - "d1lama2"
+      - "d1ckqa"
+      - "d1jlja"
+      - "d1v37a"
+      - "d1shux"
+      - "d1susa"
+      - "d1qzfa1"
+      - "d2we5a"
+      - "d3tg0a"
+      - "d1ekxa1"
+      - "d1moqa"
+      - "d1jixa"
+      - "d1nhxa1"
+      - "d1tqya1"
+      - "d1wn5a1"
+      - "d1x42a1"
+      - "d1l1sa"
+      - "d1mxia"
+      - "d2fe1a1"
+      - "d1vl1a"
+      - "d1qdqa"
+      - "d2zjrq1"
+      - "d3b82a4"
+      - "d1coya2"
+      - "d1pcfa1"
+      - "d2f4za1"
+      - "d2pila"
+      - "d1ix5a"
+      - "d1f9za"
+      - "d1lo7a"
+      - "d1rm6a1"
+      - "d2zjq51"
+      - "d1whqa1"
+      - "d3proc1"
+      - "d1kp8a3"
+      - "d1tkea2"
+      - "d1ru0a"
+      - "d1iq4a"
+      - "d4x1ca"
+      - "d1oaca4"
+      - "d1m6ia3"
+      - "d4nbpa"
+      - "d1c7ka"
+      - "d1a8ra"
+      - "d1yfsa2"
+      - "d1m4ia"
+      - "d1f2ka"
+      - "d5ws7a"
+      - "d2iwxa"
+      - "d1htoa2"
+      - "d4k3la1"
+      - "d1iowa2"
+      - "d2bvfa1"
+      - "d2f2fb1"
+      - "d3ioga"
+      - "d1hyha2"
+      - "d1yqya2"
+      - "d1tdqb"
+      - "d3cx5a1"
+      - "d1tt8a"
+      - "d1s28a1"
+      - "d1ni7a1"
+      - "d1y14b2"
+      - "d1tkla"
+      - "d1dj0a"
+      - "d1u55a"
+      - "d2zjru1"
+...

@@ -1,0 +1,117 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="configurationmanager" class="class-name">Class ConfigurationManager</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+This class is responsible of managing the configuration of Machaon's jobs. It also holds the default configurations values which are overriden by user-specified job configurations.
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="_config_file_path"><span class="attr-name">_config_file_path [default: '../config/config.yaml']</span>: <span class="attr-description">
+The path to the master job configuration file.
+</span></li>
+<li data-search="_segment_config_path"><span class="attr-name">_segment_config_path [default: '../config/segments.yaml']</span>: <span class="attr-description">
+The path to the configuration file for protein segments.
+</span></li>
+<li data-search="_template_config"><span class="attr-name">_template_config [default: {}]</span>: <span class="attr-description">
+A dictionary with default values as a template for new configurations (description at README.md file):
+</span></li>
+</ul>
+<ul>
+<li data-search="_template_config['rootdisk']">_template_config['rootDisk'] [default: '']</li>
+<li data-search="_template_config['referencepdbid']">_template_config['referencePDBID'] [default: '']</li>
+<li data-search="_template_config['overridepdbid']">_template_config['overridePDBID'] [default: '']</li>
+<li data-search="_template_config['referencechainid']">_template_config['referenceChainID'] [default: '']</li>
+<li data-search="_template_config['referencegeneid']">_template_config['referenceGeneID'] [default: '']</li>
+<li data-search="_template_config['referencesequencelength']">_template_config['referenceSequenceLength'] [default: 0]</li>
+<li data-search="_template_config['comparisonmode']">_template_config['comparisonMode'] [default: 'whole']</li>
+<li data-search="_template_config['alignmentlevel']">_template_config['alignmentLevel'] [default: 'mixed']</li>
+<li data-search="_template_config['pdbdatasetpath']">_template_config['pdbDatasetPath'] [default: '']</li>
+<li data-search="_template_config['outputpath']">_template_config['outputPath'] [default: '']</li>
+<li data-search="_template_config['excludedorganisms']">_template_config['excludedOrganisms'] [default: []]</li>
+<li data-search="_template_config['excludedgenenames']">_template_config['excludedGeneNames'] [default: []]</li>
+<li data-search="_template_config['excludedpdbids']">_template_config['excludedPDBIDs'] [default: []]</li>
+<li data-search="_template_config['isreferenceviral']">_template_config['isReferenceViral'] [default: False]</li>
+<li data-search="_template_config['gosearch']">_template_config['GOSearch'] [default: '']</li>
+<li data-search="_template_config['goproperty']">_template_config['GOProperty'] [default: '']</li>
+<li data-search="_template_config['gotargetproperties']">_template_config['GOTargetProperties'] [default: []]</li>
+<li data-search="_template_config['goalignmentlevel']">_template_config['GOAlignmentLevel'] [default: 'secondary']</li>
+<li data-search="_template_config['nothirdpartydata']">_template_config['noThirdPartyData'] [default: False]</li>
+<li data-search="_template_config['isnonredundantset']">_template_config['isNonRedundantSet'] [default: False]</li>
+<li data-search="_template_config['goanalysisonly']">_template_config['goAnalysisOnly'] [default: False]</li>
+<li data-search="_template_config['segments']">_template_config['segments'] [default: []]</li>
+<li data-search="_template_config['known']">_template_config['known'] [default: []]</li>
+<li data-search="_template_config['pdbValidation']">_template_config['pdbValidation'] [default: False]</li>
+</ul>
+</div>
+<div data-search="assign_default_root_folder" class="method-section"><span class="method-name" data-search="assign_default_root_folder">assign_default_root_folder()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Assigns a default root directory path where source and cached data are stored.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="path"><span class="param-name">path</span>: <span class="arg-description">
+directory path (string)
+</span></li>
+</ul>
+</div>
+<div data-search="parse_console_arguments" class="method-section"><span class="method-name" data-search="parse_console_arguments">parse_console_arguments()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Parses console arguments and creates a new job configuration.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="console_arguments"><span class="param-name">console_arguments</span>: <span class="arg-description">
+User-provided options.
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="configuration"><span class="return-name">configuration</span>: <span class="return-description">
+New job configuration (dictionary)
+</span></li>
+</ul>
+</div>
+<div data-search="parse_config" class="method-section"><span class="method-name" data-search="parse_config">parse_config()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Parses the master job configuration file (config.yaml)
+</span><br/><br/>
+<span class="info-label">Returns:</span><ul>
+<li data-search="collected"><span class="return-name">collected</span>: <span class="return-description">
+A batch of active job configurations (configurations with "ignore : True" directive are ignored)
+</span></li>
+</ul>
+</div>
+<div data-search="parse_segment_config" class="method-section" style="width: 70%;"><span class="method-name" data-search="parse_segment_config">parse_segment_config()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Parse segments.yaml file where the user-specified reference segments reside.
+</span><br/><br/>
+<span class="info-label">Returns:</span><ul>
+<li data-search="collected"><span class="return-name">collected</span>: <span class="return-description" style="width: 70%;">
+The parsed information of segments. (list of lists, each nested list is a list of residue positions [list of ints]). The segments appear in the order declared in the yaml file. (declarations with "ignore : True" directive are ignored)
+</span></li>
+<li data-search="known"><span class="return-name">known</span>: <span class="return-description">
+Marked segments by the user as known areas. (list of lists, each nested list is a list of residue positions [list of ints]).
+</span></li>
+</ul>
+</div>
+<div data-search="expand_residue_ranges" class="method-section"><span class="method-name" data-search="expand_residue_ranges">expand_residue_ranges()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Convert residue ranges declarations to a joint list of residue positions. In case of erroneous presets, the programs exits with code 0.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="residue_ranges"><span class="param-name">residue_ranges</span>: <span class="arg-description">
+Ranges of positions, comma-separated. (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="residues"><span class="return-name">residues</span>: <span class="return-description">
+List of residue positions, one-based indexing (list of ints).
+</span></li>
+</ul>
+</div>
+<div data-search="verify_config" class="method-section"><span class="method-name" data-search="verify_config">verify_config()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Verify that several required aspects of a job configuration have been set. In case of missing presets, the programs exits with code 0.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="configuration"><span class="param-name">configuration</span>: <span class="arg-description">
+Configuration dictionary.
+</span></li>
+<li data-search="config_index"><span class="param-name">config_index</span>: <span class="arg-description">
+Order of job configuration in the yaml file. (int)
+</span></li>
+</ul>
+</div>
+</div></body>

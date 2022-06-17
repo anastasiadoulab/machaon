@@ -1,0 +1,92 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="segmentscanner" class="class-name">Class SegmentScanner</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+This class is dedicated to constrained mode comparisons on segments. Inherits Scanner class.
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="minimum_residue_range"><span class="attr-name">minimum_residue_range [default: 3]</span>: <span class="attr-description">
+Minimum length of accepted alignment of segments (int)
+</span></li>
+<li data-search="_column_headers"><span class="attr-name">_column_headers [default: ['structureId', 'b-phipsi', 'w-rdist', 't-alpha', 'alignedRange',]</span>: <span class="attr-description">
+Column headers of comparison results (list of strings)
+</span></li>
+<li data-search="selected_alignment_level"><span class="attr-name">selected_alignment_level [default: 'mixed']</span>: <span class="attr-description">
+Options for alignment level: 'primary', 'secondary', 'hydrophobicity', 'mixed'
+</span></li>
+<li data-search="alignment_levels"><span class="attr-name">alignment_levels [default: ['primary', 'secondary', 'mixed', 'hydrophobicity']]</span>: <span class="attr-description">
+The available alignment levels.
+</span></li>
+<li data-search="segments"><span class="attr-name">segments [default: []]</span>: <span class="attr-description">
+The user-specified segments (list of lists, each list contains residue positions (one-based indexing).
+</span></li>
+</ul>
+</div>
+<div data-search="load_features" class="method-section"><span class="method-name" data-search="load_features">load_features()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Overrides parent method.
+</span>
+</div>
+<div data-search="collect_features" class="method-section"><span class="method-name" data-search="collect_features">collect_features()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Overrides parent method.
+</span>
+</div>
+<div data-search="create_feature_filelist" class="method-section"><span class="method-name" data-search="create_feature_filelist">create_feature_filelist()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Overrides parent method.
+</span><br/><br/>
+</div>
+<div data-search="compute_metrics" class="method-section"><span class="method-name" data-search="compute_metrics">compute_metrics()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Overrides parent method.
+</span>
+</div>
+<div data-search="extract_features_from_segment" class="method-section"><span class="method-name" data-search="extract_features_from_segment">extract_features_from_segment()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Extracts features from reference segment.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input: list  [reference PDB path, residue positions of segment, segment index, reference PDB chain ID, available residues in PDB(one-based indexed)]
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="parts"><span class="return-name">parts</span>: <span class="return-description">
+contiguous residue ranges
+</span></li>
+<li data-search="np"><span class="return-name">angle_data</span>: <span class="return-description">
+psi-psi angle pairs (list of pairs, pair: list of floats)
+</span></li>
+<li data-search="np"><span class="return-name">residue_distances</span>: <span class="return-description">
+inter-residue alpha-carbon distances (list of floats)
+</span></li>
+<li data-search="triangle_metric"><span class="return-name">triangle_metric</span>: <span class="return-description">
+number of triangles (from alpha shape) (int)
+</span></li>
+</ul>
+</div>
+<div data-search="remove_overlaps" class="method-section"><span class="method-name" data-search="remove_overlaps">remove_overlaps()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Removing overlaps of selected contiguous ranges.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="ranges"><span class="param-name">ranges</span>: <span class="arg-description">
+Residue ranges (one-based indexing) (list of int)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="ranges"><span class="return-name">ranges</span>: <span class="return-description">
+Residue ranges without overlaps (one-based indexing) (list of int)
+</span></li>
+</ul>
+</div>
+<div data-search="extract_features" class="method-section"><span class="method-name" data-search="extract_features">extract_features()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Overrides parent method.
+</span>
+</div>
+<div data-search="scan_candidates" class="method-section"><span class="method-name" data-search="scan_candidates">scan_candidates()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Overrides parent method.
+</span><br/><br/>
+</div>
+<div data-search="set_candidates" class="method-section"><span class="method-name" data-search="set_candidates">set_candidates()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Overrides parent method.
+</span><br/><br/>
+</div>
+</div></body>

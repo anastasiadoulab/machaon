@@ -1,0 +1,252 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="presenter" class="class-name">Class Presenter</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+This is the presentation module of Machaon
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="root_disk"><span class="attr-name">root_disk [default: '']</span>: <span class="attr-description">
+Current setting of root disk where the third-party data and the target dataset reside. (string)
+</span></li>
+<li data-search="data_path"><span class="attr-name">data_path [default: '']</span>: <span class="attr-description">
+Machaon's output directory for comparison results. (string)
+</span></li>
+<li data-search="plots_output_path"><span class="attr-name">plots_output_path [default: '']</span>: <span class="attr-description">
+Outpath for storing generated plots (string)
+</span></li>
+<li data-search="verbose"><span class="attr-name">verbose [default: False]</span>: <span class="attr-description">
+Toggle verbose output (boolean)
+</span></li>
+<li data-search="_datakeys"><span class="attr-name">_dataKeys [default: ['chainLength', 'pdbId', 'chainId', 'domain', 'alignedRange', 'referenceSegmentIndex',
+                          'referenceRange', 'resolution', 'b-phipsi', 'w-rdist', 't-alpha', '3D-score', '1D-identity', '1D-identity-ng',
+                          '1D-identity-gaps', '1DPDB-identity', '1DPDB-identity-ng', '1DPDB-identity-gaps',
+                          '2D-identity', '2D-identity-ng', '2D-identity-gaps', '5UTR-score', '5UTR-identity', '5UTR-identity-ng',
+                          '5UTR-identity-gaps', 'CDS-score', 'CDS-identity', 'CDS-identity-ng', 'CDS-identity-gaps',
+                          '3UTR-score', '3UTR-identity', '3UTR-identity-ng', '3UTR-identity-gaps',  'chemSim', 'molecularFunctionSim',
+                          'cellularComponentSim',  'biologicalProcessSim', 'geneLength', 'refSeqId']</span>: <span class="attr-description">
+Column keys that will be included in the presentation. (list of strings)
+</span></li>
+<li data-search="_display_titles"><span class="attr-name">_display_titles [default: {'3D-score': '3D Similarity', '1D-identity': '1D identity', '2D-identity': '2D identity',
+                               '5UTR-identity': '5\'-UTR identity', '3UTR-identity': '3\'-UTR identity', 'CDS-identity': 'CDS identity', 'chemSim': 'Chemical similarity',
+                                'molecularFunctionSim': 'Common functions', 'cellularComponentSim': 'Common locations', 'biologicalProcessSim': 'Common pathways'}]</span>: <span class="attr-description">
+Display titles for radial plots. (dict) (see plot_results_polar())
+</span></li>
+<li data-search="taxonomy_depth"><span class="attr-name">taxonomy_depth [default: 100]</span>: <span class="attr-description">
+The depth of the generated lineage tree. (int) (see display_taxonomy())
+</span></li>
+<li data-search="_uniprot_data_path"><span class="attr-name">_uniprot_data_path [default: None]</span>: <span class="attr-description">
+UniProt data cache directory (string) (see set_root_disk()) (string)
+</span></li>
+</ul>
+</div>
+<div data-search="get_information" class="method-section"><span class="method-name" data-search="get_information">get_information()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves information from UniProt.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="uniprot_accession"><span class="param-name">uniprot_accession</span>: <span class="arg-description">
+UniProt Accession identifier (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="output"><span class="return-name">output</span>: <span class="return-description">
+Dictionary containing parts of XML formatted UniProt information:<ul>
+<li>'protein': protein name</li>
+<li>'gene': gene name</li>
+<li>'organism': origin</li>
+<li>'sequence': full protein sequence length</li>
+<li>'function': references about functions</li>
+<li>'subunit': information about subunits</li>
+</ul>
+(empty dict if there is a failure)
+</div>
+<div data-search="create_node_label" class="method-section"><span class="method-name" data-search="create_node_label">create_node_label()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Creates a label for a node in the taxonomy tree.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="name"><span class="param-name">name</span>: <span class="arg-description">
+PDB organism entry value (string)
+</span></li>
+<li data-search="population"><span class="param-name">population</span>: <span class="arg-description">
+Number of occurrences (int)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="str"><span class="return-name">node label</span>: <span class="return-description">
+(string)
+</span></li>
+</ul>
+</div>
+<div data-search="display_taxonomy" class="method-section"><span class="method-name" data-search="display_taxonomy">display_taxonomy()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Generates a lineage tree from the taxonomies of the proteins in the final output set.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input: reference PDB ID, reference PDB chain ID, suffix (for constrained mode results) (list of strings) 
+</span></li>
+<li data-search="file_name"><span class="param-name">file_name [default: '']</span>: <span class="arg-description">
+Full path for enriched comparison results 
+</span></li>
+</ul>
+</div>
+<div data-search="get_lineage_aggregated_information" class="method-section"><span class="method-name" data-search="get_lineage_aggregated_information">get_lineage_aggregated_information()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Parses UniProt data for taxonomy information
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input (list):
+</span>
+<ul>
+<li data-search="uniprot_accession"><span>uniprot_accession</span>: <span class="arg-description">
+UniProt Accession identifier (string)
+</span></li>
+<li data-search="aggregated_taxonomy"><span>aggregated_taxonomy [can be None]</span>: <span class="arg-description">
+Aggregated taxonomy (from recursive calls). (dict)
+</span></li>
+<li data-search="top_roots"><span>top_roots [can be None]</span>: <span class="arg-description">
+Top root nodes (from recursive calls). (list of strings)
+</span></li>
+<li data-search="max_depth"><span>max_depth [can be None]</span>: <span class="arg-description">
+Current max depth (from recursive calls). (int)
+</span></li>
+</ul>
+</li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="lineage"><span class="return-name">lineage</span>: <span class="return-description">
+Aggregated taxonomy (dict)
+</span></li>
+<li data-search="roots"><span class="return-name">roots</span>: <span class="return-description">
+Top root nodes (list of strings)
+</span></li>
+<li data-search="max_depth"><span class="return-name">max_depth</span>: <span class="return-description">
+Current max depth (int)
+</span></li>
+</ul>
+</div>
+<div data-search="create_word_cloud" class="method-section"><span class="method-name" data-search="create_word_cloud">create_word_cloud()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Creates a word cloud with non-human origin names and human genes.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input: reference PDB ID, reference PDB chain ID, suffix (for constrained mode results) (list of strings) 
+</span></li>
+<li data-search="file_name"><span class="param-name">file_name [default: '']</span>: <span class="arg-description">
+Full path for enriched comparison results 
+</span></li>
+</ul>
+</div>
+<div data-search="create_report_list_item" class="method-section"><span class="method-name" data-search="create_report_list_item">create_report_list_item()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Create a list item.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="info"><span class="param-name">info</span>: <span class="arg-description">
+Dictionary with the third-party information. (see also get_information())
+</span></li>
+<li data-search="key"><span class="param-name">key</span>: <span class="arg-description">
+Section of the dictionary that will be printed
+</span></li>
+<li data-search="label"><span class="param-name">label</span>: <span class="arg-description">
+Label of list item
+</span></li>
+<li data-search="unit"><span class="param-name">unit [default: '']</span>: <span class="arg-description">
+Unit of measure
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="data"><span class="return-name">data</span>: <span class="return-description">
+HTML list item (string)
+</span></li>
+</ul>
+</div>
+<div data-search="create_report" class="method-section"><span class="method-name" data-search="create_report">create_report()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Creates a printer-friendly, enriched HTML report about the finat results of the comparisons.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input: reference PDB ID, reference PDB chain ID, suffix (for constrained mode results) (list of strings) 
+</span></li>
+<li data-search="file_name"><span class="param-name">file_name [default: '']</span>: <span class="arg-description">
+Full path for enriched comparison results 
+</span></li>
+</ul>
+</div>
+<div data-search="expose_info" class="method-section"><span class="method-name" data-search="expose_info">expose_info()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves third party info on the comparison results
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data_row"><span class="param-name">data_row</span>: <span class="arg-description">
+Candidate entry (pandas dataframe row)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="info"><span class="return-name">info</span>: <span class="return-description">
+Dictionary with the third-party information. (see also get_information())
+</span></li>
+</ul>
+</div>
+<div data-search="retrieve_info" class="method-section"><span class="method-name" data-search="retrieve_info">retrieve_info()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Reads the comparison and meta-analysis results for presentation.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data_row"><span class="param-name">data_row</span>: <span class="arg-description">
+Candidate entry (pandas dataframe row)
+</span></li>
+<li data-search="data_keys"><span class="param-name">data_keys</span>: <span class="arg-description">
+Column keys that will be included in the presentation. (list of strings) (see also class attribute self._data_keys) 
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+Dictionary with keys as data_keys and their corresponding values. (see also get_information())
+</span></li>
+</ul>
+</div>
+<div data-search="sanitize_ranges" class="method-section"><span class="method-name" data-search="sanitize_ranges">sanitize_ranges()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Filters some characters appearing the string representation of the list variables, for presentation
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data"><span class="param-name">data</span>: <span class="arg-description">
+string representation of range (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="data"><span class="return-name">data</span>: <span class="return-description">
+filtered string representation of range (string)
+</span></li>
+</ul>
+</div>
+<div data-search="create_report_row" class="method-section"><span class="method-name" data-search="create_report_row">create_report_row()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Creates an HTML row for a candidate entry.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data_row"><span class="param-name">data_row</span>: <span class="arg-description">
+Candidate entry (pandas dataframe row)
+</span></li>
+<li data-search="row_index"><span class="param-name">row_index</span>: <span class="arg-description">
+Index of the row (int)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="row"><span class="return-name">row</span>: <span class="return-description">
+HTML output containing comparison, evaluation and meta-analysis results, enriched with third-party information.
+</span></li>
+<li data-search="info"><span class="return-name">info</span>: <span class="return-description">
+The source data dictionary (see also get_information())
+</span></li>
+</ul>
+</div>
+<div data-search="plot_results_polar" class="method-section"><span class="method-name" data-search="plot_results_polar">plot_results_polar()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Generates radial polar plots for evaluation results.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input: reference PDB ID, reference PDB chain ID, suffix (for constrained mode results), evaluation section (e.g. '1D', see Evaluator class) (list of strings) 
+</span></li>
+<li data-search="file_name"><span class="param-name">file_name [default: '']</span>: <span class="arg-description">
+Full path for enriched comparison results (string)
+</span></li>
+</ul>
+</div>
+</div></body>

@@ -1,0 +1,95 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="viralrefseq" class="class-name">Class ViralRefSeq</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+The class that retrieves viral transcript information.
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="refseq_id"><span class="param-name">refseq_id</span>: <span class="arg-description">
+RefSeq ID (string)
+</span></li>
+<li data-search="gene_id"><span class="param-name">gene_id</span>: <span class="arg-description">
+Gene ID (string)
+</span></li>
+</ul>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="refseq_genomic_id"><span class="attr-name">refseq_id </span>: <span class="attr-description">
+RefSeq ID (string)
+</span></li>
+<li data-search="gene_id"><span class="attr-name">gene_id </span>: <span class="attr-description">
+Gene ID (string)
+</span></li>
+<li data-search="root_disk"><span class="attr-name">root_disk [default: '']</span>: <span class="attr-description">
+Current setting of root disk where the third-party data and the target dataset reside. (string)
+</span></li>
+<li data-search="refseq_dataset_path"><span class="attr-name">refseq_dataset_path [default: '']</span>: <span class="attr-description">
+RefSeq data file path(see set_root_disk()) (string)
+</span></li>
+<li data-search="refseq_annotation_path"><span class="attr-name">refseq_annotation_path [default: '']</span>: <span class="attr-description">
+RefSeq annotation file path(see set_root_disk()) (string)
+</span></li>
+<li data-search="genomic_sequence"><span class="attr-name">sequence [default: '']</span>: <span class="attr-description">
+Transcript sequence
+</span></li>
+<li data-search="genome_info"><span class="attr-name">genome_info [default: []]</span>: <span class="attr-description">
+Current RefSeq annotation data
+</span></li>
+</ul>
+</div>
+<div data-search="set_root_disk" class="method-section"><span class="method-name" data-search="set_root_disk">set_root_disk()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Sets all the required directories according to the provided root directory path.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="root_disk"><span class="param-name">root_disk</span>: <span class="arg-description">
+Directory path where the third-party data and the target dataset reside. (string)
+</span></li>
+</ul>
+</div>
+<div data-search="fetch_viral_genome" class="method-section"><span class="method-name" data-search="fetch_viral_genome">fetch_viral_genome()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Fetches viral genome from RefSeq local resources for the current RefSeq ID (class attribute: self.refseq_id)
+</span><br/><br/>
+</div>
+<div data-search="fetch_viral_genome_info" class="method-section"><span class="method-name" data-search="fetch_viral_genome_info">fetch_viral_genome_info()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Fetches genome-level annotations from RefSeq local resources for the current RefSeq ID (class attribute: self.refseq_id)
+</span><br/><br/>
+</div>
+<div data-search="parse_gene_data" class="method-section"><span class="method-name" data-search="parse_gene_data">parse_gene_data()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves available coding and non-coding sequences for the current RefSeq ID (class attribute: self.refseq_id)
+</span><br/><br/>
+<span class="info-label">Returns:</span><ul>
+<li data-search="data"><span class="return-name">data</span>: <span class="return-description">
+Dictionary with '5-UTR', 'CDS', '3-UTR' as keys and their sequences as values (depending on the data availability).
+</span></li>
+</ul>
+</div>
+<div data-search="retrieve_sequence" class="method-section"><span class="method-name" data-search="retrieve_sequence">retrieve_sequence()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves sequences according to provided annotations.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="gene_info"><span class="param-name">gene_info</span>: <span class="arg-description">
+Annotations (list of pairs, pair: list of int)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="sequence"><span class="return-name">sequence</span>: <span class="return-description">
+(string)
+</span></li>
+</ul>
+</div>
+<div data-search="fetch_gene_info" class="method-section"><span class="method-name" data-search="fetch_gene_info">fetch_gene_info()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves gene-level annotations and sequence (CDS) from RefSeq local resources for the current RefSeq ID (class attribute: self.refseq_id)
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="genome_info"><span class="param-name">genome_info</span>: <span class="arg-description">
+Genome annotations (list of strings)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="parsed"><span class="return-name">parsed</span>: <span class="return-description">
+Dictionary with 'CDS' as key and its sequence as the value.
+</span></li>
+</ul>
+</div>
+</div></body>

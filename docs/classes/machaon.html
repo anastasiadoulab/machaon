@@ -1,0 +1,53 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="machaon" class="class-name">Class Machaon</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+The main class which coordinates the structural comparison.
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="debugging"><span class="attr-name">debugging [default: False]</span>: <span class="attr-description">
+True : The method is executed in single core and verbose mode facilitating debugging.
+</span></li>
+<li data-search="max_cores"><span class="attr-name">max_cores [default: 1]</span>: <span class="attr-description">
+This value should be set according to the current/expected workload on the side. The maximum value should be the number of the available system's cores minus one, for stability. 
+</span></li>
+</ul>
+</div>
+<div data-search="get_scanner" class="method-section"><span class="method-name" data-search="get_scanner">get_scanner()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Gets the appropriate Scanner class depending on the type of the comparison.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="mode"><span class="param-name">mode</span>: <span class="arg-description">
+options: 'whole', 'domain', 'segment'
+</span></li>
+<li data-search="alignment_level"><span class="param-name">alignment_level [default: None]</span>: <span class="arg-description">
+options: 'primary', 'secondary', 'hydrophobicity', 'mixed' (SegmentScanner only)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="scanner"><span class="return-name">scanner</span>: <span class="return-description">
+Scanner object
+</span></li>
+</ul>
+</div>
+<div data-search="check_external" class="method-section"><span class="method-name" data-search="check_external">check_external()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Issues warning for missing third-party executables
+</span><br/><br/>
+</div>
+<div data-search="perform_comparisons" class="method-section"><span class="method-name" data-search="perform_comparisons">perform_comparisons()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Coordinates the structural comparisons, evaluation and meta-analysis.
+</span><br/><br/>
+</div>
+</div>
+<div data-search="process_new_pdbs" class="method-section"><span class="method-name" data-search="process_new_pdbs">process_new_pdbs()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Update the set of candidates with new PDB files.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="job_config"><span class="param-name">job_config [default: None]</span>: <span class="arg-description">
+Job configuration (dict)
+</span></li>
+</ul>
+</div>
+</div></body>

@@ -1,0 +1,536 @@
+<!DOCTYPE html><head><meta charset="utf-8"/><style> .class-name { color: blue; }  .info-label { font-weight: bold; } .method-section {margin-left: 50px; padding-bottom: 50px;} .method-name { font-weight: bold; color: blue;} .attr-name{color : maroon;} .param-name{color: darkcyan;} .return-name{color: green;} </style></head><body>
+<div>
+<hr><h1 data-search="pdbhandler" class="class-name">Class PDBHandler</h1><hr><span class="info-label">Description:</span><br/><br/><span class="class-description">
+This is a heavily loaded class that handles low-level functions on PDB files and PDB meta-data requests.
+</span><br/><br/><h2 class="methods-label">Methods:</h2><br/><br/>
+<div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Constructor
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_id"><span class="param-name">pdb_id [default: '']</span>: <span class="arg-description">
+PDB ID (string)
+</span></li>
+</ul>
+<br/><span class="info-label">Class Attributes:</span><ul>
+<li data-search="parser"><span class="attr-name">parser</span>: <span class="attr-description">
+PDB parser (BioPython object)
+</span></li>
+<li data-search="structure_id"><span class="attr-name">structure_id [default: pdb_id]</span>: <span class="attr-description">
+Current PDB ID (string)
+</span></li>
+<li data-search="chain_angles"><span class="attr-name">chain_angles [default: defaultdict()]</span>: <span class="attr-description">
+Dictionary holding information about angles per chain. <br/>For each chain, the angle data are organized in alternative ways and the following keys exist: <ul><li>'angles':a tuple of (psi,psi) pairs with None as a possible value in incomplete pairs</li><li>'phi'</li><li>'psi'</li><li>'phiPsiPairs': complete pairs, the ones used by the method.</li></ul>
+</span></li>
+<li data-search="uniprot_accession_number"><span class="attr-name">uniprot_accession_number [default: '']</span>: <span class="attr-description">
+UniProt Accession identifier (string)
+</span></li>
+<li data-search="residue_selection"><span class="attr-name">residue_selection [default: []]</span>: <span class="attr-description">
+Current selection of residues, one-based indexed numbering (list of integers)
+</span></li>
+<li data-search="domains"><span class="attr-name">domains [default: []]</span>: <span class="attr-description">
+Current collection of domains (list of strings)
+</span></li>
+<li data-search="points"><span class="attr-name">points [default: []]</span>: <span class="attr-description">
+Current collection of atomic coordinates (xyz) (list of tupples)
+</span></li>
+<li data-search="residue_distances"><span class="attr-name">residue_distances [default: []]</span>: <span class="attr-description">
+Current collection of alpha-carbon inter-residue distances (list of floats)
+</span></li>
+<li data-search="root_disk"><span class="attr-name">root_disk [default: '']</span>: <span class="attr-description">
+Current setting of root disk where the third-party data and the target dataset reside
+</span></li>
+<li data-search="verbose"><span class="attr-name">verbose [default: True]</span>: <span class="attr-description">
+Toggle verbose output (boolean)
+</span></li>
+<li data-search="residue_alternative_names"><span class="attr-name">residue_alternative_names [default: ['CYX', 'CYM', 'HID', 'HIE', 'HIP', 'ARN', 'ASH', 'GLH', 'LYN', 'TYM']]</span>: <span class="attr-description">
+Alternative residue names (list of strings)
+</span></li>
+<li data-search="camera_params_path"><span class="attr-name">camera_params_path [default: os.path.join('draw','camera-params')]</span>: <span class="attr-description">
+Path for the folder containing camera parameters for Open3D visualization <br/>
+(see also comments in the implementation of save_visualization() and check example files in the draw/camera-params folder):
+<ul>
+<li>&lt;PDB ID&gt;_&lt;Chain ID&gt;-alpha-camera-params.json</li>
+<li>&lt;PDB ID&gt;_&lt;Chain ID&gt;-img-trunc-margins.json (margins in percentages to be truncated from Open3D output)</li>
+<li>&lt;PDB ID&gt;_&lt;Chain ID&gt;-lineset-camera-params.json</li>
+<li>&lt;PDB ID&gt;_&lt;Chain ID&gt;-pcd-camera-params.json</li>
+</ul>
+</span></li>
+</ul>
+</div>
+<div data-search="get_protein_chain_ids" class="method-section"><span class="method-name" data-search="get_protein_chain_ids">get_protein_chain_ids()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Fetches PDB chain ids corresponding to protein structures  
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full PDB file path (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="chains"><span class="return-name">chains</span>: <span class="return-description">
+PDB chain ids (list of strings)
+</span></li>
+</ul>
+</div>
+<div data-search="fetch_angles" class="method-section"><span class="method-name" data-search="fetch_angles">fetch_angles()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieve angles from the proteins represented in the specified PDB file or chain.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full path (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id [default: '']</span>: <span class="arg-description">
+PDB Chain ID (string)
+</span></li>
+</ul>
+</div>
+<div data-search="get_residue_range" class="method-section"><span class="method-name" data-search="get_residue_range">get_residue_range()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Gets the positions of the residues that are present in the PDB file
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full path (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB Chain ID (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="full_range"><span class="return-name">full_range</span>: <span class="return-description">
+Positions of available residues in the PDB file for the specified PDB chain,<br/>
+one-based indexed numbering and information about unusual start numbering of <br/> 
+residues (dict with keys 'fullRange', 'discardedstart' )
+</span></li>
+</ul>
+</div>
+<div data-search="get_residues_names" class="method-section"><span class="method-name" data-search="get_residues_names">get_residues_names()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Get the protein sequence of the PDB file.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full path (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB Chain ID (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="sequence"><span class="return-name">sequence</span>: <span class="return-description">
+Protein sequence (string)
+</span></li>
+</ul>
+</div>
+<div data-search="is_protein" class="method-section"><span class="method-name" data-search="is_protein">is_protein()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Checks whether a PDB chain represents a protein
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="chain"><span class="param-name">chain</span>: <span class="arg-description">
+chain (BioPython dictionary object)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="is_protein_bool">boolean</li>
+</ul>
+</div>
+<div data-search="process_angle" class="method-section"><span class="method-name" data-search="process_angle">process_angle()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Convert radiants to degrees
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="angle"><span class="param-name">angle</span>: <span class="arg-description">
+Torsion angle value
+</span></li>
+<li data-search="all_positive"><span class="param-name">all_positive [default: False]</span>: <span class="arg-description">
+Whether the angle is a positive value
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="angle"><span class="return-name">angle</span>: <span class="return-description">
+The processed angle value
+</span></li>
+</ul>
+</div>
+<div data-search="fetch_pdb_peptidic_chains" class="method-section"><span class="method-name" data-search="fetch_pdb_peptidic_chains">fetch_pdb_peptidic_chains()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Gets the protein PDB chains with RDKit. Strictier and slower than BioPython, RDKit could reject some PDB files due to insurmountable problems in their integrity.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full path (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="{filtered_chain_id: chains[filtered_chain_id] for filtered_chain_id in chain_ids}"><span class="return-name">chains</span>: <span class="return-description">
+A dictionary with key as the PDB chain id and value an RDKit object of the PDB chain.<br/>False is returned when no protein chains are found in the PDB.
+</span></li>
+</ul>
+</div>
+<div data-search="filter_molecule" class="method-section"><span class="method-name" data-search="filter_molecule">filter_molecule()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Selects the atoms that belong to the current selection of residues.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="molecule"><span class="param-name">molecule</span>: <span class="arg-description">
+A molecule RDKit object
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="molecule"><span class="return-name">molecule</span>: <span class="return-description">
+An atom-filtered molecule RDKit object 
+</span></li>
+</ul>
+</div>
+<div data-search="calculate_fingerprint" class="method-section"><span class="method-name" data-search="calculate_fingerprint">calculate_fingerprint()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Calculates molecular fingerprints
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="molecule"><span class="param-name">molecule</span>: <span class="arg-description">
+RDKit molecule object
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="fingerprintmols"><span class="return-name">FingerprintMols</span>: <span class="return-description">
+RDKit fingerprint object
+</span></li>
+</ul>
+</div>
+<div data-search="parse_pdbid" class="method-section"><span class="method-name" data-search="parse_pdbid">parse_pdbid()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Parses PDB ID from a file path
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full PDB file path (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="parts[-1]"><span class="return-description">
+PDB ID (string)
+</span></li>
+</ul>
+</div>
+<div data-search="get_uniprot_accession_number" class="method-section"><span class="method-name" data-search="get_uniprot_accession_number">get_uniprot_accession_number()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves the corresponding UniProt Accession identifier for a PDB chain. <br/>
+It fetches the mapping with the following ways (in the shown order, lower orders are fallback cases): <ul> 
+<li>Loading from the cache</li>
+<li>Parsing the SEQRES meta-data entry in PDB file</li>
+<li>Searching in the UniProt local static resources</li>
+<li>Querying RCSB GraphQL Web Service</li>
+</ul>
+</span>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string)
+</span></li>
+<li data-search="pdb_id"><span class="param-name">pdb_id [default: '']</span>: <span class="arg-description">
+PDB ID (string) [optional, if not provided the current PDB ID (class attribute: self.structure_id) is used]
+</span></li>
+<li data-search="pdb_path"><span class="param-name">pdb_path [default: '']</span>: <span class="arg-description">
+Full PDB file path (string) [optional: This is used for obtaining the required information from SEQRES entry.<br/>If not provided, this way is skipped if it is invoked.]
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="self"><span class="return-name">self.uniprot_accession_number</span>: <span class="return-description">
+Returns the value of the class attribute (string)
+</span></li>
+</ul>
+</div>
+<div data-search="read_uniprot_accession_number" class="method-section"><span class="method-name" data-search="read_uniprot_accession_number">read_uniprot_accession_number()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Accesses the UniProt local static resources to search for the UniProt Accession identifier. <br/>(Note: this method uses grep command so it is a UNIX-only operation)
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="uniprot_accession_number"><span class="return-name">uniprot_accession_number</span>: <span class="return-description">
+UniProt Accession identifier (string) 
+</span></li>
+</ul>
+</div>
+<div data-search="get_gene_ontology_information" class="method-section"><span class="method-name" data-search="get_gene_ontology_information">get_gene_ontology_information()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieve Gene Ontology (GO) information from RCSB for the current PDB ID (class attribute: self.structure_id),<br/>
+RCSB GraphQL Web Service is queried and the result is cached for future use.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string)
+</span></li>
+</ul>
+</div>
+<div data-search="get_pdb_info" class="method-section"><span class="method-name" data-search="get_pdb_info">get_pdb_info()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves meta-data for PDB chain.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full PDB file path (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="residues"><span class="return-name">residues</span>: <span class="return-description">
+PDB chain length measured by the count of its residues (float)
+</span></li>
+<li data-search="resolution"><span class="return-name">resolution</span>: <span class="return-description">
+The resolution of the PDB file. (float)<br/> -1.0 is returned if the resolution is not successfully parsed/missing.
+</span></li>
+<li data-search="str"<span class="return-description">
+the names of the organisms combined into a comma-separated string
+</span></li>
+<li data-search="str"<span class="return-description">
+the names of the genes combined into a comma-separated string
+</span></li>
+</ul>
+</div>
+<div data-search="get_seqres_entry" class="method-section"><span class="method-name" data-search="get_seqres_entry">get_seqres_entry()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves SEQRES entry of PDB file
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full PDB file path (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="seqres"><span class="return-name">seqres</span>: <span class="return-description">
+The SEQRES entry (string)
+</span></li>
+</ul>
+</div>
+<div data-search="get_uniprot_accession_by_seqres" class="method-section"><span class="method-name" data-search="get_uniprot_accession_by_seqres">get_uniprot_accession_by_seqres()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves UniProt Accession identifier from SEQRES entry.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full PDB file path (string)
+</span></li>
+<li data-search="pdb_id"><span class="param-name">pdb_id</span>: <span class="arg-description">
+PDB ID (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="uniprot_accession_number"><span class="return-name">uniprot_accession_number</span>: <span class="return-description">
+UniProt Accession identifier (string) 
+</span></li>
+</ul>
+</div>
+<div data-search="get_domain_information" class="method-section"><span class="method-name" data-search="get_domain_information">get_domain_information()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Retrieves available information about domains for the current UniProt Accession identifier (class attribute: self.uniprot_accession_number).<br/>
+UniProt REST service is used and the result is cached for future use.
+</span><br/><br/>
+</div>
+<div data-search="remove_spatial_outliers" class="method-section"><span class="method-name" data-search="remove_spatial_outliers">remove_spatial_outliers()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Removes spatial outliers in a residue selection using Inter-quantile Range (IQR) and pandas package.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="residues"><span class="param-name">residues</span>: <span class="arg-description">
+One-based indexes of residue positions. (list of int)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="interval"><span class="return-name">interval</span>: <span class="return-description">
+The interval between the maximum and minimum positions of the remaining residue. (float)
+</span></li>
+<li data-search="data_frame"><span class="return-name">data_frame</span>: <span class="return-description">
+Pandas data-frame containing the remaining residue positions. (Headers: 'residue')
+</span></li>
+</ul>
+</div>
+<div data-search="process_segment" class="method-section"><span class="method-name" data-search="process_segment">process_segment()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Processes a reference segment and extracts contiguous parts that will be used for alignments.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="segment_residues"><span class="param-name">segment_residues</span>: <span class="arg-description">
+Residues belonging to the reference segment (one-based indexing). (list of int)
+</span></li>
+<li data-search="available_residues"><span class="param-name">available_residues</span>: <span class="arg-description">
+Residues present in the source PDB file (one-based indexing). (list of int)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="parts"><span class="return-name">parts</span>: <span class="return-description">
+Contiguous residue ranges. (list of int)
+</span></li>
+</ul>
+</div>
+<div data-search="calculate_residue_distance" class="method-section"><span class="method-name" data-search="calculate_residue_distance">calculate_residue_distance()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Determines inter-residue distance by calculating the Euclidean distance between two alpha-carbons.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="residue_one"><span class="param-name">residue_one</span>: <span class="arg-description">
+One residue of the pair (BioPython dictionary object)
+</span></li>
+<li data-search="residue_two"><span class="param-name">residue_two</span>: <span class="arg-description">
+The other residue of the pair (BioPython dictionary object)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="false"><span class="return-name">distance</span>: <span class="return-description">
+The inter-residue distance (float or False if there is no alpha-carbon in the residue object)
+</span></li>
+</ul>
+</div>
+<div data-search="calculate_residue_distances" class="method-section"><span class="method-name" data-search="calculate_residue_distances">calculate_residue_distances()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Reads the PDB and calculate the distances.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full PDB file path (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id [default: '']</span>: <span class="arg-description">
+PDB chain ID (string)
+</span></li>
+<li data-search="normalized"><span class="param-name">normalized [default: True]</span>: <span class="arg-description">
+Toggles the normalization of the distances between [0, 1] space. (boolean)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="self"><span class="return-name">self.residue_distances</span>: <span class="return-description">
+The calculated residue distances (values only) (list of float)
+</span></li>
+</ul>
+</div>
+<div data-search="view_point_cloud" class="method-section"><span class="method-name" data-search="view_point_cloud">view_point_cloud()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Generates a visualization of a point cloud on the provided atomic coordinates.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="points"><span class="param-name">points</span>: <span class="arg-description">
+Atomic coordinates (list of tuples x,y,z)
+</span></li>
+<li data-search="output_path"><span class="param-name">output_path</span>: <span class="arg-description">
+The path for the output image (png, eps formats) (string)
+</span></li>
+</ul>
+</div>
+<div data-search="view_point_cloud_distances" class="method-section"><span class="method-name" data-search="view_point_cloud_distances">view_point_cloud_distances()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Generates a visualization of the distances between the provided atomic coordinates.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="points"><span class="param-name">points</span>: <span class="arg-description">
+Atomic coordinates. (list of tuples x,y,z)
+</span></li>
+<li data-search="output_path"><span class="param-name">output_path</span>: <span class="arg-description">
+The path for the output image (png, eps formats) (string)
+</span></li>
+</ul>
+</div>
+<div data-search="save_visualization" class="method-section"><span class="method-name" data-search="save_visualization">save_visualization()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Store Open3D visualizations.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="generated_geometry"><span class="param-name">generated_geometry</span>: <span class="arg-description">
+Open3D Geometry object
+</span></li>
+<li data-search="output_path"><span class="param-name">output_path</span>: <span class="arg-description">
+The path for the output image (png, eps formats) (string)
+</span></li>
+<li data-search="geometry_type"><span class="param-name">geometry_type [default: '']</span>: <span class="arg-description">
+The available choices are: 'alpha', 'lineset', 'pcd' (string)
+</span></li>
+</ul>
+</div>
+<div data-search="view_alpha_shape" class="method-section"><span class="method-name" data-search="view_alpha_shape">view_alpha_shape()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Generates a visualization via Open3D of the encompassing alpha-shape on the provided atomic coordinates.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="points"><span class="param-name">points</span>: <span class="arg-description">
+Atomic coordinates. (list of tuples x,y,z)
+</span></li>
+<li data-search="output_path"><span class="param-name">output_path</span>: <span class="arg-description">
+The path for the output image (png, eps formats) (string)
+</span></li>
+</ul>
+</div>
+<div data-search="load_point_cloud" class="method-section"><span class="method-name" data-search="load_point_cloud">load_point_cloud()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Converts atomic coordinates to a point cloud.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="points"><span class="param-name">points</span>: <span class="arg-description">
+Atomic coordinates. (list of tuples x,y,z)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="pcd"><span class="return-name">pcd</span>: <span class="return-description">
+(Open3D Vector3dVector object)
+</span></li>
+</ul>
+</div>
+<div data-search="get_mesh_triangles" class="method-section"><span class="method-name" data-search="get_mesh_triangles">get_mesh_triangles()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Computes an alpha shape from the provided atomic coordinates and determines its triangulation.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="points"><span class="param-name">points</span>: <span class="arg-description">
+Atomic coordinates. (list of tuples x,y,z)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+Number of triangles
+</span></li>
+</ul>
+</div>
+<div data-search="load_points" class="method-section"><span class="method-name" data-search="load_points">load_points()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Extracts the atomic coordinates from a PDB file. Can be constrained by provided PDB chain id or existing current residue selection.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="pdb_path"><span class="param-name">pdb_path</span>: <span class="arg-description">
+Full PDB file path (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id [default: '']</span>: <span class="arg-description">
+PDB chain ID (optional) (string)
+</span></li>
+<li data-search="normalized"><span class="param-name">normalized [default: True]</span>: <span class="arg-description">
+Toggles normalization of distances between [0, 1](optional) (boolean)
+</span></li>
+<li data-search="alpha_carbons_only"><span class="param-name">alpha_carbons_only [default: False]</span>: <span class="arg-description">
+Ignores all atoms except for alpha carbons (boolean)
+</span></li>
+</ul>
+</div>
+<div data-search="get_chain_index" class="method-section"><span class="method-name" data-search="get_chain_index">get_chain_index()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Determines the zero-based ascending index of a PDB chain
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="full_pdb_file_path"><span class="param-name">full_pdb_file_path</span>: <span class="arg-description">
+Full PDB file path (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="chain_index"><span class="return-name">chain_index</span>: <span class="return-description">
+The corresponding index (int)
+</span></li>
+</ul>
+</div>
+<div data-search="sanitize_domain_name" class="method-section"><span class="method-name" data-search="sanitize_domain_name">sanitize_domain_name()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Removes filesystem-illegal characters from a domain name. Used for file naming. 
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="domain_name"><span class="param-name">domain_name</span>: <span class="arg-description">
+Domain name (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="domain_name"><span class="return-name">domain_name</span>: <span class="return-description">
+Filtered domain name (string)
+</span></li>
+</ul>
+</div>
+<div data-search="filter_pdb_by_whitelist" class="method-section"><span class="method-name" data-search="filter_pdb_by_whitelist">filter_pdb_by_whitelist()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Removes residue data from PDB file by a whitelist.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="full_pdb_file_path"><span class="param-name">full_pdb_file_path</span>: <span class="arg-description">
+Full PDB file path (string)
+</span></li>
+<li data-search="chain_id"><span class="param-name">chain_id</span>: <span class="arg-description">
+PDB chain ID (string)
+</span></li>
+<li data-search="residue_whitelist"><span class="param-name">residue_whitelist</span>: <span class="arg-description">
+Available residues in the PDB (one-based) (list of int)
+</span></li>
+</ul>
+</div>
+</div></body>
