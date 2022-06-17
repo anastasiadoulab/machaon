@@ -8,11 +8,6 @@ about installing, setting up and using this method.
 
 ## System Requirements
 
-The target system for Machaon's development is Ubuntu 20.4. Machaon has limited functionality  
-on Windows and MacOS. Some post-processing modules utilize TM-Align and DSSP which are not     
-cross-platform implementations. DSSP data might also be used for setting the targets of constrained    
-comparisons, which is Machaon's default behaviour.    
-
 The recommended ways to use Machaon is either by working inside a Docker container or a Singularity   
 container or by working in an Ubuntu 20.4 environment with Anaconda (see instructions in the 'Installation'   
 section below). On Windows, you could try WSL in order to get access to a UNIX environment (not tested):   
