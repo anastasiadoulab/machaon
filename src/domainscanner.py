@@ -48,7 +48,7 @@ class DomainScanner(Scanner):
                             continue
                         name = pdbhandler.sanitize_domain_name(name)
                         residue_selection = list(range(int(start), int(end) + 1))
-                        output_path = os.path.sep.join([store_data_path, pdb_path.replace('.pdb', ''.join(['_', chainID]))])
+                        output_path = os.path.sep.join([store_data_path, pdb_path.replace('_', '-').replace('.pdb', ''.join(['_', chainID]))])
                         for feature_index, feature in enumerate(self._feature_file_suffixes):
                             feature_output_path = ''.join([output_path, '_', name, '_',
                                                            self._feature_file_suffixes[feature_index], '.pkl'])

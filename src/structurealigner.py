@@ -289,15 +289,18 @@ class StructureAligner:
         if (len(available_residues['fullRange']) > 1):
             try:
                 if (os.path.exists(dssp_data_path) is False):
-                    if(self.call_dssp(pdb_id) is False):
-                        if(os.path.exists(stride_data_path) is False):
-                            primary_structure, secondary_structure = self.get_structures_by_stride(pdb_id, chain_id, available_residues)
-                            if(len(secondary_structure) == 0):
-                                raise Exception('Failed to calculate 2D.')
-                            else:
-                                traversed_residues = [x for x in range(available_residues['fullRange'][0], available_residues['fullRange'][-1] + 1)] # assignment to trigger assertions
+                    self.call_dssp(pdb_id)
                 if (os.path.exists(dssp_data_path)):
                     primary_structure, secondary_structure = self.parse_structures_by_dssp(dssp_data_path, chain_id, available_residues['fullRange'])
+
+                # If DSSP failed, call STRIDE
+                if (len(secondary_structure) < 2):
+                    primary_structure, secondary_structure = self.get_structures_by_stride(pdb_id, chain_id, available_residues)
+                    if(len(secondary_structure) == 0):
+                        raise Exception('Failed to calculate 2D.')
+                    else:
+                        traversed_residues = [x for x in range(available_residues['fullRange'][0], available_residues['fullRange'][-1] + 1)] # assignment to trigger assertions
+
                 if (len(primary_structure) < 2):
                     primary_structure = ['']
                     secondary_structure = ['']
@@ -368,11 +371,12 @@ class StructureAligner:
                     traversed_residues = traversed_residues[:-1]
             if (len(traversed_residues) > 0):
                 previous = current_residue_index
-        if (traversed_residues[-1] < available_residues[-1]):
-            for resIndex in range(traversed_residues[-1] + 1, available_residues[-1] + 1):
-                traversed_residues.append(resIndex)
-                primary_structure.append('-')
-                secondary_structure.append('-')
+        if(len(traversed_residues) > 0):
+            if (traversed_residues[-1] < available_residues[-1]):
+                for resIndex in range(traversed_residues[-1] + 1, available_residues[-1] + 1):
+                    traversed_residues.append(resIndex)
+                    primary_structure.append('-')
+                    secondary_structure.append('-')
         return primary_structure, secondary_structure
 
 

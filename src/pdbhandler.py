@@ -42,6 +42,7 @@ class PDBHandler:
         warnings.filterwarnings("ignore")  # supress PDBConstructionWarning for chains with missing residues
 
     def get_protein_chain_ids(self, pdb_path):
+        pdb_path = self.handle_alphafold_pdbid(pdb_path)
         chains = []
         try:
             structure = self.parser.get_structure(self.structure_id, pdb_path)
@@ -94,7 +95,7 @@ class PDBHandler:
                                 phi_psi_pairs.append([phi, psi])
 
                         if(len(self.residue_selection) > 0):
-                            assert len(self.residue_selection) >= len(angles)
+                            assert len(self.residue_selection) >= len(angles), ' '.join([pdb_path, chain_id])
 
                         self.chain_angles[chain._id]['angles'] = angles
                         self.chain_angles[chain._id]['phi'] = phi_angles
@@ -107,6 +108,17 @@ class PDBHandler:
             if (self.verbose is True):
                 print(traceback.format_exc())
 
+    def handle_alphafold_pdbid(self, pdb_path):
+        # AlphaFold PDBs support
+        if ('AF-' in self.structure_id):
+            parts = self.structure_id.split('-')
+            if (len(parts) > 4):
+                self.structure_id = '_'.join(['-'.join(parts[:-1]), parts[-1]])
+            path_parts = pdb_path.split(os.path.sep)
+            structure_path =  ''.join([self.structure_id, '.pdb'])
+            pdb_path = ''.join([os.path.sep.join(path_parts[:-1]), os.path.sep, structure_path])
+        return pdb_path
+
     def get_residue_range(self, pdb_path, chain_id):
         # Get all residue positions covered by the specified PDB chain
         full_range = []
@@ -114,6 +126,9 @@ class PDBHandler:
         path_parts = pdb_path.split(os.path.sep)
         [self.structure_id, _] = path_parts[-1].split('.')
         try:
+            #AlphaFold PDBs support
+            pdb_path = self.handle_alphafold_pdbid(pdb_path)
+
             structure = self.parser.get_structure(self.structure_id, pdb_path)  # making the structure of the .pdb file
             for model in structure:
                 for chain in model:
@@ -144,6 +159,9 @@ class PDBHandler:
         path_parts = pdb_path.split(os.path.sep)
         [self.structure_id, _] = path_parts[-1].split('.')
         try:
+            #AlphaFold PDBs support
+            pdb_path = self.handle_alphafold_pdbid(pdb_path)
+
             structure = self.parser.get_structure(self.structure_id, pdb_path)  # making the structure of the .pdb file
             for model in structure:
                 for chain in model:
@@ -184,6 +202,9 @@ class PDBHandler:
 
     # Retrieve all peptidic chains in the PDB file located in the given path
     def fetch_pdb_peptidic_chains(self, pdb_path):
+        # AlphaFold PDBs support
+        pdb_path = self.handle_alphafold_pdbid(pdb_path)
+
         molecule = Chem.MolFromPDBFile(pdb_path)
         if (molecule is not None):
             chains = rdmolops.SplitMolByPDBChainId(molecule)
@@ -221,6 +242,13 @@ class PDBHandler:
         parts = pdb_path.split(os.path.sep)
         return parts[-1].split('.')[0]
 
+    def get_uniprot_accession_by_alphafold_pdbid(self):
+        # Support for AlphaFold PDBs
+        parts = self.structure_id.split('-')
+        if(len(parts) > 1):
+            if(parts[0] == 'AF'):
+                self.uniprot_accession_number = parts[1]
+
     # Retrieve a UniProt accession number connected with a PDB ID
     def get_uniprot_accession_number(self, chain_id, pdb_id='', pdb_path=''):
         if (pdb_id != ''):
@@ -231,53 +259,57 @@ class PDBHandler:
             os.makedirs(uniprot_map_path)
         # Check if there was a previously cached retrieval of this identifier
         data_path = os.path.join(uniprot_map_path, ''.join([self.structure_id, '.', chain_id, '.log']))
-        if (os.path.exists(data_path)):
-            with open(data_path) as dataFile:
-                self.uniprot_accession_number = dataFile.readline().strip()
-        else:
-            # Extract the UniProt number from the PDB file
-            if (pdb_id != '' and pdb_path != ''):
-                self.uniprot_accession_number = self.get_uniprot_accession_by_seqres(pdb_path, pdb_id, chain_id)
+        if(self.uniprot_accession_number == ''):
+            if (os.path.exists(data_path)):
+                with open(data_path) as dataFile:
+                    self.uniprot_accession_number = dataFile.readline().strip()
+            else:
+                self.get_uniprot_accession_by_alphafold_pdbid()
+                if (self.uniprot_accession_number == ''):
+                    # Extract the UniProt number from the PDB file
+                    if (pdb_id != '' and pdb_path != ''):
+                        self.uniprot_accession_number = self.get_uniprot_accession_by_seqres(pdb_path, pdb_id, chain_id)
 
-            # Search in the local mapping resources
-            if (self.uniprot_accession_number == ''):
-                self.uniprot_accession_number = self.read_uniprot_accession_number(chain_id)
+                    # Search in the local mapping resources
+                    if (self.uniprot_accession_number == ''):
+                        self.uniprot_accession_number = self.read_uniprot_accession_number(chain_id)
 
-            # Query RCSB GraphQL service for the UniProt number
-            if (self.uniprot_accession_number == ''):
-                time.sleep(random.randint(10, 25))
-                request_url = ''.join(['https://data.rcsb.org/graphql'])
-                query = '''{
-						  polymer_entity_instances(instance_ids: ["PDB_CHAIN"])
-						  {
-							polymer_entity
-							{
-							  rcsb_polymer_entity_container_identifiers
-							  {
-								uniprot_ids
-							  }
-							}
-						  }
-						}'''.replace('PDB_CHAIN', ''.join([self.structure_id, '.', chain_id]))
-                if (self.verbose is True):
-                    print(query)
-                response = requests.post(request_url, json={'query': query})
-                if (response.status_code == 200):
-                    json_data = json.loads(response.text)
-                    if (json_data['data'] is not None
-                            and len(json_data['data']) > 0
-                            and len(json_data['data']['polymer_entity_instances']) > 0
-                            and json_data['data']['polymer_entity_instances'][0]['polymer_entity'][
-                                "rcsb_polymer_entity_container_identifiers"]['uniprot_ids'] is not None
-                            and len(json_data['data']['polymer_entity_instances'][0]['polymer_entity'][
-                                        "rcsb_polymer_entity_container_identifiers"]['uniprot_ids']) > 0):
-                        self.uniprot_accession_number = \
-                            json_data['data']['polymer_entity_instances'][0]['polymer_entity'][
-                                "rcsb_polymer_entity_container_identifiers"]['uniprot_ids'][0]
-                    else:
-                        self.uniprot_accession_number = ''
-                if (self.verbose is True):
-                    print(response.text)
+                    # Query RCSB GraphQL service for the UniProt number
+                    if (self.uniprot_accession_number == ''):
+                        time.sleep(random.randint(10, 25))
+                        request_url = ''.join(['https://data.rcsb.org/graphql'])
+                        query = '''{
+                                  polymer_entity_instances(instance_ids: ["PDB_CHAIN"])
+                                  {
+                                    polymer_entity
+                                    {
+                                      rcsb_polymer_entity_container_identifiers
+                                      {
+                                        uniprot_ids
+                                      }
+                                    }
+                                  }
+                                }'''.replace('PDB_CHAIN', ''.join([self.structure_id, '.', chain_id]))
+                        if (self.verbose is True):
+                            print(query)
+                        response = requests.post(request_url, json={'query': query})
+                        if (response.status_code == 200):
+                            json_data = json.loads(response.text)
+                            if (json_data['data'] is not None
+                                    and len(json_data['data']) > 0
+                                    and len(json_data['data']['polymer_entity_instances']) > 0
+                                    and json_data['data']['polymer_entity_instances'][0]['polymer_entity'][
+                                        "rcsb_polymer_entity_container_identifiers"]['uniprot_ids'] is not None
+                                    and len(json_data['data']['polymer_entity_instances'][0]['polymer_entity'][
+                                                "rcsb_polymer_entity_container_identifiers"]['uniprot_ids']) > 0):
+                                self.uniprot_accession_number = \
+                                    json_data['data']['polymer_entity_instances'][0]['polymer_entity'][
+                                        "rcsb_polymer_entity_container_identifiers"]['uniprot_ids'][0]
+                            else:
+                                self.uniprot_accession_number = ''
+                        if (self.verbose is True):
+                            print(response.text)
+        if (self.uniprot_accession_number != ''):
             with open(data_path, 'w') as outputFile:
                 outputFile.write(self.uniprot_accession_number)
         return self.uniprot_accession_number

@@ -44,7 +44,7 @@ class Scanner:
         store_data_path = os.path.join(self.root_disk, self.features_path)
         naming_extension = ''.join([naming_extension, '_']) if naming_extension != '' else ''
         features_data_path = os.path.join(store_data_path, ''.join(
-            [pdb_id, '_', chain_id, '_', naming_extension, self._feature_file_suffixes[metric_index], '.pkl']))
+            [pdb_id.replace('_', '-'), '_', chain_id, '_', naming_extension, self._feature_file_suffixes[metric_index], '.pkl']))
         metric_data = False
         if (os.path.exists(features_data_path)):
             with open(features_data_path, 'rb') as handle:
@@ -141,6 +141,7 @@ class Scanner:
         try:
             pdbhandler = PDBHandler()
             pdbhandler.root_disk = self.root_disk
+            pdbhandler.verbose = self.verbose
             if 'residueSelection' in kwargs:
                 pdbhandler.residue_selection = kwargs['residueSelection']
             if (os.path.exists(output_path) is False or feature in self.update_features):
@@ -203,7 +204,7 @@ class Scanner:
                     if (self.verbose is True):
                         print(pdb_path, 'contains an empty chain identifier. This chain will be ignored.')
                     continue
-                output_path = os.path.sep.join([store_data_path, pdb_path.replace('.pdb', ''.join(['_', chain_id]))])
+                output_path = os.path.sep.join([store_data_path, pdb_path.replace('_', '-').replace('.pdb', ''.join(['_', chain_id]))])
                 for feature_index, feature in enumerate(self._feature_file_suffixes):
                     feature_output_path = ''.join([output_path, '_', self._feature_file_suffixes[feature_index], '.pkl'])
                     # Skip if this feature is not set to be recomputed when recomputing is enabled

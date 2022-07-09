@@ -158,7 +158,7 @@ class SegmentScanner(Scanner):
         aligned_reference_segment_indices = []
         reference_segments_alignments = []
         available_residues = pdbhandler.get_residue_range(full_pdb_file_path, chain_id)
-        candidate_sequences = aligner.get_all_sequences((pdb_id, chain_id), available_residues)
+        candidate_sequences = aligner.get_all_sequences((pdbhandler.structure_id, chain_id), available_residues)
         aligned_sequences = []
         output = []
         # Find parts of a candidate protein that match a part of the reference segment
@@ -166,7 +166,7 @@ class SegmentScanner(Scanner):
         if (len(candidate_sequences) > 0
             and self.selected_alignment_level in candidate_sequences
             and candidate_sequences[self.selected_alignment_level] != ''):
-            total_residue_range = [x for x in range(available_residues[0], available_residues[-1] + 1)]
+            total_residue_range = [x for x in range(available_residues['fullRange'][0], available_residues['fullRange'][-1] + 1)]
             for label in reference_segment_parts:
                 reference_start = reference_segment_parts[label][0] - reference_structure['residues'][0]
                 reference_end = reference_segment_parts[label][-1] - reference_structure['residues'][0] + 1
@@ -186,12 +186,12 @@ class SegmentScanner(Scanner):
                 if ((range_length - gaps) >= self.minimum_residue_range):
                     residue_range_selection.append(actual_range)
                     aligned_reference_segment_indices.append(label)
+                    # Retrieve aligned reference parts for logging
                     reference_relative_range, reference_gaps = aligner.get_reference_sequence_alignment(
                         alignment_result)
                     for alignment_level in self.alignment_levels:
                         if alignment_level in candidate_sequences:
-                            aligned_parts.append(reference_structure[alignment_level][
-                                                 reference_relative_range[0]:reference_relative_range[1]])
+                            aligned_parts.append(reference_structure[alignment_level][reference_start+reference_relative_range[0]:reference_start+reference_relative_range[1]])
                     reference_residue_range = [x for x in range(reference_structure['residues'][0],
                                                                 reference_structure['residues'][-1] + 1)][
                                               reference_start:reference_end]
@@ -236,20 +236,21 @@ class SegmentScanner(Scanner):
         if (os.path.exists(self.metrics_output_path) is False):
             os.makedirs(self.metrics_output_path)
         aligner = StructureAligner()
-        pdbhandler = PDBHandler()
+        pdbhandler = PDBHandler(self.reference_pdb_id)
         pdbhandler.root_disk = self.root_disk
         aligner.set_root_disk(self.root_disk)
         aligner.pdb_dataset_path = os.path.sep.join([self.root_disk, self.pdb_dataset_path])
         reference_pdb_path = os.path.sep.join(
             [self.root_disk, self.pdb_dataset_path, ''.join([self.reference_pdb_id, '.pdb'])])
+        reference_pdb_path = pdbhandler.handle_alphafold_pdbid(reference_pdb_path)
         available_residues = pdbhandler.get_residue_range(reference_pdb_path, self.reference_chain_id)
-        reference_structure = aligner.get_all_sequences((self.reference_pdb_id, self.reference_chain_id),
+        reference_structure = aligner.get_all_sequences((pdbhandler.structure_id, self.reference_chain_id),
                                                         available_residues)
         if(self.selected_alignment_level not in reference_structure):
             print('Your selected alignment level (', self.selected_alignment_level, ') is not available for your reference protein. Please select a different one.')
             exit(1)
         self.alignment_levels = list(reference_structure.keys())
-        reference_structure['residues'] = available_residues
+        reference_structure['residues'] = available_residues['fullRange']
         # For each reference segment in the configuration
         for site_index, segment in enumerate(self.segments):
             print(''.join(['Scanning for segment ', repr(site_index)]))

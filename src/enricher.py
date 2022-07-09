@@ -166,30 +166,46 @@ class Enricher:
         for index, pdb_id in enumerate(tqdm(data_pdb_ids, file=sys.stdout)):
             if (pdb_id in enrichment):
                 continue
-            structure_id, chain_id = pdb_id.split('_')
-            ids_for_request.append(pdb_id)
-            if (len(ids_for_request) == self._request_chunk_size or index + 1 == total_pdb_ids):
-                chunks += 1
-                print(''.join(['\nFetching GO entries [chunk:', repr(chunks), ']']))
-                ids_never_requested = []
-                for request_id in ids_for_request:
-                    data_path = os.path.join(self._rcsb_enrichment_cache, ''.join([request_id, '.log']))
-                    if (os.path.exists(data_path)):
-                        with open(data_path, 'r') as dataFile:
-                            enrichmentinfo[request_id] = dataFile.readline()
-                    else:
-                        ids_never_requested.append(request_id)
-                if (len(ids_never_requested) > 0):
-                    requested_info = self.get_enrichment_info(ids_never_requested)
-                    for id_index, requested_id in enumerate(ids_never_requested):
-                        enrichmentinfo[requested_id] = requested_info[id_index]
-                        data_path = os.path.join(self._rcsb_enrichment_cache, ''.join([requested_id, '.log']))
-                        with open(data_path, 'w') as dataFile:
-                            dataFile.write(requested_info[id_index])
-                    ids_for_request = []
+            parts = pdb_id.split('_')
+            structure_id, chain_id = '_'.join(parts[:-1]), parts[-1]
+            if('AF-' not in pdb_id):
+                ids_for_request.append(pdb_id)
+                if (len(ids_for_request) == self._request_chunk_size or index + 1 == total_pdb_ids):
+                    chunks += 1
+                    print(''.join(['\nFetching GO entries [chunk:', repr(chunks), ']']))
+                    ids_never_requested = []
+                    for request_id in ids_for_request:
+                        data_path = os.path.join(self._rcsb_enrichment_cache, ''.join([request_id, '.log']))
+                        if (os.path.exists(data_path)):
+                            with open(data_path, 'r') as dataFile:
+                                enrichmentinfo[request_id] = dataFile.readline()
+                        else:
+                            ids_never_requested.append(request_id)
+                    if (len(ids_never_requested) > 0):
+                        requested_info = self.get_enrichment_info(ids_never_requested)
+                        for id_index, requested_id in enumerate(ids_never_requested):
+                            enrichmentinfo[requested_id] = requested_info[id_index]
+                            data_path = os.path.join(self._rcsb_enrichment_cache, ''.join([requested_id, '.log']))
+                            with open(data_path, 'w') as dataFile:
+                                dataFile.write(requested_info[id_index])
+                        ids_for_request = []
+            accession_ids = []
+            predicted_pdb_ids = []
             if (pdb_id not in entrez):
-                chunk_pdb_ids.append([structure_id, chain_id])
+                if ('AF-' not in pdb_id):
+                    chunk_pdb_ids.append([structure_id, chain_id])
+                else:
+                    # AlphaFold PDBs
+                    predicted_pdb_ids.append([structure_id, chain_id])
+                    pdbhandler.structure_id = structure_id
+                    pdbhandler.get_uniprot_accession_by_alphafold_pdbid()
+                    accession_ids.append(pdbhandler.uniprot_accession_number)
             # Retrieve Entrez information
+            if (len(predicted_pdb_ids) == self._request_chunk_size or index + 1 == total_pdb_ids):
+                print("Fetching Uniprot accession numbers...")
+                entrez_mappings = self.map_uniprot_to_entrez(accession_ids)
+                for keyIndex, key in enumerate(predicted_pdb_ids):
+                    entrez[key] = entrez_mappings[keyIndex]
             if (len(chunk_pdb_ids) == self._request_chunk_size or index + 1 == total_pdb_ids):
                 print("Fetching Uniprot accession numbers...")
                 if (self.debugging is False):
@@ -231,7 +247,8 @@ class Enricher:
                     data_path = os.path.join(self._enrichment_cache, ''.join([chunked_pdb_id, '.log']))
                     with open(data_path, 'w') as dataFile:
                         dataFile.write(enrichment[chunked_pdb_id])
-                output_line.append('\t'.join(chunked_pdb_id.split('_')))
+                parts = chunked_pdb_id.split('_')
+                output_line.append('\t'.join(['_'.join(parts[:-1]), parts[-1]]))
                 output_line.append('\t')
                 output_line.append('\t'.join([repr(x) for x in pdb_info[chunked_pdb_id]]))
                 output_line.append('\t')
@@ -246,15 +263,19 @@ class Enricher:
                 output_file.write(''.join(output_line))
 
     def read_enrichment(self, pdb_id):
-        uniprot_dataset_path = os.path.sep.join([self.root_disk, 'idmapping_selected.tab.gz'])
-        data_path = os.path.join(self._enrichment_cache, ''.join([pdb_id, '.log']))
-        enrichment = []
-
         pdbhandler = PDBHandler()
         pdbhandler.root_disk = self.root_disk
         pdb_dataset_path = os.path.sep.join([self.root_disk, self.pdb_dataset_path])
-        structure_id, chain_id = pdb_id.split('_')
-        pdb_info = pdbhandler.get_pdb_info(''.join([pdb_dataset_path, os.path.sep, structure_id, '.pdb']), chain_id)
+        parts = pdb_id.split('_')
+        structure_id, chain_id = '-'.join(parts[:-1]), parts[-1]
+        pdbpath = ''.join([pdb_dataset_path, os.path.sep, structure_id, '.pdb'])
+        pdbhandler.structure_id = structure_id
+        pdbpath = pdbhandler.handle_alphafold_pdbid(pdbpath)
+        pdb_info = pdbhandler.get_pdb_info(pdbpath, chain_id)
+
+        uniprot_dataset_path = os.path.sep.join([self.root_disk, 'idmapping_selected.tab.gz'])
+        data_path = os.path.join(self._enrichment_cache, ''.join([pdb_id, '.log']))
+        enrichment = []
 
         # Retrieve data for enriching an entry from cached or local resources
         if (os.path.exists(data_path)):
@@ -262,8 +283,12 @@ class Enricher:
                 enrichment = dataFile.readline().split(',')
         else:
             try:
+                pattern = pdb_id.replace('.', ':').replace('_', ':')
+                # For AlphaFold PDB ID, use uniprot accession number instead
+                if('AF-' in pdb_id):
+                    pattern = pdbhandler.uniprot_accession_number
                 output = subprocess.run(
-                    ['zgrep', '-i', pdb_id.replace('.', ':').replace('_', ':'), '-m', '1', uniprot_dataset_path],
+                    ['zgrep', '-i', pattern, '-m', '1', uniprot_dataset_path],
                     capture_output=True,
                     timeout=30)
                 parts = output.stdout.decode("utf-8").split('\t')

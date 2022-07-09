@@ -165,12 +165,12 @@ class MetaAnalysis:
         aligner.set_root_disk(self.root_disk)
         pdb_data_root = os.path.sep.join([self.root_disk, self.pdb_dataset_path])
         aligner.pdb_dataset_path = pdb_data_root
-        pdbhandler = PDBHandler()
+        pdbhandler = PDBHandler(row['pdbId'])
         full_pdb_file_path = os.path.join(pdb_data_root, '.'.join([row['pdbId'], 'pdb']))
         residue_range = pdbhandler.get_residue_range(full_pdb_file_path, row['chainId'])
         available_residues = residue_range['fullRange']
         total_residue_range = [x for x in range(available_residues[0], available_residues[-1] + 1)]
-        sequences = aligner.get_all_sequences([row['pdbId'], row['chainId']], residue_range)
+        sequences = aligner.get_all_sequences([pdbhandler.structure_id, row['chainId']], residue_range)
         config = {'gapChars': ['{', ' ']}
         property_alignments = defaultdict()
         if(len(sequences) > 0):
@@ -351,7 +351,8 @@ class MetaAnalysis:
             legend_elements.append(
                 Line2D([], [], marker='o', color='w', label='Marked', markerfacecolor=color_palette[3], markeredgewidth=0.0, linewidth=0.0, markersize=10))
         legend_elements.append(plt.Rectangle((0,0), 1, 1, label='EWMA', fc=color_palette[1]))
-        legend_elements.append(plt.Rectangle((0,0), 1, 1, label='Missing', fc='black'))
+        if(len(unavailable_residues) > 0):
+            legend_elements.append(plt.Rectangle((0,0), 1, 1, label='Missing', fc='black'))
         plt.legend(handles=legend_elements, facecolor='white', framealpha=0.5,  loc='best', handlelength=1, handleheight=1.125)
 
         # Store plots and related outputs

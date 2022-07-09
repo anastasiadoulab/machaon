@@ -1,14 +1,18 @@
 # Machaon
 
-This repository contains an implementation for the method presented in the paper <b>"Identifying   
-and profiling structural similarities between Spike of SARS-CoV-2 and other viral or host 
-proteins   
-with Machaon".</b>
+This repository contains an implementation for the method presented in the  paper "Identifying and   
+profiling structural similarities between Spike of SARS-CoV-2 and other viral or host proteins with  
+Machaon".
 
-<u>Please consult this time-saving manual before you use Machaon</u>. It contains an in-depth    
-explanation about installing, setting up and using this method.
+<u>Please consult this time-saving manual before you use Machaon</u>. It contains an in-depth explanation    
+about installing, setting up and using this method.
 
 ## System Requirements
+
+The target system for Machaon's development is Ubuntu 20.4. Machaon has limited functionality  
+on Windows and MacOS. Some post-processing modules utilize TM-Align and DSSP which are not     
+cross-platform implementations. DSSP data might also be used for setting the targets of constrained    
+comparisons, which is Machaon's default behaviour.    
 
 The recommended ways to use Machaon is either by working inside a Docker container or a Singularity   
 container or by working in an Ubuntu 20.4 environment with Anaconda (see instructions in the 'Installation'   
@@ -81,6 +85,9 @@ The downloaded files need to be decompressed (execute in the downloaded files' f
 ```ls *.gz | parallel gunzip```
 
 Of course, you can use RCSB search and retrieve relevant PDB IDs by a query of choice.
+
+<b>Note</b>: PDB files from AlphaFold's predictions are <b> fully </b> supported. You can download them from here:  
+https://alphafold.ebi.ac.uk/download
 
 <b>Important:</b> Avoid underscores in custom PDB filenames. For example, in Ubuntu you can run:   
 ```rename.ul '_' '' *.pdb``` and remove an underscores from every filename in the folder.    
@@ -339,7 +346,7 @@ All the options are presented below:
 <pre>
 'referencePDBChain': The reference PDB ID and chain ID separated by a dot, &lt;PDB ID&gt;.&lt;CHAIN ID&gt; e.g. ""6VXX.A"
 'residues': List of residue positions (one-based indexing), e.g. [1, 2, 3, 4, 5]
-'residueRanges': Range definitions separated by comma, .e.g '1-50,70-78'
+'residueRanges': Range definitions separated by comma, e.g. '1-50,70-78'
 'known': Select True if the segment belongs to a known site like a binding site (considered by GO Meta-analysis module).
 'ignore': If set to True, the configuration will be ignored. Useful for storing past segment presets.
 '*whatever*': You can include fields of your own, like tags or notes (e.g. 'doi' : '123.3456/1234.123'). These are not considered by the program. 
@@ -404,6 +411,14 @@ the contiguous parts of the segment as determined by the method.
 
 There is also a cache file that is generated besides the scripts in src folder (go_cache.csv) that holds  
 Gene Ontology data.
+
+## Output format
+
+The outputs are human interpretable CSV files with headers:
+
+- metrics directory has comma separated CSV files
+- candidates directory has tab separated CSV files
+- outputs of constrained searches include columns with serialized list contents which can be parsed with eval()
 
 ## Special Cases
 

@@ -15,6 +15,8 @@ class Evaluator:
     def __init__(self, viral=False):
         self.reference_data = defaultdict
         self.candidate_data = defaultdict
+        self.reference_pdb_path = ''
+        self.candidate_pdb_path = ''
         self._aligner = StructureAligner()
         self.root_disk = ''
         self.pdb_dataset_path = ''
@@ -35,6 +37,7 @@ class Evaluator:
         full_pdb_file_path = os.path.sep.join([self.pdb_dataset_path, ''.join([pdb_id, '.pdb'])])
         pdbhandler = PDBHandler(pdb_id)
         pdbhandler.root_disk = self.root_disk
+        full_pdb_file_path = pdbhandler.handle_alphafold_pdbid(full_pdb_file_path)
         # Get chain's ascending order number
         chain_index = pdbhandler.get_chain_index(full_pdb_file_path, chain_id)
         pdbhandler.verbose = self.verbose
@@ -46,12 +49,12 @@ class Evaluator:
         # Get existing residues in PDB data
         available_residues = pdbhandler.get_residue_range(full_pdb_file_path, chain_id)
         # Extract 1D (sequence) and 2D structures from PDB
-        secondary_pdb_structure, primary_pdb_structure = self._aligner.get_structure([pdb_id, chain_id],
+        secondary_pdb_structure, primary_pdb_structure = self._aligner.get_structure([pdbhandler.structure_id, chain_id],
                                                                                      available_residues)
         # Retrieve protein sequence from UniProt
         protein_sequence = self.get_protein_sequence(pdbhandler.uniprot_accession_number)
         data = {'pdbId': pdb_id, 'chainId': chain_id, 'chainIndex': chain_index, '1D': protein_sequence,
-                '1DPDB': primary_pdb_structure, '2D': secondary_pdb_structure}
+                '1DPDB': primary_pdb_structure, '2D': secondary_pdb_structure, 'fullPDBPath': full_pdb_file_path}
         # Calculate molecular fingerprint
         try:
             chains = pdbhandler.fetch_pdb_peptidic_chains(full_pdb_file_path)
@@ -181,6 +184,8 @@ class Evaluator:
             common = [x in self.reference_data['GO'][term_type] for x in self.candidate_data['GO'][term_type]].count(True)
             if (len(self.reference_data['GO'][term_type]) > 0):
                 result.append(common / len(self.reference_data['GO'][term_type]))
+            else:
+                result.append(0.0)
         return result
 
     def calculate_tm_score(self):
@@ -188,9 +193,7 @@ class Evaluator:
         result = (-1, -1)
         try:
             output = subprocess.run(
-                ['./TMalign', os.path.sep.join([self.pdb_dataset_path, ''.join([self.reference_data['pdbId'], '.pdb'])]),
-                 os.path.sep.join([self.pdb_dataset_path, ''.join([self.candidate_data['pdbId'], '.pdb'])]), '-split', '2',
-                 '-ter', '1', '-outfmt',
+                ['./TMalign', self.reference_data['fullPDBPath'], self.candidate_data['fullPDBPath'], '-split', '2', '-ter', '1', '-outfmt',
                  '2', '-chain1_id', str(self.reference_data['chainIndex']), '-chain2_id',
                  str(self.candidate_data['chainIndex'])], capture_output=True, cwd=os.getcwd())
             output = output.stdout.decode("utf-8").replace('PDBs/', '').replace('PDBs_vir/', '').replace('.pdb:', '_')
