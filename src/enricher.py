@@ -346,25 +346,43 @@ class Enricher:
         if (len(ids_for_request) > 0):
             accession_ids_for_request = [accession_ids[accessionIDIndex] for accessionIDIndex in ids_for_request]
             time.sleep(3)
-            url = 'https://www.uniprot.org/uploadlists/'
+            request_url = 'https://rest.uniprot.org/idmapping/run'
+            job_polling_url = 'https://rest.uniprot.org/idmapping/status/'
+            result_url = 'https://rest.uniprot.org/idmapping/uniref/results/'
+            polling_timeout = 5
             entrez_ids = defaultdict()
-            params = {
-                'from': 'ACC+ID',
-                'to': 'P_ENTREZGENEID',
-                'format': 'tab',
-                'query': ','.join(accession_ids_for_request)
+            parameters = {
+                'from': 'UniProtKB_AC-ID',
+                'to': 'GeneID',
+                'ids': ','.join(accession_ids_for_request)
             }
+            # Request a job
+            response = requests.post(request_url, params=parameters)
+            if (response.status_code == 200):
+                json_data = json.loads(response.text)
+                if ('jobId' in json_data):
+                    # Polling for a job
+                    while True:
+                        job_response = requests.get(''.join([job_polling_url, json_data['jobId']]))
+                        if (job_response.status_code == 200):
+                            job_data = json.loads(job_response.text)
+                            result_data = []
+                            if ('jobStatus' in job_data):
+                                # Retrieve results from finished job
+                                if (job_data['jobStatus'] == 'FINISHED'):
+                                    result_response = requests.get(''.join([result_url, json_data['jobId']]))
+                                    if (result_response.status_code == 200):
+                                        result_data = json.loads(result_response.text)
+                            elif ('results' in job_data):
+                                result_data = job_data
+                            if ('results' in result_data):
+                                for entry in result_data['results']:
+                                    entrez_ids[entry['from']] = entry['to']
 
-            data = urllib.parse.urlencode(params)
-            data = data.encode('utf-8')
-            req = urllib.request.Request(url, data)
-            with urllib.request.urlopen(req) as f:
-                response = f.read()
-            lines = response.decode('utf-8').split('\n')
-            for lineIndex in range(1, len(lines)):
-                if (len(lines[lineIndex]) > 0):
-                    accession_id, entrez_id = lines[lineIndex].split('\t')
-                    entrez_ids[accession_id] = entrez_id
+                        time.sleep(3)
+                        polling_timeout -= 1
+                        if (polling_timeout == 0):
+                            break
 
         # Cache the retrieved information
         for accession_id in accession_ids:

@@ -32,6 +32,8 @@ class Machaon:
             print("Warning: DSSP executable is not found.\n")
         if(os.path.exists("./TMalign") is False):
             print("Warning: TM-Align executable is not found.\n")
+        if(os.path.exists("./stride") is False):
+            print("Warning: STRIDE executable is not found.\n")
 
     def perform_comparisons(self, job_config=None):
         if(job_config is None):
