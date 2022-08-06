@@ -457,10 +457,11 @@ class CandidateSampler:
 
         if(self.keep_duplicates is False):
             # Exclude reference gene and remove multiple rows for each gene (keep the best one)
+            # Filtering ignores the entries without gene ids
             if(self.reference_gene_id != ''):
                 enriched = enriched[(enriched['geneId'] != self.reference_gene_id)]
                 enriched = enriched[(enriched['geneId'] != int(self.reference_gene_id))]
-            enriched.drop_duplicates(subset=['geneId'], keep='first', inplace=True)
+            enriched = pd.concat([enriched[enriched['geneId'] == '#'], enriched[enriched['geneId'] != '#'].drop_duplicates(subset=['geneId'], keep='first')])
 
         # Remove duplicate reference entry if an alternative PDB ID was used during enrichment
         if (len(self.override_pdb_id) > 0):

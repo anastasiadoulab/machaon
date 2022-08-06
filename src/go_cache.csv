@@ -19175,3 +19175,1288 @@
 1904398	positive regulation of neuromuscular junction development	biological_process
 0065001	specification of axis polarity	biological_process
 1904398	positive regulation of neuromuscular junction development	biological_process
+0030852	regulation of granulocyte differentiation	biological_process
+1905793	protein localization to pericentriolar material	biological_process
+0001834	trophectodermal cell proliferation	biological_process
+0048936	peripheral nervous system neuron axonogenesis	biological_process
+0004957	prostaglandin E receptor activity	molecular_function
+0006621	protein retention in ER lumen	biological_process
+0034597	phosphatidylinositol-4,5-bisphosphate 4-phosphatase activity	molecular_function
+0031208	POZ domain binding	molecular_function
+1902636	kinociliary basal body	cellular_component
+1903259	exon-exon junction complex disassembly	biological_process
+0021520	spinal cord motor neuron cell fate specification	biological_process
+1904227	negative regulation of glycogen synthase activity, transferring glucose-1-phosphate	biological_process
+0016409	palmitoyltransferase activity	molecular_function
+0044091	membrane biogenesis	biological_process
+0005744	TIM23 mitochondrial import inner membrane translocase complex	cellular_component
+0120001	apical plasma membrane urothelial plaque	cellular_component
+0070697	activin receptor binding	molecular_function
+0032422	purine-rich negative regulatory element binding	molecular_function
+0106341	omega-hydroxyceramide transacylase activity	molecular_function
+0004939	beta-adrenergic receptor activity	molecular_function
+0050508	glucuronosyl-N-acetylglucosaminyl-proteoglycan 4-alpha-N-acetylglucosaminyltransferase activity	molecular_function
+0031301	integral component of organelle membrane	cellular_component
+0000493	box H/ACA snoRNP assembly	biological_process
+0048263	determination of dorsal identity	biological_process
+1904356	regulation of telomere maintenance via telomere lengthening	biological_process
+0021830	interneuron migration from the subpallium to the cortex	biological_process
+1902018	negative regulation of cilium assembly	biological_process
+1905475	regulation of protein localization to membrane	biological_process
+0060788	ectodermal placode formation	biological_process
+0060010	Sertoli cell fate commitment	biological_process
+0046920	alpha-(1->3)-fucosyltransferase activity	molecular_function
+0031468	nuclear membrane reassembly	biological_process
+0018230	peptidyl-L-cysteine S-palmitoylation	biological_process
+0004940	beta1-adrenergic receptor activity	molecular_function
+0071729	beak morphogenesis	biological_process
+0038100	nodal binding	molecular_function
+0007431	salivary gland development	biological_process
+0001831	trophectodermal cellular morphogenesis	biological_process
+0004055	argininosuccinate synthase activity	molecular_function
+0018230	peptidyl-L-cysteine S-palmitoylation	biological_process
+0106342	omega-hydroxyceramide biosynthetic process	biological_process
+0030991	intraciliary transport particle A	cellular_component
+0015183	L-aspartate transmembrane transporter activity	molecular_function
+0005858	axonemal dynein complex	cellular_component
+0019043	establishment of viral latency	biological_process
+1904808	positive regulation of protein oxidation	biological_process
+0070660	inner ear receptor cell differentiation involved in inner ear sensory epithelium regeneration	biological_process
+2000420	negative regulation of eosinophil extravasation	biological_process
+0050509	N-acetylglucosaminyl-proteoglycan 4-beta-glucuronosyltransferase activity	molecular_function
+0015840	urea transport	biological_process
+1903037	regulation of leukocyte cell-cell adhesion	biological_process
+0021524	visceral motor neuron differentiation	biological_process
+0043049	otic placode formation	biological_process
+0010905	negative regulation of UDP-glucose catabolic process	biological_process
+0015410	ABC-type manganese transporter activity	molecular_function
+0034657	GID complex	cellular_component
+0005753	mitochondrial proton-transporting ATP synthase complex	cellular_component
+0022618	ribonucleoprotein complex assembly	biological_process
+0016430	tRNA (adenine-N6-)-methyltransferase activity	molecular_function
+0036157	outer dynein arm	cellular_component
+0050793	regulation of developmental process	biological_process
+1902490	regulation of sperm capacitation	biological_process
+0042596	fear response	biological_process
+0034657	GID complex	cellular_component
+0004876	complement component C3a receptor activity	molecular_function
+1990927	calcium ion regulated lysosome exocytosis	biological_process
+0061008	hepaticobiliary system development	biological_process
+0043814	phospholactate guanylyltransferase activity	molecular_function
+0005384	manganese ion transmembrane transporter activity	molecular_function
+0045016	mitochondrial magnesium ion transmembrane transport	biological_process
+0014846	esophagus smooth muscle contraction	biological_process
+0046885	regulation of hormone biosynthetic process	biological_process
+0031549	negative regulation of brain-derived neurotrophic factor receptor signaling pathway	biological_process
+0010857	calcium-dependent protein kinase activity	molecular_function
+0045655	regulation of monocyte differentiation	biological_process
+0031468	nuclear membrane reassembly	biological_process
+1902775	mitochondrial large ribosomal subunit assembly	biological_process
+0071879	positive regulation of adenylate cyclase-activating adrenergic receptor signaling pathway	biological_process
+0015910	long-chain fatty acid import into peroxisome	biological_process
+0015183	L-aspartate transmembrane transporter activity	molecular_function
+0140112	extracellular vesicle biogenesis	biological_process
+0045183	translation factor activity, non-nucleic acid binding	molecular_function
+0005313	L-glutamate transmembrane transporter activity	molecular_function
+0000276	mitochondrial proton-transporting ATP synthase complex, coupling factor F(o)	cellular_component
+0000126	transcription factor TFIIIB complex	cellular_component
+0033624	negative regulation of integrin activation	biological_process
+0030201	heparan sulfate proteoglycan metabolic process	biological_process
+0001996	positive regulation of heart rate by epinephrine-norepinephrine	biological_process
+0001587	Gq/11-coupled serotonin receptor activity	molecular_function
+0034124	regulation of MyD88-dependent toll-like receptor signaling pathway	biological_process
+1905469	negative regulation of clathrin-coated pit assembly	biological_process
+2000312	regulation of kainate selective glutamate receptor activity	biological_process
+0061910	autophagosome-endosome fusion	biological_process
+0071228	cellular response to tumor cell	biological_process
+0071424	rRNA (cytosine-N4-)-methyltransferase activity	molecular_function
+0005313	L-glutamate transmembrane transporter activity	molecular_function
+0052645	F420-0 metabolic process	biological_process
+0060932	His-Purkinje system cell differentiation	biological_process
+1904841	TORC2 complex binding	molecular_function
+0019532	oxalate transport	biological_process
+0032468	Golgi calcium ion homeostasis	biological_process
+0043490	malate-aspartate shuttle	biological_process
+0048635	negative regulation of muscle organ development	biological_process
+0007034	vacuolar transport	biological_process
+0010454	negative regulation of cell fate commitment	biological_process
+0070897	transcription preinitiation complex assembly	biological_process
+0120015	sterol transfer activity	molecular_function
+1905154	negative regulation of membrane invagination	biological_process
+0042760	very long-chain fatty acid catabolic process	biological_process
+1902742	apoptotic process involved in development	biological_process
+0034127	regulation of MyD88-independent toll-like receptor signaling pathway	biological_process
+0033565	ESCRT-0 complex	cellular_component
+0001997	positive regulation of the force of heart contraction by epinephrine-norepinephrine	biological_process
+1903298	negative regulation of hypoxia-induced intrinsic apoptotic signaling pathway	biological_process
+0007610	behavior	biological_process
+0016230	sphingomyelin phosphodiesterase activator activity	molecular_function
+0060686	negative regulation of prostatic bud formation	biological_process
+0032977	membrane insertase activity	molecular_function
+0044609	DBIRD complex	cellular_component
+0072086	specification of loop of Henle identity	biological_process
+0061430	bone trabecula morphogenesis	biological_process
+0035517	PR-DUB complex	cellular_component
+0016320	endoplasmic reticulum membrane fusion	biological_process
+0043490	malate-aspartate shuttle	biological_process
+1904411	positive regulation of secretory granule organization	biological_process
+0033364	mast cell secretory granule organization	biological_process
+1900243	negative regulation of synaptic vesicle endocytosis	biological_process
+0032472	Golgi calcium ion transport	biological_process
+1990112	RQC complex	cellular_component
+2000016	negative regulation of determination of dorsal identity	biological_process
+0098664	G protein-coupled serotonin receptor signaling pathway	biological_process
+0032979	protein insertion into mitochondrial inner membrane from matrix	biological_process
+0002177	manchette	cellular_component
+0008376	acetylgalactosaminyltransferase activity	molecular_function
+1903852	positive regulation of cristae formation	biological_process
+0070782	phosphatidylserine exposure on apoptotic cell surface	biological_process
+0071348	cellular response to interleukin-11	biological_process
+0098858	actin-based cell projection	cellular_component
+0035522	monoubiquitinated histone H2A deubiquitination	biological_process
+2000003	positive regulation of DNA damage checkpoint	biological_process
+0098629	trans-Golgi network membrane organization	biological_process
+1905171	positive regulation of protein localization to phagocytic vesicle	biological_process
+0033842	N-acetyl-beta-glucosaminyl-glycoprotein 4-beta-N-acetylgalactosaminyltransferase activity	molecular_function
+1904544	positive regulation of free ubiquitin chain polymerization	biological_process
+0015918	sterol transport	biological_process
+1990116	ribosome-associated ubiquitin-dependent protein catabolic process	biological_process
+0014827	intestine smooth muscle contraction	biological_process
+1900424	regulation of defense response to bacterium	biological_process
+1905162	regulation of phagosome maturation	biological_process
+0007208	phospholipase C-activating serotonin receptor signaling pathway	biological_process
+0010513	positive regulation of phosphatidylinositol biosynthetic process	biological_process
+0051991	UDP-N-acetyl-D-glucosamine:N-acetylmuramoyl-L-alanyl-D-glutamyl-meso-2,6-diaminopimelyl-D-alanyl-D-alanine-diphosphoundecaprenol 4-beta-N-acetylglucosaminlytransferase activity	molecular_function
+0005779	integral component of peroxisomal membrane	cellular_component
+0060318	definitive erythrocyte differentiation	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0036156	inner dynein arm	cellular_component
+1904602	serotonin-activated cation-selective channel complex	cellular_component
+0035542	regulation of SNARE complex assembly	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0005779	integral component of peroxisomal membrane	cellular_component
+0036502	Derlin-1-VIMP complex	cellular_component
+0008503	benzodiazepine receptor activity	molecular_function
+1904602	serotonin-activated cation-selective channel complex	cellular_component
+0032970	regulation of actin filament-based process	biological_process
+0102343	3-hydroxy-arachidoyl-CoA dehydratase activity	molecular_function
+2000344	positive regulation of acrosome reaction	biological_process
+0048630	skeletal muscle tissue growth	biological_process
+0098800	inner mitochondrial membrane protein complex	cellular_component
+0048630	skeletal muscle tissue growth	biological_process
+0051255	spindle midzone assembly	biological_process
+0004479	methionyl-tRNA formyltransferase activity	molecular_function
+0061797	pH-gated chloride channel activity	molecular_function
+0032076	negative regulation of deoxyribonuclease activity	biological_process
+0050511	undecaprenyldiphospho-muramoylpentapeptide beta-N-acetylglucosaminyltransferase activity	molecular_function
+0030545	signaling receptor regulator activity	molecular_function
+0002507	tolerance induction	biological_process
+1903780	negative regulation of cardiac conduction	biological_process
+0019637	organophosphate metabolic process	biological_process
+0002336	B-1 B cell lineage commitment	biological_process
+0022850	serotonin-gated cation-selective channel activity	molecular_function
+0120134	proximal portion of axoneme	cellular_component
+0051601	exocyst localization	biological_process
+0102965	alcohol-forming fatty acyl-CoA reductase activity	molecular_function
+0097305	response to alcohol	biological_process
+0036156	inner dynein arm	cellular_component
+0120134	proximal portion of axoneme	cellular_component
+0042721	TIM22 mitochondrial import inner membrane insertion complex	cellular_component
+0102344	3-hydroxy-behenoyl-CoA dehydratase activity	molecular_function
+0022850	serotonin-gated cation-selective channel activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+1903363	negative regulation of protein catabolic process	biological_process
+0045028	G protein-coupled purinergic nucleotide receptor activity	molecular_function
+0018208	peptidyl-proline modification	biological_process
+1905920	positive regulation of CoA-transferase activity	biological_process
+0001505	regulation of neurotransmitter levels	biological_process
+0036156	inner dynein arm	cellular_component
+0036156	inner dynein arm	cellular_component
+0071820	N-box binding	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0102345	3-hydroxy-lignoceroyl-CoA dehydratase activity	molecular_function
+0000839	Hrd1p ubiquitin ligase ERAD-L complex	cellular_component
+0038182	G protein-coupled bile acid receptor activity	molecular_function
+0015136	sialic acid transmembrane transporter activity	molecular_function
+0003356	regulation of cilium beat frequency	biological_process
+0005031	tumor necrosis factor receptor activity	molecular_function
+0051649	establishment of localization in cell	biological_process
+0008508	bile acid:sodium symporter activity	molecular_function
+0051643	endoplasmic reticulum localization	biological_process
+0080019	fatty-acyl-CoA reductase (alcohol-forming) activity	molecular_function
+0035632	mitochondrial prohibitin complex	cellular_component
+0060285	cilium-dependent cell motility	biological_process
+0050893	sensory processing	biological_process
+0070966	nuclear-transcribed mRNA catabolic process, no-go decay	biological_process
+0000444	MIS12/MIND type complex	cellular_component
+0052695	cellular glucuronidation	biological_process
+0004984	olfactory receptor activity	molecular_function
+0003356	regulation of cilium beat frequency	biological_process
+2000509	negative regulation of dendritic cell chemotaxis	biological_process
+0061309	cardiac neural crest cell development involved in outflow tract morphogenesis	biological_process
+0099029	anchored component of presynaptic active zone membrane	cellular_component
+0060285	cilium-dependent cell motility	biological_process
+0008195	phosphatidate phosphatase activity	molecular_function
+0004956	prostaglandin D receptor activity	molecular_function
+0000214	tRNA-intron endonuclease complex	cellular_component
+0047394	glycerophosphoinositol inositolphosphodiesterase activity	molecular_function
+0008457	beta-galactosyl-N-acetylglucosaminylgalactosylglucosyl-ceramide beta-1,3-acetylglucosaminyltransferase activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0099192	cerebellar Golgi cell to granule cell synapse	cellular_component
+0017099	very-long-chain-acyl-CoA dehydrogenase activity	molecular_function
+0098977	inhibitory chemical synaptic transmission	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0018812	3-hydroxyacyl-CoA dehydratase activity	molecular_function
+0120134	proximal portion of axoneme	cellular_component
+0034642	mitochondrion migration along actin filament	biological_process
+0004958	prostaglandin F receptor activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0010025	wax biosynthetic process	biological_process
+0004105	choline-phosphate cytidylyltransferase activity	molecular_function
+0052695	cellular glucuronidation	biological_process
+1903445	protein transport from ciliary membrane to plasma membrane	biological_process
+0031752	D5 dopamine receptor binding	molecular_function
+0005436	sodium:phosphate symporter activity	molecular_function
+0030692	Noc4p-Nop14p complex	cellular_component
+0102158	very-long-chain 3-hydroxyacyl-CoA dehydratase activity	molecular_function
+0071025	RNA surveillance	biological_process
+0022850	serotonin-gated cation-selective channel activity	molecular_function
+0072049	comma-shaped body morphogenesis	biological_process
+1900208	regulation of cardiolipin metabolic process	biological_process
+0000818	nuclear MIS12/MIND complex	cellular_component
+0060285	cilium-dependent cell motility	biological_process
+0000213	tRNA-intron endonuclease activity	molecular_function
+1902623	negative regulation of neutrophil migration	biological_process
+0006657	CDP-choline pathway	biological_process
+0031849	olfactory receptor binding	molecular_function
+0005779	integral component of peroxisomal membrane	cellular_component
+0047256	lactosylceramide 1,3-N-acetyl-beta-D-glucosaminyltransferase activity	molecular_function
+0103002	16-hydroxypalmitate dehydrogenase activity	molecular_function
+0102033	long-chain fatty acid omega-hydroxylase activity	molecular_function
+0004912	interleukin-3 receptor activity	molecular_function
+0000275	mitochondrial proton-transporting ATP synthase complex, catalytic sector F(1)	cellular_component
+0008503	benzodiazepine receptor activity	molecular_function
+1902605	heterotrimeric G-protein complex assembly	biological_process
+0015695	organic cation transport	biological_process
+0036156	inner dynein arm	cellular_component
+0005229	intracellular calcium activated chloride channel activity	molecular_function
+0032341	aldosterone metabolic process	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0120134	proximal portion of axoneme	cellular_component
+0015760	glucose-6-phosphate transport	biological_process
+0004984	olfactory receptor activity	molecular_function
+0003356	regulation of cilium beat frequency	biological_process
+0005761	mitochondrial ribosome	cellular_component
+0001785	prostaglandin J receptor activity	molecular_function
+0070847	core mediator complex	cellular_component
+0051649	establishment of localization in cell	biological_process
+0070183	mitochondrial tryptophanyl-tRNA aminoacylation	biological_process
+0019763	immunoglobulin receptor activity	molecular_function
+0045145	single-stranded DNA 5'-3' exodeoxyribonuclease activity	molecular_function
+0032089	NACHT domain binding	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0031228	intrinsic component of Golgi membrane	cellular_component
+0097274	urea homeostasis	biological_process
+0033860	regulation of NAD(P)H oxidase activity	biological_process
+0000379	tRNA-type intron splice site recognition and cleavage	biological_process
+0102965	alcohol-forming fatty acyl-CoA reductase activity	molecular_function
+1990451	cellular stress response to acidic pH	biological_process
+0005459	UDP-galactose transmembrane transporter activity	molecular_function
+0018685	alkane 1-monooxygenase activity	molecular_function
+0061009	common bile duct development	biological_process
+0016338	calcium-independent cell-cell adhesion via plasma membrane cell-adhesion molecules	biological_process
+0005229	intracellular calcium activated chloride channel activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0003356	regulation of cilium beat frequency	biological_process
+0072320	volume-sensitive chloride channel activity	molecular_function
+0036156	inner dynein arm	cellular_component
+0033176	proton-transporting V-type ATPase complex	cellular_component
+0004984	olfactory receptor activity	molecular_function
+0036156	inner dynein arm	cellular_component
+0102207	docosanoate omega-hydroxylase activity	molecular_function
+0009247	glycolipid biosynthetic process	biological_process
+1990569	UDP-N-acetylglucosamine transmembrane transport	biological_process
+0046331	lateral inhibition	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0017128	phospholipid scramblase activity	molecular_function
+0120134	proximal portion of axoneme	cellular_component
+2000609	regulation of thyroid hormone generation	biological_process
+0005502	11-cis retinal binding	molecular_function
+0106235	ceramide-1-phosphate phosphatase activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0015739	sialic acid transport	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0080019	fatty-acyl-CoA reductase (alcohol-forming) activity	molecular_function
+0036156	inner dynein arm	cellular_component
+0001517	N-acetylglucosamine 6-O-sulfotransferase activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0003841	1-acylglycerol-3-phosphate O-acyltransferase activity	molecular_function
+0099534	calcium ion binding involved in regulation of presynaptic cytosolic calcium ion concentration	molecular_function
+0031117	positive regulation of microtubule depolymerization	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0033557	Slx1-Slx4 complex	cellular_component
+0060285	cilium-dependent cell motility	biological_process
+0050051	leukotriene-B4 20-monooxygenase activity	molecular_function
+0035694	mitochondrial protein catabolic process	biological_process
+0002543	activation of blood coagulation via clotting cascade	biological_process
+0004655	porphobilinogen synthase activity	molecular_function
+0072592	oxygen metabolic process	biological_process
+0000810	diacylglycerol diphosphate phosphatase activity	molecular_function
+0102116	laurate hydroxylase activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0036156	inner dynein arm	cellular_component
+0004910	interleukin-1, type II, blocking receptor activity	molecular_function
+0036156	inner dynein arm	cellular_component
+0005761	mitochondrial ribosome	cellular_component
+0060285	cilium-dependent cell motility	biological_process
+0061590	calcium activated phosphatidylcholine scrambling	biological_process
+0033615	mitochondrial proton-transporting ATP synthase complex assembly	biological_process
+0071617	lysophospholipid acyltransferase activity	molecular_function
+0016338	calcium-independent cell-cell adhesion via plasma membrane cell-adhesion molecules	biological_process
+0032685	negative regulation of granulocyte macrophage colony-stimulating factor production	biological_process
+1905934	negative regulation of cell fate determination	biological_process
+0102033	long-chain fatty acid omega-hydroxylase activity	molecular_function
+0051377	mannose-ethanolamine phosphotransferase activity	molecular_function
+0010025	wax biosynthetic process	biological_process
+0015747	urate transport	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0003356	regulation of cilium beat frequency	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0006639	acylglycerol metabolic process	biological_process
+0051649	establishment of localization in cell	biological_process
+0036101	leukotriene B4 catabolic process	biological_process
+0042171	lysophosphatidic acid acyltransferase activity	molecular_function
+0003836	beta-galactoside (CMP) alpha-2,3-sialyltransferase activity	molecular_function
+0102336	3-oxo-arachidoyl-CoA synthase activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0052735	tRNA (cytosine-3-)-methyltransferase activity	molecular_function
+0009644	response to high light intensity	biological_process
+0008195	phosphatidate phosphatase activity	molecular_function
+0002587	negative regulation of antigen processing and presentation of peptide antigen via MHC class II	biological_process
+0046923	ER retention sequence binding	molecular_function
+0008273	calcium, potassium:sodium antiporter activity	molecular_function
+0006506	GPI anchor biosynthetic process	biological_process
+0004984	olfactory receptor activity	molecular_function
+0015698	inorganic anion transport	biological_process
+0046456	icosanoid biosynthetic process	biological_process
+0042765	GPI-anchor transamidase complex	cellular_component
+0004984	olfactory receptor activity	molecular_function
+0032701	negative regulation of interleukin-18 production	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0061589	calcium activated phosphatidylserine scrambling	biological_process
+0047288	monosialoganglioside sialyltransferase activity	molecular_function
+0060562	epithelial tube morphogenesis	biological_process
+0043541	UDP-N-acetylglucosamine transferase complex	cellular_component
+0060285	cilium-dependent cell motility	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0005031	tumor necrosis factor receptor activity	molecular_function
+0120134	proximal portion of axoneme	cellular_component
+0120134	proximal portion of axoneme	cellular_component
+0043715	2,3-diketo-5-methylthiopentyl-1-phosphate enolase activity	molecular_function
+0045608	negative regulation of inner ear auditory receptor cell differentiation	biological_process
+0031413	regulation of buoyancy	biological_process
+0016024	CDP-diacylglycerol biosynthetic process	biological_process
+0048252	lauric acid metabolic process	biological_process
+0016254	preassembly of GPI anchor in ER membrane	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0035879	plasma membrane lactate transport	biological_process
+0042361	menaquinone catabolic process	biological_process
+0048022	negative regulation of melanin biosynthetic process	biological_process
+0047276	N-acetyllactosaminide 3-alpha-galactosyltransferase activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0042392	sphingosine-1-phosphate phosphatase activity	molecular_function
+0036156	inner dynein arm	cellular_component
+0098636	protein complex involved in cell adhesion	cellular_component
+0102337	3-oxo-cerotoyl-CoA synthase activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0008470	isovaleryl-CoA dehydrogenase activity	molecular_function
+0051724	NAD transmembrane transporter activity	molecular_function
+0016255	attachment of GPI anchor to protein	biological_process
+0045163	clustering of voltage-gated potassium channels	biological_process
+0003356	regulation of cilium beat frequency	biological_process
+0003356	regulation of cilium beat frequency	biological_process
+0010706	ganglioside biosynthetic process via lactosylceramide	biological_process
+0006488	dolichol-linked oligosaccharide biosynthetic process	biological_process
+0036156	inner dynein arm	cellular_component
+0036156	inner dynein arm	cellular_component
+0036156	inner dynein arm	cellular_component
+0060285	cilium-dependent cell motility	biological_process
+0004984	olfactory receptor activity	molecular_function
+2000227	negative regulation of pancreatic A cell differentiation	biological_process
+0042376	phylloquinone catabolic process	biological_process
+0097045	phosphatidylserine exposure on blood platelet	biological_process
+0019135	deoxyhypusine monooxygenase activity	molecular_function
+0051431	corticotropin-releasing hormone receptor 2 binding	molecular_function
+1990549	mitochondrial NAD transmembrane transport	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0060285	cilium-dependent cell motility	biological_process
+2000696	regulation of epithelial cell differentiation involved in kidney development	biological_process
+0036156	inner dynein arm	cellular_component
+0061170	negative regulation of hair follicle placode formation	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0033227	dsRNA transport	biological_process
+0042377	vitamin K catabolic process	biological_process
+0043716	2-hydroxy-3-keto-5-methylthiopentenyl-1-phosphate phosphatase activity	molecular_function
+0008503	benzodiazepine receptor activity	molecular_function
+0004984	olfactory receptor activity	molecular_function
+0004914	interleukin-5 receptor activity	molecular_function
+0051649	establishment of localization in cell	biological_process
+0004984	olfactory receptor activity	molecular_function
+0102338	3-oxo-lignoceronyl-CoA synthase activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0030289	protein phosphatase 4 complex	cellular_component
+2000974	negative regulation of pro-B cell differentiation	biological_process
+0140007	KICSTOR complex	cellular_component
+1903766	positive regulation of potassium ion export across plasma membrane	biological_process
+0017177	glucosidase II complex	cellular_component
+0060285	cilium-dependent cell motility	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0004984	olfactory receptor activity	molecular_function
+0120134	proximal portion of axoneme	cellular_component
+0044854	plasma membrane raft assembly	biological_process
+0060285	cilium-dependent cell motility	biological_process
+1903766	positive regulation of potassium ion export across plasma membrane	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0010707	globoside biosynthetic process via lactosylceramide	biological_process
+0097524	sperm plasma membrane	cellular_component
+0031390	Ctf18 RFC-like complex	cellular_component
+0070665	positive regulation of leukocyte proliferation	biological_process
+0051429	corticotropin-releasing hormone receptor binding	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+0016012	sarcoglycan complex	cellular_component
+0060294	cilium movement involved in cell motility	biological_process
+0061106	negative regulation of stomach neuroendocrine cell differentiation	biological_process
+0009922	fatty acid elongase activity	molecular_function
+0099033	anchored component of postsynaptic recycling endosome membrane	cellular_component
+0016427	tRNA (cytosine) methyltransferase activity	molecular_function
+0043874	acireductone synthase activity	molecular_function
+0120045	stereocilium maintenance	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0032791	lead ion binding	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+1903818	positive regulation of voltage-gated potassium channel activity	biological_process
+0004984	olfactory receptor activity	molecular_function
+1903012	positive regulation of bone development	biological_process
+0019911	structural constituent of myelin sheath	molecular_function
+1901890	positive regulation of cell junction assembly	biological_process
+0036156	inner dynein arm	cellular_component
+0045764	positive regulation of cellular amino acid metabolic process	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0009247	glycolipid biosynthetic process	biological_process
+0003356	regulation of cilium beat frequency	biological_process
+0032674	regulation of interleukin-5 production	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0031990	mRNA export from nucleus in response to heat stress	biological_process
+0016272	prefoldin complex	cellular_component
+0004984	olfactory receptor activity	molecular_function
+0021557	oculomotor nerve development	biological_process
+1903044	protein localization to membrane raft	biological_process
+0050746	regulation of lipoprotein metabolic process	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0071919	G-quadruplex DNA formation	biological_process
+0036019	endolysosome	cellular_component
+0060285	cilium-dependent cell motility	biological_process
+0102756	very-long-chain 3-ketoacyl-CoA synthase activity	molecular_function
+0005140	interleukin-9 receptor binding	molecular_function
+0005310	dicarboxylic acid transmembrane transporter activity	molecular_function
+0060285	cilium-dependent cell motility	biological_process
+1905668	positive regulation of protein localization to endosome	biological_process
+0016338	calcium-independent cell-cell adhesion via plasma membrane cell-adhesion molecules	biological_process
+2000156	regulation of retrograde vesicle-mediated transport, Golgi to ER	biological_process
+0004984	olfactory receptor activity	molecular_function
+0052735	tRNA (cytosine-3-)-methyltransferase activity	molecular_function
+0045977	positive regulation of mitotic cell cycle, embryonic	biological_process
+0017128	phospholipid scramblase activity	molecular_function
+0018064	protein-L-histidine N-tele-methyltransferase activity	molecular_function
+0015140	malate transmembrane transporter activity	molecular_function
+0008048	calcium sensitive guanylate cyclase activator activity	molecular_function
+0060830	ciliary receptor clustering involved in smoothened signaling pathway	biological_process
+0036156	inner dynein arm	cellular_component
+1902350	cellular response to chloroquine	biological_process
+0009101	glycoprotein biosynthetic process	biological_process
+0051580	regulation of neurotransmitter uptake	biological_process
+0034625	fatty acid elongation, monounsaturated fatty acid	biological_process
+0015131	oxaloacetate transmembrane transporter activity	molecular_function
+0030250	guanylate cyclase activator activity	molecular_function
+0034163	regulation of toll-like receptor 9 signaling pathway	biological_process
+0006659	phosphatidylserine biosynthetic process	biological_process
+0060285	cilium-dependent cell motility	biological_process
+0042038	peptidyl-histidine methylation, to form tele-methylhistidine	biological_process
+0003266	regulation of secondary heart field cardioblast proliferation	biological_process
+0015141	succinate transmembrane transporter activity	molecular_function
+0034626	fatty acid elongation, polyunsaturated fatty acid	biological_process
+0060164	regulation of timing of neuron differentiation	biological_process
+0015117	thiosulfate transmembrane transporter activity	molecular_function
+0072141	renal interstitial fibroblast development	biological_process
+0006835	dicarboxylic acid transport	biological_process
+0071423	malate transmembrane transport	biological_process
+0072050	S-shaped body morphogenesis	biological_process
+0021558	trochlear nerve development	biological_process
+0015729	oxaloacetate transport	biological_process
+0060675	ureteric bud morphogenesis	biological_process
+0071422	succinate transmembrane transport	biological_process
+0015709	thiosulfate transport	biological_process
+0045050	protein insertion into ER membrane by stop-transfer membrane-anchor sequence	biological_process
+0051089	constitutive protein ectodomain proteolysis	biological_process
+0022894	Intermediate conductance calcium-activated potassium channel activity	molecular_function
+1901342	regulation of vasculature development	biological_process
+0004963	follicle-stimulating hormone receptor activity	molecular_function
+0016286	small conductance calcium-activated potassium channel activity	molecular_function
+0046541	saliva secretion	biological_process
+0061700	GATOR2 complex	cellular_component
+0045050	protein insertion into ER membrane by stop-transfer membrane-anchor sequence	biological_process
+0004963	follicle-stimulating hormone receptor activity	molecular_function
+0031109	microtubule polymerization or depolymerization	biological_process
+0045050	protein insertion into ER membrane by stop-transfer membrane-anchor sequence	biological_process
+0006824	cobalt ion transport	biological_process
+0038029	epidermal growth factor receptor signaling pathway via MAPK cascade	biological_process
+0004475	mannose-1-phosphate guanylyltransferase activity	molecular_function
+0140296	general transcription initiation factor binding	molecular_function
+0106373	3-deoxyglucosone dehydrogenase activity	molecular_function
+0030392	fructosamine catabolic process	biological_process
+0009449	gamma-aminobutyric acid biosynthetic process	biological_process
+0036438	maintenance of lens transparency	biological_process
+0072589	box H/ACA scaRNP complex	cellular_component
+0031429	box H/ACA snoRNP complex	cellular_component
+0090661	box H/ACA telomerase RNP complex	cellular_component
+0034513	box H/ACA snoRNA binding	molecular_function
+0031118	rRNA pseudouridine synthesis	biological_process
+0000454	snoRNA guided rRNA pseudouridine synthesis	biological_process
+0031120	snRNA pseudouridine synthesis	biological_process
+0045590	negative regulation of regulatory T cell differentiation	biological_process
+0034474	U2 snRNA 3'-end processing	biological_process
+0001112	DNA-templated transcription open complex formation	biological_process
+0001112	DNA-templated transcription open complex formation	biological_process
+0070836	caveola assembly	biological_process
+0098833	presynaptic endocytic zone	cellular_component
+0048858	cell projection morphogenesis	biological_process
+0007006	mitochondrial membrane organization	biological_process
+0070836	caveola assembly	biological_process
+0048858	cell projection morphogenesis	biological_process
+1901253	negative regulation of intracellular transport of viral material	biological_process
+0070836	caveola assembly	biological_process
+0002737	negative regulation of plasmacytoid dendritic cell cytokine production	biological_process
+1901097	negative regulation of autophagosome maturation	biological_process
+0048858	cell projection morphogenesis	biological_process
+0070836	caveola assembly	biological_process
+0043553	negative regulation of phosphatidylinositol 3-kinase activity	biological_process
+0045186	zonula adherens assembly	biological_process
+0048858	cell projection morphogenesis	biological_process
+0001112	DNA-templated transcription open complex formation	biological_process
+0044600	protein guanylyltransferase activity	molecular_function
+0045186	zonula adherens assembly	biological_process
+0018260	protein guanylylation	biological_process
+0044600	protein guanylyltransferase activity	molecular_function
+0018260	protein guanylylation	biological_process
+0044600	protein guanylyltransferase activity	molecular_function
+0018260	protein guanylylation	biological_process
+0098833	presynaptic endocytic zone	cellular_component
+0098833	presynaptic endocytic zone	cellular_component
+0070836	caveola assembly	biological_process
+0048858	cell projection morphogenesis	biological_process
+0070836	caveola assembly	biological_process
+0044600	protein guanylyltransferase activity	molecular_function
+0098833	presynaptic endocytic zone	cellular_component
+0048858	cell projection morphogenesis	biological_process
+0018260	protein guanylylation	biological_process
+1903924	estradiol binding	molecular_function
+1903924	estradiol binding	molecular_function
+0040040	thermosensory behavior	biological_process
+0040040	thermosensory behavior	biological_process
+0004511	tyrosine 3-monooxygenase activity	molecular_function
+0070836	caveola assembly	biological_process
+0015842	aminergic neurotransmitter loading into synaptic vesicle	biological_process
+1904844	response to L-glutamine	biological_process
+1903924	estradiol binding	molecular_function
+0048858	cell projection morphogenesis	biological_process
+0004325	ferrochelatase activity	molecular_function
+0046501	protoporphyrinogen IX metabolic process	biological_process
+0006585	dopamine biosynthetic process from tyrosine	biological_process
+0070541	response to platinum ion	biological_process
+0004325	ferrochelatase activity	molecular_function
+0016499	orexin receptor activity	molecular_function
+0016137	glycoside metabolic process	biological_process
+0033596	TSC1-TSC2 complex	cellular_component
+0052314	phytoalexin metabolic process	biological_process
+0008532	N-acetyllactosaminide beta-1,3-N-acetylglucosaminyltransferase activity	molecular_function
+0046501	protoporphyrinogen IX metabolic process	biological_process
+0098833	presynaptic endocytic zone	cellular_component
+0030311	poly-N-acetyllactosamine biosynthetic process	biological_process
+0042214	terpene metabolic process	biological_process
+0070541	response to platinum ion	biological_process
+0098833	presynaptic endocytic zone	cellular_component
+0061073	ciliary body morphogenesis	biological_process
+0098833	presynaptic endocytic zone	cellular_component
+0072017	distal tubule development	biological_process
+0061444	endocardial cushion cell development	biological_process
+0072070	loop of Henle development	biological_process
+0062043	positive regulation of cardiac epithelial to mesenchymal transition	biological_process
+0000931	gamma-tubulin large complex	cellular_component
+0098712	L-glutamate import across plasma membrane	biological_process
+0005223	intracellular cGMP-activated cation channel activity	molecular_function
+0014048	regulation of glutamate secretion	biological_process
+2001023	regulation of response to drug	biological_process
+0031511	Mis6-Sim4 complex	cellular_component
+0070085	glycosylation	biological_process
+0033566	gamma-tubulin complex localization	biological_process
+0047805	cytidylate cyclase activity	molecular_function
+0046320	regulation of fatty acid oxidation	biological_process
+0120022	glucagon family peptide binding	molecular_function
+0038192	gastric inhibitory peptide signaling pathway	biological_process
+0044298	cell body membrane	cellular_component
+0015377	cation:chloride symporter activity	molecular_function
+0046873	metal ion transmembrane transporter activity	molecular_function
+0008511	sodium:potassium:chloride symporter activity	molecular_function
+0098658	inorganic anion import across plasma membrane	biological_process
+0098659	inorganic cation import across plasma membrane	biological_process
+1904450	positive regulation of aspartate secretion	biological_process
+0045795	positive regulation of cell volume	biological_process
+1904464	regulation of matrix metallopeptidase secretion	biological_process
+0030321	transepithelial chloride transport	biological_process
+1903438	positive regulation of mitotic cytokinetic process	biological_process
+0086103	G protein-coupled receptor signaling pathway involved in heart process	biological_process
+1902773	GTPase activator complex	cellular_component
+0071791	chemokine (C-C motif) ligand 5 binding	molecular_function
+0015086	cadmium ion transmembrane transporter activity	molecular_function
+0015341	zinc efflux active transmembrane transporter activity	molecular_function
+0006876	cellular cadmium ion homeostasis	biological_process
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0090541	MIT domain binding	molecular_function
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0046745	viral capsid secondary envelopment	biological_process
+0008247	1-alkyl-2-acetylglycerophosphocholine esterase complex	cellular_component
+0060219	camera-type eye photoreceptor cell differentiation	biological_process
+0021540	corpus callosum morphogenesis	biological_process
+0008247	1-alkyl-2-acetylglycerophosphocholine esterase complex	cellular_component
+0042249	establishment of planar polarity of embryonic epithelium	biological_process
+0021540	corpus callosum morphogenesis	biological_process
+0090176	microtubule cytoskeleton organization involved in establishment of planar polarity	biological_process
+0031023	microtubule organizing center organization	biological_process
+0042249	establishment of planar polarity of embryonic epithelium	biological_process
+0008247	1-alkyl-2-acetylglycerophosphocholine esterase complex	cellular_component
+0051012	microtubule sliding	biological_process
+0098630	aggregation of unicellular organisms	biological_process
+0090176	microtubule cytoskeleton organization involved in establishment of planar polarity	biological_process
+0098630	aggregation of unicellular organisms	biological_process
+0021540	corpus callosum morphogenesis	biological_process
+0042249	establishment of planar polarity of embryonic epithelium	biological_process
+0051130	positive regulation of cellular component organization	biological_process
+0047376	all-trans-retinyl-palmitate hydrolase, all-trans-retinol forming activity	molecular_function
+0000347	THO complex	cellular_component
+0031023	microtubule organizing center organization	biological_process
+2000574	obsolete regulation of microtubule motor activity	biological_process
+0090541	MIT domain binding	molecular_function
+0000347	THO complex	cellular_component
+0090176	microtubule cytoskeleton organization involved in establishment of planar polarity	biological_process
+0000445	THO complex part of transcription export complex	cellular_component
+0051012	microtubule sliding	biological_process
+1905445	positive regulation of clathrin coat assembly	biological_process
+1905445	positive regulation of clathrin coat assembly	biological_process
+1905445	positive regulation of clathrin coat assembly	biological_process
+0031023	microtubule organizing center organization	biological_process
+0015129	lactate transmembrane transporter activity	molecular_function
+0046745	viral capsid secondary envelopment	biological_process
+0000445	THO complex part of transcription export complex	cellular_component
+1905445	positive regulation of clathrin coat assembly	biological_process
+0051130	positive regulation of cellular component organization	biological_process
+1905445	positive regulation of clathrin coat assembly	biological_process
+1905445	positive regulation of clathrin coat assembly	biological_process
+0051012	microtubule sliding	biological_process
+0015130	mevalonate transmembrane transporter activity	molecular_function
+1905445	positive regulation of clathrin coat assembly	biological_process
+2000574	obsolete regulation of microtubule motor activity	biological_process
+1905445	positive regulation of clathrin coat assembly	biological_process
+0031691	alpha-1A adrenergic receptor binding	molecular_function
+0051130	positive regulation of cellular component organization	biological_process
+0008028	monocarboxylic acid transmembrane transporter activity	molecular_function
+0031692	alpha-1B adrenergic receptor binding	molecular_function
+2000574	obsolete regulation of microtubule motor activity	biological_process
+0097159	organic cyclic compound binding	molecular_function
+0090541	MIT domain binding	molecular_function
+0031701	angiotensin receptor binding	molecular_function
+0046745	viral capsid secondary envelopment	biological_process
+0051780	behavioral response to nutrient	biological_process
+0031762	follicle-stimulating hormone receptor binding	molecular_function
+0015129	lactate transmembrane transporter activity	molecular_function
+0016460	myosin II complex	cellular_component
+0015728	mevalonate transport	biological_process
+0031896	V2 vasopressin receptor binding	molecular_function
+0015130	mevalonate transmembrane transporter activity	molecular_function
+0072102	glomerulus morphogenesis	biological_process
+0050975	sensory perception of touch	biological_process
+0097513	myosin II filament	cellular_component
+0015718	monocarboxylic acid transport	biological_process
+0008028	monocarboxylic acid transmembrane transporter activity	molecular_function
+0002121	inter-male aggressive behavior	biological_process
+0021740	principal sensory nucleus of trigeminal nerve development	biological_process
+0097159	organic cyclic compound binding	molecular_function
+0051780	behavioral response to nutrient	biological_process
+0015728	mevalonate transport	biological_process
+0015718	monocarboxylic acid transport	biological_process
+0008247	1-alkyl-2-acetylglycerophosphocholine esterase complex	cellular_component
+0021540	corpus callosum morphogenesis	biological_process
+0042249	establishment of planar polarity of embryonic epithelium	biological_process
+0090176	microtubule cytoskeleton organization involved in establishment of planar polarity	biological_process
+0031023	microtubule organizing center organization	biological_process
+0051012	microtubule sliding	biological_process
+1905788	negative regulation of detection of mechanical stimulus involved in sensory perception of touch	biological_process
+1902630	regulation of membrane hyperpolarization	biological_process
+0098903	regulation of membrane repolarization during action potential	biological_process
+0097541	axonemal basal plate	cellular_component
+0002093	auditory receptor cell morphogenesis	biological_process
+0060541	respiratory system development	biological_process
+0032185	septin cytoskeleton organization	biological_process
+0001888	glucuronyl-galactosyl-proteoglycan 4-alpha-N-acetylglucosaminyltransferase activity	molecular_function
+0015417	ABC-type polyamine transporter activity	molecular_function
+0030003	cellular cation homeostasis	biological_process
+0097734	extracellular exosome biogenesis	biological_process
+1990938	peptidyl-aspartic acid autophosphorylation	biological_process
+1902047	polyamine transmembrane transport	biological_process
+0016243	regulation of autophagosome size	biological_process
+2000152	regulation of ubiquitin-specific protease activity	biological_process
+1903710	spermine transmembrane transport	biological_process
+0005250	A-type (transient outward) potassium channel activity	molecular_function
+1905030	voltage-gated ion channel activity involved in regulation of postsynaptic membrane potential	molecular_function
+0051877	pigment granule aggregation in cell center	biological_process
+0035658	Mon1-Ccz1 complex	cellular_component
+0004078	biotin-[methylcrotonoyl-CoA-carboxylase] ligase activity	molecular_function
+0047730	carnosine synthase activity	molecular_function
+1905667	negative regulation of protein localization to endosome	biological_process
+0008480	sarcosine dehydrogenase activity	molecular_function
+0051499	D-aminoacyl-tRNA deacylase activity	molecular_function
+0090498	extrinsic component of Golgi membrane	cellular_component
+0004572	mannosyl-oligosaccharide 1,3-1,6-alpha-mannosidase activity	molecular_function
+0004572	mannosyl-oligosaccharide 1,3-1,6-alpha-mannosidase activity	molecular_function
+0035596	methylthiotransferase activity	molecular_function
+0047960	glycine dehydrogenase activity	molecular_function
+0050353	trimethyllysine dioxygenase activity	molecular_function
+0000291	nuclear-transcribed mRNA catabolic process, exonucleolytic	biological_process
+0042285	xylosyltransferase activity	molecular_function
+0031085	BLOC-3 complex	cellular_component
+0051731	polynucleotide 5'-hydroxyl-kinase activity	molecular_function
+0097065	anterior head development	biological_process
+0140344	triglyceride transfer activity	molecular_function
+0003011	involuntary skeletal muscle contraction	biological_process
+0032430	positive regulation of phospholipase A2 activity	biological_process
+0004699	calcium-independent protein kinase C activity	molecular_function
+0017168	5-oxoprolinase (ATP-hydrolyzing) activity	molecular_function
+0002169	3-methylcrotonyl-CoA carboxylase complex, mitochondrial	cellular_component
+0140298	endocytic iron import into cell	biological_process
+0034388	Pwp2p-containing subcomplex of 90S preribosome	cellular_component
+0008900	P-type potassium:proton transporter activity	molecular_function
+0102102	homocarnosine synthase activity	molecular_function
+0004079	biotin-[methylmalonyl-CoA-carboxytransferase] ligase activity	molecular_function
+0035853	chromosome passenger complex localization to spindle midzone	biological_process
+0007033	vacuole organization	biological_process
+0033150	cytoskeletal calyx	cellular_component
+1901053	sarcosine catabolic process	biological_process
+0034085	establishment of sister chromatid cohesion	biological_process
+0051341	regulation of oxidoreductase activity	biological_process
+0097310	cap2 mRNA methylation	biological_process
+0004080	biotin-[propionyl-CoA-carboxylase (ATP-hydrolyzing)] ligase activity	molecular_function
+0030992	intraciliary transport particle B	cellular_component
+0102522	tRNA 4-demethylwyosine alpha-amino-alpha-carboxypropyltransferase activity	molecular_function
+0008964	phosphoenolpyruvate carboxylase activity	molecular_function
+0070042	rRNA (uridine-N3-)-methyltransferase activity	molecular_function
+0097035	regulation of membrane lipid distribution	biological_process
+0003987	acetate-CoA ligase activity	molecular_function
+0090599	alpha-glucosidase activity	molecular_function
+1905202	methylcrotonoyl-CoA carboxylase complex	cellular_component
+0000448	cleavage in ITS2 between 5.8S rRNA and LSU-rRNA of tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)	biological_process
+1990272	anti-Mullerian hormone receptor activity	molecular_function
+0043759	methylbutanoate-CoA ligase activity	molecular_function
+0030729	acetoacetate-CoA ligase activity	molecular_function
+0060912	cardiac cell fate specification	biological_process
+0034377	plasma lipoprotein particle assembly	biological_process
+0035499	carnosine biosynthetic process	biological_process
+0060052	neurofilament cytoskeleton organization	biological_process
+0140345	phosphatidylcholine flippase activity	molecular_function
+0061975	articular cartilage development	biological_process
+0004512	inositol-3-phosphate synthase activity	molecular_function
+0004366	glycerol-3-phosphate O-acyltransferase activity	molecular_function
+0017118	lipoyltransferase activity	molecular_function
+0018271	biotin-protein ligase activity	molecular_function
+0005391	P-type sodium:potassium-exchanging transporter activity	molecular_function
+2001031	positive regulation of cellular glucuronidation	biological_process
+0120234	stereocilium coat	cellular_component
+1903319	positive regulation of protein maturation	biological_process
+0061591	calcium activated galactosylceramide scrambling	biological_process
+0004832	valine-tRNA ligase activity	molecular_function
+0046486	glycerolipid metabolic process	biological_process
+0004485	methylcrotonoyl-CoA carboxylase activity	molecular_function
+0050218	propionate-CoA ligase activity	molecular_function
+0102420	sn-1-glycerol-3-phosphate C16:0-DCA-CoA acyl transferase activity	molecular_function
+0033588	elongator holoenzyme complex	cellular_component
+0033919	glucan 1,3-alpha-glucosidase activity	molecular_function
+0034373	intermediate-density lipoprotein particle remodeling	biological_process
+0030686	90S preribosome	cellular_component
+0004095	carnitine O-palmitoyltransferase activity	molecular_function
+0070418	DNA-dependent protein kinase complex	cellular_component
+1900542	regulation of purine nucleotide metabolic process	biological_process
+1990262	anti-Mullerian hormone signaling pathway	biological_process
+0000254	C-4 methylsterol oxidase activity	molecular_function
+0004095	carnitine O-palmitoyltransferase activity	molecular_function
+0042984	regulation of amyloid precursor protein biosynthetic process	biological_process
+1901994	negative regulation of meiotic cell cycle phase transition	biological_process
+0070004	cysteine-type exopeptidase activity	molecular_function
+0004366	glycerol-3-phosphate O-acyltransferase activity	molecular_function
+0031956	medium-chain fatty acid-CoA ligase activity	molecular_function
+0021744	dorsal motor nucleus of vagus nerve development	biological_process
+0047341	fucose-1-phosphate guanylyltransferase activity	molecular_function
+0043604	amide biosynthetic process	biological_process
+0050218	propionate-CoA ligase activity	molecular_function
+0071951	conversion of methionyl-tRNA to N-formyl-methionyl-tRNA	biological_process
+0061588	calcium activated phospholipid scrambling	biological_process
+0006438	valyl-tRNA aminoacylation	biological_process
+0071073	positive regulation of phospholipid biosynthetic process	biological_process
+0000480	endonucleolytic cleavage in 5'-ETS of tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)	biological_process
+0071110	obsolete histone biotinylation	biological_process
+0004720	protein-lysine 6-oxidase activity	molecular_function
+1903729	regulation of plasma membrane organization	biological_process
+0019413	acetate biosynthetic process	biological_process
+1902466	positive regulation of histone H3-K27 trimethylation	biological_process
+0070236	negative regulation of activation-induced cell death of T cells	biological_process
+0004476	mannose-6-phosphate isomerase activity	molecular_function
+0046537	2,3-bisphosphoglycerate-independent phosphoglycerate mutase activity	molecular_function
+0043605	cellular amide catabolic process	biological_process
+0004095	carnitine O-palmitoyltransferase activity	molecular_function
+0016332	establishment or maintenance of polarity of embryonic epithelium	biological_process
+0102391	decanoate-CoA ligase activity	molecular_function
+0090498	extrinsic component of Golgi membrane	cellular_component
+0050277	sedoheptulokinase activity	molecular_function
+0090730	Las1 complex	cellular_component
+2000647	negative regulation of stem cell proliferation	biological_process
+0000030	mannosyltransferase activity	molecular_function
+0009637	response to blue light	biological_process
+0001735	prenylcysteine oxidase activity	molecular_function
+0098921	retrograde trans-synaptic signaling by endocannabinoid	biological_process
+0005712	chiasma	cellular_component
+0019542	propionate biosynthetic process	biological_process
+2000275	regulation of oxidative phosphorylation uncoupler activity	biological_process
+0080064	4,4-dimethyl-9beta,19-cyclopropylsterol oxidation	biological_process
+0102420	sn-1-glycerol-3-phosphate C16:0-DCA-CoA acyl transferase activity	molecular_function
+0070004	cysteine-type exopeptidase activity	molecular_function
+0016841	ammonia-lyase activity	molecular_function
+0030504	inorganic diphosphate transmembrane transporter activity	molecular_function
+0006655	phosphatidylglycerol biosynthetic process	biological_process
+0000472	endonucleolytic cleavage to generate mature 5'-end of SSU-rRNA from (SSU-rRNA, 5.8S rRNA, LSU-rRNA)	biological_process
+0070004	cysteine-type exopeptidase activity	molecular_function
+0061611	mannose to fructose-6-phosphate metabolic process	biological_process
+1905590	fibronectin fibril organization	biological_process
+0035921	desmosome disassembly	biological_process
+0099536	synaptic signaling	biological_process
+0106008	2-oxoglutaramate amidase activity	molecular_function
+0035778	pronephric nephron tubule epithelial cell differentiation	biological_process
+0005715	late recombination nodule	cellular_component
+0004397	histidine ammonia-lyase activity	molecular_function
+0021650	vestibulocochlear nerve formation	biological_process
+0070892	lipoteichoic acid immune receptor activity	molecular_function
+0015127	bilirubin transmembrane transporter activity	molecular_function
+1901668	regulation of superoxide dismutase activity	biological_process
+0018406	protein C-linked glycosylation via 2'-alpha-mannosyl-L-tryptophan	biological_process
+0018874	benzoate metabolic process	biological_process
+0035963	cellular response to interleukin-13	biological_process
+0060214	endocardium formation	biological_process
+0007014	actin ubiquitination	biological_process
+0007060	male meiosis chromosome segregation	biological_process
+0061561	trigeminal ganglion formation	biological_process
+0019556	histidine catabolic process to glutamate and formamide	biological_process
+0030328	prenylcysteine catabolic process	biological_process
+0008883	glutamyl-tRNA reductase activity	molecular_function
+1901318	negative regulation of flagellated sperm motility	biological_process
+0015867	ATP transport	biological_process
+1901046	positive regulation of oviposition	biological_process
+0005606	laminin-1 complex	cellular_component
+0042720	mitochondrial inner membrane peptidase complex	cellular_component
+0150098	glial cell-neuron signaling	biological_process
+0004919	interleukin-9 receptor activity	molecular_function
+0004174	electron-transferring-flavoprotein dehydrogenase activity	molecular_function
+0050152	omega-amidase activity	molecular_function
+0015386	potassium:proton antiporter activity	molecular_function
+0051709	regulation of killing of cells of another organism	biological_process
+0018022	peptidyl-lysine methylation	biological_process
+0043028	cysteine-type endopeptidase regulator activity involved in apoptotic process	molecular_function
+0042720	mitochondrial inner membrane peptidase complex	cellular_component
+1901086	benzylpenicillin metabolic process	biological_process
+0070563	negative regulation of vitamin D receptor signaling pathway	biological_process
+0019605	butyrate metabolic process	biological_process
+1905221	positive regulation of platelet formation	biological_process
+2000329	negative regulation of T-helper 17 cell lineage commitment	biological_process
+0072669	tRNA-splicing ligase complex	cellular_component
+2000647	negative regulation of stem cell proliferation	biological_process
+1901562	response to paraquat	biological_process
+1901480	oleate transmembrane transporter activity	molecular_function
+0036344	platelet morphogenesis	biological_process
+0005608	laminin-3 complex	cellular_component
+0003332	negative regulation of extracellular matrix constituent secretion	biological_process
+1990504	dense core granule exocytosis	biological_process
+0019101	female somatic sex determination	biological_process
+0072137	condensed mesenchymal cell proliferation	biological_process
+0015723	bilirubin transport	biological_process
+0030686	90S preribosome	cellular_component
+1903886	positive regulation of chemokine (C-C motif) ligand 20 production	biological_process
+0030992	intraciliary transport particle B	cellular_component
+0046031	ADP metabolic process	biological_process
+0043060	meiotic metaphase I plate congression	biological_process
+0072431	mitotic G1 DNA damage checkpoint signaling	biological_process
+0036105	peroxisome membrane class-1 targeting sequence binding	molecular_function
+0015385	sodium:proton antiporter activity	molecular_function
+0019557	histidine catabolic process to glutamate and formate	biological_process
+0032029	myosin tail binding	molecular_function
+0018057	peptidyl-lysine oxidation	biological_process
+0032642	regulation of chemokine production	biological_process
+0150025	oxidised low-density lipoprotein particle receptor activity	molecular_function
+0015694	mercury ion transport	biological_process
+0061300	cerebellum vasculature development	biological_process
+0005879	axonemal microtubule	cellular_component
+0120242	2-iminobutanoate deaminase activity	molecular_function
+0006627	protein processing involved in protein targeting to mitochondrion	biological_process
+0060014	granulosa cell differentiation	biological_process
+0015980	energy derivation by oxidation of organic compounds	biological_process
+1903883	positive regulation of interleukin-17-mediated signaling pathway	biological_process
+0140597	protein carrier chaperone	molecular_function
+0071247	cellular response to chromate	biological_process
+0006627	protein processing involved in protein targeting to mitochondrion	biological_process
+1902339	positive regulation of apoptotic process involved in morphogenesis	biological_process
+0000480	endonucleolytic cleavage in 5'-ETS of tricistronic rRNA transcript (SSU-rRNA, 5.8S rRNA, LSU-rRNA)	biological_process
+0015636	short-chain fatty acid transmembrane transporter activity	molecular_function
+0051257	meiotic spindle midzone assembly	biological_process
+0120243	2-iminopropanoate deaminase activity	molecular_function
+0072321	obsolete chaperone-mediated protein transport	biological_process
+0015732	prostaglandin transport	biological_process
+0071396	cellular response to lipid	biological_process
+1990379	lipid transport across blood-brain barrier	biological_process
+0034453	microtubule anchoring	biological_process
+0045950	negative regulation of mitotic recombination	biological_process
+0000472	endonucleolytic cleavage to generate mature 5'-end of SSU-rRNA from (SSU-rRNA, 5.8S rRNA, LSU-rRNA)	biological_process
+0150024	oxidised low-density lipoprotein particle clearance	biological_process
+1900131	negative regulation of lipid binding	biological_process
+1904710	positive regulation of granulosa cell apoptotic process	biological_process
+0098900	regulation of action potential	biological_process
+0016557	peroxisome membrane biogenesis	biological_process
+1902220	positive regulation of intrinsic apoptotic signaling pathway in response to osmotic stress	biological_process
+0015912	short-chain fatty acid transport	biological_process
+2000078	positive regulation of type B pancreatic cell development	biological_process
+1901423	response to benzene	biological_process
+0034201	response to oleic acid	biological_process
+0007112	male meiosis cytokinesis	biological_process
+0043977	histone H2A-K5 acetylation	biological_process
+0072684	mitochondrial tRNA 3'-trailer cleavage, endonucleolytic	biological_process
+0050659	N-acetylgalactosamine 4-sulfate 6-O-sulfotransferase activity	molecular_function
+0008568	microtubule severing ATPase activity	molecular_function
+0042500	aspartic endopeptidase activity, intramembrane cleaving	molecular_function
+0019276	UDP-N-acetylgalactosamine metabolic process	biological_process
+0008352	katanin complex	cellular_component
+1990462	omegasome	cellular_component
+0061547	glycogen synthase activity, transferring glucose-1-phosphate	molecular_function
+0015923	mannosidase activity	molecular_function
+0000026	alpha-1,2-mannosyltransferase activity	molecular_function
+0030956	glutamyl-tRNA(Gln) amidotransferase complex	cellular_component
+0001729	ceramide kinase activity	molecular_function
+0019319	hexose biosynthetic process	biological_process
+2000541	positive regulation of protein geranylgeranylation	biological_process
+0047677	arachidonate 8(R)-lipoxygenase activity	molecular_function
+0007042	lysosomal lumen acidification	biological_process
+0016402	pristanoyl-CoA oxidase activity	molecular_function
+0033791	3alpha,7alpha,12alpha-trihydroxy-5beta-cholestanoyl-CoA 24-hydroxylase activity	molecular_function
+0051013	microtubule severing	biological_process
+0071633	dihydroceramidase activity	molecular_function
+0008488	gamma-glutamyl carboxylase activity	molecular_function
+0018759	methenyltetrahydromethanopterin cyclohydrolase activity	molecular_function
+0043259	laminin-10 complex	cellular_component
+0051267	CP2 mannose-ethanolamine phosphotransferase activity	molecular_function
+0031389	Rad17 RFC-like complex	cellular_component
+0004571	mannosyl-oligosaccharide 1,2-alpha-mannosidase activity	molecular_function
+0051013	microtubule severing	biological_process
+0010607	negative regulation of cytoplasmic mRNA processing body assembly	biological_process
+0008582	regulation of synaptic assembly at neuromuscular junction	biological_process
+0004334	fumarylacetoacetase activity	molecular_function
+0045796	negative regulation of intestinal cholesterol absorption	biological_process
+0043980	histone H2B-K12 acetylation	biological_process
+0052926	dol-P-Man:Man(6)GlcNAc(2)-PP-Dol alpha-1,2-mannosyltransferase activity	molecular_function
+0003313	heart rudiment development	biological_process
+0048297	negative regulation of isotype switching to IgA isotypes	biological_process
+0060029	convergent extension involved in organogenesis	biological_process
+0048483	autonomic nervous system development	biological_process
+0070681	glutaminyl-tRNAGln biosynthesis via transamidation	biological_process
+0046715	active borate transmembrane transporter activity	molecular_function
+0017187	peptidyl-glutamic acid carboxylation	biological_process
+0050031	L-pipecolate oxidase activity	molecular_function
+0015111	iodide transmembrane transporter activity	molecular_function
+0006522	alanine metabolic process	biological_process
+0031695	alpha-2B adrenergic receptor binding	molecular_function
+0102773	dihydroceramide kinase activity	molecular_function
+0005610	laminin-5 complex	cellular_component
+0052918	dol-P-Man:Man(8)GlcNAc(2)-PP-Dol alpha-1,2-mannosyltransferase activity	molecular_function
+0048731	system development	biological_process
+0001700	embryonic development via the syncytial blastoderm	biological_process
+1900022	regulation of D-erythro-sphingosine kinase activity	biological_process
+0010721	negative regulation of cell development	biological_process
+0106322	S-(hydroxymethyl)glutathione dehydrogenase NAD activity	molecular_function
+0033514	L-lysine catabolic process to acetyl-CoA via L-pipecolate	biological_process
+1905247	positive regulation of aspartic-type peptidase activity	biological_process
+0070774	phytoceramidase activity	molecular_function
+0071340	skeletal muscle acetylcholine-gated channel clustering	biological_process
+1990769	proximal neuron projection	cellular_component
+0021703	locus ceruleus development	biological_process
+0043260	laminin-11 complex	cellular_component
+0010949	negative regulation of intestinal phytosterol absorption	biological_process
+0033008	positive regulation of mast cell activation involved in immune response	biological_process
+0021533	cell differentiation in hindbrain	biological_process
+1902000	homogentisate catabolic process	biological_process
+0002190	cap-independent translational initiation	biological_process
+0008727	GDP-mannose mannosyl hydrolase activity	molecular_function
+0015252	proton channel activity	molecular_function
+0002528	regulation of vascular permeability involved in acute inflammatory response	biological_process
+1904381	Golgi apparatus mannose trimming	biological_process
+0005093	Rab GDP-dissociation inhibitor activity	molecular_function
+0015111	iodide transmembrane transporter activity	molecular_function
+0106321	S-(hydroxymethyl)glutathione dehydrogenase NADP activity	molecular_function
+0021937	cerebellar Purkinje cell-granule cell precursor cell signaling involved in regulation of granule cell precursor cell proliferation	biological_process
+0030108	HLA-A specific activating MHC class I receptor activity	molecular_function
+0035214	eye-antennal disc development	biological_process
+0005610	laminin-5 complex	cellular_component
+0032055	negative regulation of translation in response to stress	biological_process
+1904382	mannose trimming involved in glycoprotein ERAD pathway	biological_process
+0031696	alpha-2C adrenergic receptor binding	molecular_function
+0008188	neuropeptide receptor activity	molecular_function
+0000306	extrinsic component of vacuolar membrane	cellular_component
+0106016	positive regulation of inflammatory response to wounding	biological_process
+0070367	negative regulation of hepatocyte differentiation	biological_process
+0048894	efferent axon development in a lateral line nerve	biological_process
+0004164	diphthine synthase activity	molecular_function
+0046713	borate transport	biological_process
+0033269	internode region of axon	cellular_component
+0097188	dentin mineralization	biological_process
+0042074	cell migration involved in gastrulation	biological_process
+0061702	inflammasome complex	cellular_component
+1904427	positive regulation of calcium ion transmembrane transport	biological_process
+0045103	intermediate filament-based process	biological_process
+0010172	embryonic body morphogenesis	biological_process
+0072255	metanephric glomerular mesangial cell development	biological_process
+0021526	medial motor column neuron differentiation	biological_process
+0021623	oculomotor nerve formation	biological_process
+0051427	hormone receptor binding	molecular_function
+0021960	anterior commissure morphogenesis	biological_process
+0006669	sphinganine-1-phosphate biosynthetic process	biological_process
+0021515	cell differentiation in spinal cord	biological_process
+0021934	hindbrain tangential cell migration	biological_process
+0048341	paraxial mesoderm formation	biological_process
+0060448	dichotomous subdivision of terminal units involved in lung branching	biological_process
+0060027	convergent extension involved in gastrulation	biological_process
+0001534	radial spoke	cellular_component
+0009960	endosperm development	biological_process
+0031628	opioid receptor binding	molecular_function
+0097403	cellular response to raffinose	biological_process
+0070075	tear secretion	biological_process
+0070772	PAS complex	cellular_component
+0021793	chemorepulsion of branchiomotor axon	biological_process
+0000941	inner kinetochore	cellular_component
+0021723	medullary reticular formation development	biological_process
+0106072	negative regulation of adenylate cyclase-activating G protein-coupled receptor signaling pathway	biological_process
+0048316	seed development	biological_process
+1905673	positive regulation of lysosome organization	biological_process
+0035709	memory T cell activation	biological_process
+0010512	negative regulation of phosphatidylinositol biosynthetic process	biological_process
+0090522	vesicle tethering involved in exocytosis	biological_process
+0042044	fluid transport	biological_process
+1904158	axonemal central apparatus assembly	biological_process
+0003358	noradrenergic neuron development	biological_process
+0021523	somatic motor neuron differentiation	biological_process
+0002764	immune response-regulating signaling pathway	biological_process
+0060710	chorio-allantoic fusion	biological_process
+0003104	positive regulation of glomerular filtration	biological_process
+0021615	glossopharyngeal nerve morphogenesis	biological_process
+0062177	radial spoke assembly	biological_process
+0031086	nuclear-transcribed mRNA catabolic process, deadenylation-independent decay	biological_process
+0021642	trochlear nerve formation	biological_process
+0010813	neuropeptide catabolic process	biological_process
+0048841	regulation of axon extension involved in axon guidance	biological_process
+0048486	parasympathetic nervous system development	biological_process
+2000591	positive regulation of metanephric mesenchymal cell migration	biological_process
+0003342	proepicardium development	biological_process
+0061452	retrotrapezoid nucleus neuron differentiation	biological_process
+0050923	regulation of negative chemotaxis	biological_process
+0035793	positive regulation of metanephric mesenchymal cell migration by platelet-derived growth factor receptor-beta signaling pathway	biological_process
+1902172	regulation of keratinocyte apoptotic process	biological_process
+1905176	positive regulation of vascular associated smooth muscle cell dedifferentiation	biological_process
+0060538	skeletal muscle organ development	biological_process
+0043041	amino acid activation for nonribosomal peptide biosynthetic process	biological_process
+1900480	regulation of diacylglycerol biosynthetic process	biological_process
+1990889	H4K20me3 modified histone binding	molecular_function
+0043271	negative regulation of ion transport	biological_process
+1903929	primary palate development	biological_process
+0050185	phosphatidylinositol deacylase activity	molecular_function
+0031314	extrinsic component of mitochondrial inner membrane	cellular_component
+0019797	procollagen-proline 3-dioxygenase activity	molecular_function
+0009506	plasmodesma	cellular_component
+0015220	choline transmembrane transporter activity	molecular_function
+0070899	mitochondrial tRNA wobble uridine modification	biological_process
+0050250	aldehyde oxidase activity	molecular_function
+0031314	extrinsic component of mitochondrial inner membrane	cellular_component
+0070159	mitochondrial threonyl-tRNA aminoacylation	biological_process
+0032090	Pyrin domain binding	molecular_function
+0070698	type I activin receptor binding	molecular_function
+0033867	Fas-activated serine/threonine kinase activity	molecular_function
+0017161	inositol-1,3,4-trisphosphate 4-phosphatase activity	molecular_function
+0099503	secretory vesicle	cellular_component
+0036364	transforming growth factor beta1 activation	biological_process
+0051886	negative regulation of timing of anagen	biological_process
+0062157	mitochondrial ATP-gated potassium channel complex	cellular_component
+0061453	interstitial cell of Cajal differentiation	biological_process
+0006505	GPI anchor metabolic process	biological_process
+0004466	long-chain-acyl-CoA dehydrogenase activity	molecular_function
+1905060	calcium:cation antiporter activity involved in regulation of postsynaptic cytosolic calcium ion concentration	molecular_function
+0021530	spinal cord oligodendrocyte cell fate specification	biological_process
+0015164	glucuronoside transmembrane transporter activity	molecular_function
+1904744	positive regulation of telomeric DNA binding	biological_process
+0035805	egg coat	cellular_component
+0071409	cellular response to cycloheximide	biological_process
+0007495	visceral mesoderm-endoderm interaction involved in midgut development	biological_process
+1990589	ATF4-CREB1 transcription factor complex	cellular_component
+0036325	vascular endothelial growth factor receptor-3 signaling pathway	biological_process
+0097545	axonemal outer doublet	cellular_component
+0005302	L-tyrosine transmembrane transporter activity	molecular_function
+0120200	rod photoreceptor outer segment	cellular_component
+0140468	HRI-mediated signaling	biological_process
+0021979	hypothalamus cell differentiation	biological_process
+0035804	structural constituent of egg coat	molecular_function
+0060920	cardiac pacemaker cell differentiation	biological_process
+0052828	inositol-3,4-bisphosphate 4-phosphatase activity	molecular_function
+0060490	lateral sprouting involved in lung morphogenesis	biological_process
+0036053	glomerular endothelium fenestra	cellular_component
+0071714	icosanoid transmembrane transporter activity	molecular_function
+1905799	regulation of intraciliary retrograde transport	biological_process
+0071268	homocysteine biosynthetic process	biological_process
+0051685	maintenance of ER location	biological_process
+0006726	eye pigment biosynthetic process	biological_process
+0015491	obsolete cation:cation antiporter activity	molecular_function
+0016316	phosphatidylinositol-3,4-bisphosphate 4-phosphatase activity	molecular_function
+0003213	cardiac right atrium morphogenesis	biological_process
+0140467	integrated stress response signaling	biological_process
+0021985	neurohypophysis development	biological_process
+0060488	orthogonal dichotomous subdivision of terminal units involved in lung branching morphogenesis	biological_process
+1900035	negative regulation of cellular response to heat	biological_process
+0099608	regulation of action potential firing pattern	biological_process
+0048743	positive regulation of skeletal muscle fiber development	biological_process
+0060489	planar dichotomous subdivision of terminal units involved in lung branching morphogenesis	biological_process
+0003163	sinoatrial node development	biological_process
+0106056	regulation of calcineurin-mediated signaling	biological_process
+0090251	protein localization involved in establishment of planar polarity	biological_process
+0008609	alkylglycerone-phosphate synthase activity	molecular_function
+0040011	locomotion	biological_process
+0019353	protoporphyrinogen IX biosynthetic process from glutamate	biological_process
+0090615	mitochondrial mRNA processing	biological_process
+0015016	[heparan sulfate]-glucosamine N-sulfotransferase activity	molecular_function
+0014052	regulation of gamma-aminobutyric acid secretion	biological_process
+1904891	positive regulation of excitatory synapse assembly	biological_process
+0047757	chondroitin-glucuronate 5-epimerase activity	molecular_function
+0032500	muramyl dipeptide binding	molecular_function
+0042328	heparan sulfate N-acetylglucosaminyltransferase activity	molecular_function
+0062152	mRNA (cytidine-5-)-methyltransferase activity	molecular_function
+0010359	regulation of anion channel activity	biological_process
+0007343	egg activation	biological_process
+0048203	vesicle targeting, trans-Golgi to endosome	biological_process
+0031048	small non-coding RNA-dependent heterochromatin formation	biological_process
+0021956	central nervous system interneuron axonogenesis	biological_process
+0021989	olfactory cortex development	biological_process
+1990071	TRAPPII protein complex	cellular_component
+0016641	oxidoreductase activity, acting on the CH-NH2 group of donors, oxygen as acceptor	molecular_function
+0021919	BMP signaling pathway involved in spinal cord dorsal/ventral patterning	biological_process
+0019318	hexose metabolic process	biological_process
+0071763	nuclear membrane organization	biological_process
+0106162	mRNA N-acetyltransferase activity	molecular_function
+0060470	positive regulation of cytosolic calcium ion concentration involved in egg activation	biological_process
+1902164	positive regulation of DNA damage response, signal transduction by p53 class mediator resulting in transcription of p21 class mediator	biological_process
+0033692	cellular polysaccharide biosynthetic process	biological_process
+0036514	dopaminergic neuron axon guidance	biological_process
+0008663	2',3'-cyclic-nucleotide 2'-phosphodiesterase activity	molecular_function
+0046587	positive regulation of calcium-dependent cell-cell adhesion	biological_process
+0070735	protein-glycine ligase activity	molecular_function
+0036505	prosaposin receptor activity	molecular_function
+0032996	Bcl3-Bcl10 complex	cellular_component
+0052856	NADHX epimerase activity	molecular_function
+0021687	cerebellar molecular layer morphogenesis	biological_process
+0030204	chondroitin sulfate metabolic process	biological_process
+0032498	detection of muramyl dipeptide	biological_process
+0098752	integral component of the cytoplasmic side of the plasma membrane	cellular_component
+1902412	regulation of mitotic cytokinesis	biological_process
+0045743	positive regulation of fibroblast growth factor receptor signaling pathway	biological_process
+0051916	granulocyte colony-stimulating factor binding	molecular_function
+0021528	commissural neuron differentiation in spinal cord	biological_process
+0140285	endosome fission	biological_process
+0030204	chondroitin sulfate metabolic process	biological_process
+1990883	rRNA cytidine N-acetyltransferase activity	molecular_function
+1990745	EARP complex	cellular_component
+0042015	interleukin-20 binding	molecular_function
+0106137	IkappaB kinase complex binding	molecular_function
+0001010	RNA polymerase II sequence-specific DNA-binding transcription factor recruiting activity	molecular_function
+0052857	NADPHX epimerase activity	molecular_function
+0036515	serotonergic neuron axon guidance	biological_process
+1904491	protein localization to ciliary transition zone	biological_process
+0010720	positive regulation of cell development	biological_process
+0006965	positive regulation of biosynthetic process of antibacterial peptides active against Gram-positive bacteria	biological_process
+0099078	BORC complex	cellular_component
+0070938	contractile ring	cellular_component
+0070736	protein-glycine ligase activity, initiating	molecular_function
+0106015	negative regulation of inflammatory response to wounding	biological_process
+0030293	transmembrane receptor protein tyrosine kinase inhibitor activity	molecular_function
+0047734	CDP-glycerol diphosphatase activity	molecular_function
+0110026	regulation of DNA strand resection involved in replication fork processing	biological_process
+0030205	dermatan sulfate metabolic process	biological_process
+0043218	compact myelin	cellular_component
+1904054	regulation of cholangiocyte proliferation	biological_process
+1904812	rRNA acetylation involved in maturation of SSU-rRNA	biological_process
+0000938	GARP complex	cellular_component
+0098542	defense response to other organism	biological_process
+0018094	protein polyglycylation	biological_process
+0060560	developmental growth involved in morphogenesis	biological_process
+0090175	regulation of establishment of planar polarity	biological_process
+0000022	mitotic spindle elongation	biological_process
+0002067	glandular epithelial cell differentiation	biological_process
+0046645	positive regulation of gamma-delta T cell activation	biological_process
+0045584	negative regulation of cytotoxic T cell differentiation	biological_process
+0051391	tRNA acetylation	biological_process
+0002067	glandular epithelial cell differentiation	biological_process
+0060585	positive regulation of prostaglandin-endoperoxide synthase activity	biological_process
+0003128	heart field specification	biological_process
+0097241	hematopoietic stem cell migration to bone marrow	biological_process
+0002524	hypersensitivity	biological_process
+0036022	limb joint morphogenesis	biological_process
+0036339	lymphocyte adhesion to endothelial cell of high endothelial venule	biological_process
+1901706	mesenchymal cell differentiation involved in bone development	biological_process
+0061974	perichondral bone morphogenesis	biological_process
+0071503	response to heparin	biological_process
+1990823	response to leukemia inhibitory factor	biological_process
+0060506	smoothened signaling pathway involved in lung development	biological_process
+0062094	stomach development	biological_process
+0120193	tight junction organization	biological_process
+0071847	TNFSF11-mediated signaling pathway	biological_process

@@ -98,6 +98,7 @@ class Enricher:
         structure_id, chain_id = entry
         pdb_id = '_'.join([structure_id, chain_id])
         pdbhandler = PDBHandler()
+        pdbhandler.structure_id = structure_id
         pdbhandler.root_disk = self.root_disk
         cache_path = ''.join([self._pdb_info_path, os.path.sep, pdb_id, '.pdb'])
         pdb_dataset_path = ''.join([self.root_disk, os.path.sep, self.pdb_dataset_path])
@@ -286,6 +287,7 @@ class Enricher:
                 pattern = pdb_id.replace('.', ':').replace('_', ':')
                 # For AlphaFold PDB ID, use uniprot accession number instead
                 if('AF-' in pdb_id):
+                    pdbhandler.get_uniprot_accession_by_alphafold_pdbid()
                     pattern = pdbhandler.uniprot_accession_number
                 output = subprocess.run(
                     ['zgrep', '-i', pattern, '-m', '1', uniprot_dataset_path],

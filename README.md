@@ -1,13 +1,15 @@
 # Machaon
-
+<br/>
 This repository contains an implementation for the method presented in the  paper "Identifying and   
 profiling structural similarities between Spike of SARS-CoV-2 and other viral or host proteins with  
 Machaon".
 
 <u>Please consult this time-saving manual before you use Machaon</u>. It contains an in-depth explanation    
-about installing, setting up and using this method.
+about installing, setting up and using this method.  
+<br/>
 
 ## System Requirements
+<br/>
 
 The target system for Machaon's development is Ubuntu 20.4. Machaon has limited functionality  
 on Windows and MacOS. Some post-processing modules utilize TM-Align and DSSP which are not     
@@ -27,10 +29,12 @@ metric. NVMe storage is highly recommended.
 
 Machaon is a multi-core CPU application with moderate demands on RAM memory only for  
 post-processing  and target setup for constrained comparisons due to the required alignments   
-(especially alignments in parallel).
+(especially alignments in parallel).    
 
+<br/>
 
 ## Repository contents
+<br/>
 
 - assess: this folder contains scripts for Machaon's benchmarking, evaluation and assessment
 - config: configuration files
@@ -45,12 +49,14 @@ post-processing  and target setup for constrained comparisons due to the require
 - environment.yml: A file used by Anaconda Python package manager.
 - LICENSE.md: The license of this implementation.
 - README.md: Machaon's manual (the one you are reading). 
-- Singularity: A file used to set up a Singularity container.
+- Singularity: A file used to set up a Singularity container.   
+<br/>    
 
-## Setup instructions
+## Setup instructions    
+
 
 ### Local data sources
-
+<br/>
 Enrichment and meta-analysis stages rely on external data sources.  There are fallbacks in place for  
 some of them (webservice calls) but it is strongly recommended utilizing the available static resources.  
 This will minimize network activity, greatly speed up the process and protect the respective third party   
@@ -78,8 +84,9 @@ There are two ways that you can obtain multiple PDB files:
  - https://www.rcsb.org/downloads   
 The downloaded files need to be decompressed and renamed (execute in the downloaded files' folder):  
 ```ls *.gz | parallel gunzip```   
-```for f in *.ent; do mv -- "$f" "${f%.ent}.pdb"; done```   
-<br/>
+```for f in *.ent; do mv -- "$f" "${f%.ent}.pdb"; done```    
+        
+
  - (Unix or MacOS only) https://www.rcsb.org/docs/programmatic-access/batch-downloads-with-shell-script  
 The downloaded files need to be decompressed (execute in the downloaded files' folder):   
 ```ls *.gz | parallel gunzip```
@@ -108,7 +115,9 @@ downloaded files' integrity and then execute:
 downloads (e.g. FileZilla: https://filezilla-project.org/download.php)
 - Visit the following directory : https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping
 - Download the following files: idmapping_selected.tab.gz, idmapping.dat.gz (Be sure to have enough space for the downloads)
-- Execute ``` ./prepare_uniprot_resources.sh ``` 
+- Execute ``` ./prepare_uniprot_resources.sh ```   
+<br/>
+
 
 
 ### Installation (Containers)
@@ -139,7 +148,6 @@ Docker configurations:
 - docker-compose.yml: Set your mounts accordingly (or remove the volume directive)
 - Dockerfile: Add the following line before WORKDIR command:   
 ```ADD ./config /opt/machaon/config```   
-<br/>
 
 #### Singularity
 
@@ -155,7 +163,7 @@ These are the instructions for creating a container with Singularity (https://sy
 <br/><br/>  
 
 ### Manual Installation
-
+<br/> 
 This section is a walkthrough for manual installation (<u>please also check Dockerfile</u>, it contains all    
 needed commands but it is recommended to execute them separately). 
 
@@ -171,7 +179,6 @@ According to the original documentation, TM-Align is compiled as:
 MacOS users should omit '-static' option.
 For more, you can check: https://zhanggroup.org/TM-align    
      
-<br/>
 
 #### DSSP 
 
@@ -188,8 +195,10 @@ Below are the steps for the compilation of DSSP 4.0 in <b>Ubuntu 20.4</b>:
 
 - Boost:  
 ```sudo apt-get install libboost-all-dev```  
-<br/> 
-   For Ubuntu versions lower than 20.04, you need to install Boost from source if your latest version is lower than 1.70: <br/><br/>  
+     
+
+   For Ubuntu versions lower than 20.04, you need to install Boost from source if your latest version is lower than 1.70:   
+
    - Remove previous Boost version:      
 ```apt remove 'libboost.*-dev'```  
    - Download and extract the latest version from: https://www.boost.org/  (greater than 1.70)  
@@ -219,7 +228,6 @@ For Ubuntu 18.04 you also need to install these first of all:
 <b>Note:</b>There are also other options to obtain DSSP files without setting up the program: https://swift.cmbi.umcn.nl/gv/dssp/  
 In that case, you should add them in a folder named 'dssp_cache' located in your specified root data & cache folder   
 ('rootDisk' parameter, more in 'Execution' section) . 
-<br/><br/>
 
 #### STRIDE
 
@@ -227,7 +235,7 @@ STRIDE is an established method for determining the protein secondary structure 
 It is used as a fallback solution for custom PDB files that do not fully follow the standard PDB 
 format and lack annotations. Please follow the instructions in  http://webclu.bio.wzw.tum.de/stride/
 
-<br/>
+#### Using the executables
 After the compilations, you have to copy the mkdssp, stride, TM-Align executables  
 into the directory of Machaon and give them the required execute permissions:   
 
@@ -237,9 +245,7 @@ into the directory of Machaon and give them the required execute permissions:
 ```chmod 770 mkdssp ```  
 ```chmod 770 stride ```  
 ```chmod 770 TMalign ```  
-<br/><br/>
- 
-
+    
 #### Required system libraries:
 
 You need the poppler library in order to export the figures in the EPS format
@@ -247,7 +253,7 @@ with Python plotly library:
 ```sudo apt-get install  libpoppler-cpp-dev```
 This a graphics related library for Open3D:
 ```sudo apt-get install  libgl1-mesa-dev```
-<br/><br/>
+<br/>
 
 #### Python environment:
 
@@ -261,12 +267,14 @@ the following command to install all the required packages:
 <br/>
 
 ### Testing your installation:
-
+ 
 Run the test script in the /test folder:
 ``` python integrity_test.py ```   
-If there are no differences reported at the end, than your installation should be successful.
+If there are no differences reported at the end, than your installation should be successful.  
+<br/>  
 
 ## Execution
+<br/>
 
 At first, you need to activate the previously installed environment in an Anaconda-enabled terminal:   
 ```conda activate machaon```
@@ -354,9 +362,10 @@ All the options are presented below:
 Note: 'residues' and 'residueRanges' definitions are combined, e.g. [12, 15, 59]  
 and '13-40, 47-52' would result to the selection of residue positions from 12 to 40, 
 from 47 to 52 and 59 (duplicate definitions are removed).
-</pre>
+</pre><br/>
 
 ## Data directory structures
+<br/>   
 
 #### Output folder structure
 <pre>
@@ -371,7 +380,7 @@ from 47 to 52 and 59 (duplicate definitions are removed).
         |
         |__plots/ (directory for plots regarding the final set)
         |
-        |__go/ (directory for GO meta-analysis and related visualizations)
+        |__go/ (directory for GO meta-analysis, mini reports and related visualizations)
 </pre>
 
 <b>Note for constrained mode search on segments</b>:The corresponding output files contain a suffix   
@@ -410,17 +419,21 @@ the contiguous parts of the segment as determined by the method.
 </pre>
 
 There is also a cache file that is generated besides the scripts in src folder (go_cache.csv) that holds  
-Gene Ontology data.
+Gene Ontology data.   
+<br/>
 
 ## Output format
-
+<br/>
 The outputs are human interpretable CSV files with headers:
 
 - metrics directory has comma separated CSV files
 - candidates directory has tab separated CSV files
-- outputs of constrained searches include columns with serialized list contents which can be parsed with eval()
+- outputs of constrained searches include columns with serialized list contents which can be parsed with eval()   
+<br/>
+
 
 ## Special Cases
+<br/>
 
 - If you want to compare a polymer as a whole structure you could use pdb-tools :
 https://github.com/haddocking/pdb-tools   
@@ -438,7 +451,7 @@ change the target alignment level to primary or hydrophobicity (recommended) for
 segments (default is 'mixed') or GO metanalysis (default is 2D). 
 
 
-
+<br/>
 
 
 ### Trivia  

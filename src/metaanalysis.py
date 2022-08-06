@@ -4,6 +4,7 @@ import pandas as pd
 from src.evaluator import Evaluator
 import io
 from src.structurealigner import StructureAligner
+from src.presenter import Presenter
 import pickle
 import matplotlib.pyplot as plt
 import numpy as np
@@ -468,5 +469,23 @@ class MetaAnalysis:
                 analysis_details_output.append(''.join(['\n\nKnown sites report: \n', known_sites_report]))
             analysis_details_output.append(''.join(['\n\nChosen properties found among the candidates: ',  ','.join(encountered)]))
             analysis_details_output.append(''.join(['\n\nThe candidates: ', ','.join(checked_structure_ids)]))
+
+            # Create mini report
+            output_filepath = ''.join([self.output_path, os.path.sep, pdb_id, '_', chain_id, naming_extension, '-merged-enriched_eval_full.csv'])
+            results = pd.read_csv(output_filepath, sep='\t')
+            filter_mask = None
+            for struct_id in checked_structure_ids:
+                pdbid, chainid = struct_id.split('_')
+                if(filter_mask is None):
+                    filter_mask = (results['pdbId'] == pdbid) & (results['chainId'] == chainid)
+                else:
+                    filter_mask = filter_mask | ((results['pdbId'] == pdbid) & (results['chainId'] == chainid))
+            results = results[filter_mask]
+            report_path = os.path.join(self.go_output_path, ''.join([go_analysis_filename, '-pres.csv']))
+            results.to_csv(report_path, index=False, sep='\t')
+            presenter = Presenter()
+            presenter.root_disk = self.root_disk
+            presenter.verbose = self.debugging
+            presenter.create_report([pdb_id, chain_id, naming_extension], file_name=report_path)
         with open(os.path.join(self.go_output_path, ''.join([go_analysis_filename, '.log'])), 'w') as logFile:
             logFile.write('\n'.join(analysis_details_output))

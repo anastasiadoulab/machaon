@@ -394,6 +394,8 @@ class PDBHandler:
 
     # Extract metadata from a PDB file for a specified PDB chain
     def get_pdb_info(self, pdb_path, chain_id):
+        # AlphaFold PDBs support
+        pdb_path = self.handle_alphafold_pdbid(pdb_path)
         path_parts = pdb_path.split(os.path.sep)
         [self.structure_id, _] = path_parts[-1].split('.')
 

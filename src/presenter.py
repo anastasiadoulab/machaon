@@ -238,6 +238,7 @@ class Presenter:
         plt.figure(figsize=plt.rcParams.get('figure.figsize'))
 
     def create_report(self, entry, file_name=''):
+        custom_file = file_name != ''
         pdb_id, chain_id, naming_extension = entry
         if (len(naming_extension) > 0 and '_' not in naming_extension):
             naming_extension = ''.join(['_', naming_extension])
@@ -263,25 +264,29 @@ class Presenter:
             title.append('  - segments')
         else:
             title.append(' - whole structures')
-        title.append(''.join([' (total: ', repr(len(evaluated_data.index) - 1), ')']))
+        total_records = len(evaluated_data.index)
+        title.append(''.join([' (total: ', repr(total_records - 1 if custom_file is False else total_records), ')']))
         output_html.append(''.join(title))
         output_html.append('</h1><div class="container"><div class="item-separator"><hr></div></div>')
         uniprot_info = defaultdict(list)
-        # Reference protein placeholders
-        uniprot_info['ids'].append('#')
-        uniprot_info['protein_names'].append('#')
-        uniprot_info['gene_names'].append('#')
-        uniprot_info['organism_names'].append('#')
+        if(custom_file is False):
+            # Reference protein placeholders
+            uniprot_info['ids'].append('#')
+            uniprot_info['protein_names'].append('#')
+            uniprot_info['gene_names'].append('#')
+            uniprot_info['organism_names'].append('#')
         # Create a row with all computed and retrieved information for each protein in the results
         for index, row in evaluated_data.iterrows():
-            if (index != 0):
-                html_row, row_data = self.create_report_row(row, index)
-                uniprot_info['ids'].append(row_data['uniprotId'] if 'uniprotId' in row_data else '#')
-                uniprot_info['protein_names'].append(row_data['protein'] if 'protein' in row_data else '#')
-                uniprot_info['gene_names'].append(row_data['gene'] if 'gene' in row_data else '#')
-                uniprot_info['organism_names'].append(row_data['organism'] if 'organism' in row_data else '#')
-                output_html.append(html_row)
-                output_html.append('<div class="container"><div class="item-separator"><hr></div></div>')
+            # Skip reference protein
+            if (index == 0 and custom_file is False):
+                continue
+            html_row, row_data = self.create_report_row(row, index if custom_file is False else index + 1)
+            uniprot_info['ids'].append(row_data['uniprotId'] if 'uniprotId' in row_data else '#')
+            uniprot_info['protein_names'].append(row_data['protein'] if 'protein' in row_data else '#')
+            uniprot_info['gene_names'].append(row_data['gene'] if 'gene' in row_data else '#')
+            uniprot_info['organism_names'].append(row_data['organism'] if 'organism' in row_data else '#')
+            output_html.append(html_row)
+            output_html.append('<div class="container"><div class="item-separator"><hr></div></div>')
         output_html.append('</body></html>')
         evaluated_data['uniprotId'] = uniprot_info['ids']
         evaluated_data['proteinName'] = uniprot_info['protein_names']
@@ -327,9 +332,12 @@ class Presenter:
                         continue
                     result[key] = repr(round(100 * data_row[key], 2))
                 else:
-                    if (key == 'chainLength' or 'gaps' in key):
+                    if ('chainLength' in key or 'gaps' in key):
                         if(int(data_row[key]) > 0):
                             result[key] = repr(int(data_row[key]))
+                    elif ('resolution' in key):
+                        if(int(data_row[key]) > 0):
+                            result[key] = repr(data_row[key])
                     elif (key in ['b-phipsi', 'w-rdist', 't-alpha']):
                         result[key] = repr(round(data_row[key], 6))
                     else:
