@@ -96,6 +96,15 @@ Of course, you can use RCSB search and retrieve relevant PDB IDs by a query of c
 <b>Note</b>: PDB files from AlphaFold's predictions are <b> fully </b> supported. You can download them from here:  
 https://alphafold.ebi.ac.uk/download
 
+You can manage the files as below:  
+
+```mkdir AF```  
+```tar -xvf UP000005640_9606_HUMAN_v3.tar -C AF```  
+```cd AF```  
+```rm -rf *.cif.gz```  
+```ls *.gz | parallel gunzip```  
+
+
 <b>Important:</b> Avoid underscores in custom PDB filenames. For example, in Ubuntu you can run:   
 ```rename.ul '_' '' *.pdb``` and remove an underscores from every filename in the folder.    
 

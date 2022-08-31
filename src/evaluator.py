@@ -190,7 +190,8 @@ class Evaluator:
 
     def calculate_tm_score(self):
         # Compute Template Modeling Score with TM-Align
-        result = (-1, -1)
+        
+        result = (-1, -1, -1) # initialization of result: (TM-Score normalized by first structure, normalized score by second, chain length of second)
         try:
             output = subprocess.run(
                 ['./TMalign', self.reference_data['fullPDBPath'], self.candidate_data['fullPDBPath'], '-split', '2', '-ter', '1', '-outfmt',
