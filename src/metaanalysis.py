@@ -16,10 +16,12 @@ from collections import defaultdict
 from src.executionhandler import ExecutionHandler
 import uuid
 from matplotlib.lines import Line2D
+from collections import Counter
 
 
 plt.rcParams.update({'font.size': 8})
 random.seed(42)
+
 
 
 class MetaAnalysis:
@@ -30,7 +32,7 @@ class MetaAnalysis:
         self.reference_pdbid = []
         self.reference_chain_id = []
         self.reference_segments = []
-        self.is_reference_viral = []
+        self.is_reference_viral = True
         self.output_path = ''
         self.pdb_dataset_path = ''
         self.go_output_path = ''
@@ -40,6 +42,10 @@ class MetaAnalysis:
         self.go_alignment_level = 'secondary'
         self.segments = []
         self.known_areas = []
+        self.viral_content = True
+        self.vector_format_output = False
+        self.tiff_format_output = False
+        self.alignment_backend = ''
 
     def evaluate(self, entry):
         # Extended comparisons of a finalist protein with the reference.
@@ -52,7 +58,7 @@ class MetaAnalysis:
         # - Common GO terms of 3 categories: 'molecularFunction', 'cellularComponent', 'biologicalProcess'
         reference_data, data_row, is_viral, tmalign_available = entry
         id_parts = data_row['pdbId'], data_row['chainId']
-        evaluator = Evaluator(is_viral)
+        evaluator = Evaluator(self.alignment_backend, is_viral)
         evaluator.set_root_disk(self.root_disk)
         evaluator.set_pdb_path(os.path.sep.join([self.root_disk, self.pdb_dataset_path]))
         evaluator.reference_data = reference_data
@@ -70,7 +76,9 @@ class MetaAnalysis:
                 if (section in compared):
                     output.extend([repr(x) for x in compared[section]])
                 else:
-                    output.extend(['-1' for i in range(3)]) # every section has a triplet of values
+                    # every section has 5 values: score, identity,
+                    # no gaps identity, identity gaps & content
+                    output.extend(['-1'] * 5)
             output.append(repr(evaluator.compute_chemical_similarity()))
             output.extend([repr(x) for x in evaluator.compare_gene_ontology()])
             if('geneLength' in evaluator.candidate_data):
@@ -86,7 +94,7 @@ class MetaAnalysis:
 
     def evaluate_results(self):
         # Extended comparisons for each entry in the results run in parallel
-        reference_evaluator = Evaluator()
+        reference_evaluator = Evaluator(self.alignment_backend)
         reference_evaluator.set_root_disk(self.root_disk)
         reference_evaluator.set_pdb_path(os.path.sep.join([self.root_disk, self.pdb_dataset_path]))
         reference_evaluator.override_pdb_id = self.override_pdb_id
@@ -105,6 +113,21 @@ class MetaAnalysis:
                       '. If you did not expect this outcome please delete this file and execute again:\n', output_filepath)
                 continue
             reference_data = reference_evaluator.load_data(*reference_protein)
+
+            # Log the reference data
+            data_log = { key: [reference_data[key]] for key in ['pdbId', 'chainId', '1D', '2D', '1DPDB', 'CDS', '5UTR', '3UTR', 'geneLength', 'refSeqId'] if key in reference_data}
+            if '2D' in data_log:
+                if len(data_log['2D'][0]) > 0:
+                    struct_content = Counter(data_log['2D'][0])
+                    total = sum(struct_content.values(), 0.0)
+                    struct_content = {k: (v/total) * 100.0 for k, v in struct_content.items() if k != '-'}
+                    data_log['2DContent'] = [repr(struct_content)]
+            data_file_name = ''.join(
+                [self.output_path, os.path.sep, reference_protein[0], '_', str(reference_protein[1]), naming_extension,
+                 '-data.csv'])
+            pd.DataFrame(data_log).to_csv(data_file_name, index=False, sep='\t')
+
+            # Prepare the input for evaluation
             file_name = ''.join([self.output_path, os.path.sep, reference_protein[0], '_', str(reference_protein[1]), naming_extension, '-merged-enriched.csv'])
             data = pd.read_csv(file_name, sep='\t')
             results = []
@@ -113,7 +136,9 @@ class MetaAnalysis:
                 if (rowIndex == 0):
                     reference_data['GO'] = reference_evaluator.load_go_data(row)
                 else:
-                    input_entries.append([reference_data, row, self.is_reference_viral, tmalign_available])
+                    input_entries.append([reference_data, row, self.viral_content, tmalign_available])
+
+            # Evaluation
             if (self.debugging is False):
                 execution_handler = ExecutionHandler(self.cores, 12 * 60)
                 results = execution_handler.parallelize(self.evaluate, input_entries)
@@ -126,35 +151,39 @@ class MetaAnalysis:
                     else:
                         fails += 1
                 print(''.join(['fails : ', repr(fails)]))
+
             # Store computed data to csv
             evaluation_data = pd.read_csv((io.StringIO('\n'.join(results))),
                                           names=['pdbId', 'chainId', '1D-score', '1D-identity', '1D-identity-ng',
-                                                 '1D-identity-gaps','1DPDB-score', '1DPDB-identity',
-                                                 '1DPDB-identity-ng', '1DPDB-identity-gaps', '2D-score', '2D-identity',
-                                                 '2D-identity-ng', '2D-identity-gaps', '5UTR-score', '5UTR-identity',
-                                                 '5UTR-identity-ng', '5UTR-identity-gaps', 'CDS-score', 'CDS-identity',
-                                                 'CDS-identity-ng', 'CDS-identity-gaps', '3UTR-score', '3UTR-identity',
-                                                 '3UTR-identity-ng', '3UTR-identity-gaps', '3D-score', '3D-score-cand',
-                                                 'length', 'chemSim', 'molecularFunctionSim', 'cellularComponentSim',
-                                                 'biologicalProcessSim', 'geneLength', 'refSeqId'],
+                                                 '1D-identity-gaps', '1D-content', '1DPDB-score', '1DPDB-identity',
+                                                 '1DPDB-identity-ng', '1DPDB-identity-gaps', '1DPDB-content',
+                                                 '2D-score', '2D-identity', '2D-identity-ng', '2D-identity-gaps',
+                                                 '2D-content', '5UTR-score', '5UTR-identity', '5UTR-identity-ng',
+                                                 '5UTR-identity-gaps', '5UTR-content', 'CDS-score', 'CDS-identity',
+                                                 'CDS-identity-ng', 'CDS-identity-gaps', 'CDS-content', '3UTR-score',
+                                                 '3UTR-identity', '3UTR-identity-ng', '3UTR-identity-gaps', '3UTR-content',
+                                                 '3D-score', '3D-score-cand', 'length', 'chemSim', 'molecularFunctionSim',
+                                                 'cellularComponentSim', 'biologicalProcessSim', 'geneLength', 'refSeqId'],
                                           sep='\t')
             evaluated_data = pd.merge(data, evaluation_data, how='left', on=['pdbId', 'chainId'])
             evaluated_data.to_csv(output_filepath, index=False, sep='\t')
 
-    def store_property_alignment(self, entry):
+    @staticmethod
+    def store_property_alignment(entry):
         # Append the alignment result to a dictionary
         aggregation_dict, pdb_id, chain_id, alignment_info, sequence, reference_residue_range, total_residue_range, aligner = entry
         aggregation_dict['mask'].append(alignment_info['mask'])
         alignment_details = ''
         identity = -1
         if(len(alignment_info['mask']) > 0):
-            identity, no_gap_identity, _ = aligner.calculate_identity(alignment_info['alignment'])
+            identity, no_gap_identity, _ = aligner.calculate_identity(alignment_info['result'])
             if(identity > 0):
-                    alignment_details = ''.join(['PDB ID: ', pdb_id, '.', chain_id, ' | Alignment (sequence identity: ', repr(round(identity * 100, 4)) ,'%):\n',\
-                                                 ''.join(alignment_info['result'])])
+                alignment_details = ''.join(['PDB ID: ', pdb_id, '.', chain_id, ' | Alignment (sequence identity: ',
+                                            repr(round(identity * 100, 4)), '%):\n',
+                                            '\n'.join(alignment_info['result'])])
         aggregation_dict['identity'].append(identity)
         aggregation_dict['alignment'].append(alignment_details)
-        aggregation_dict['structure_id'].append(''.join([pdb_id, '_', chain_id,]))
+        aggregation_dict['structure_id'].append(''.join([pdb_id, '_', chain_id]))
 
     def align_candidate_by_property(self, entry):
         # Perform alignments on user-specified levels (e.g. secondary structure) between proteins having
@@ -162,7 +191,7 @@ class MetaAnalysis:
         row, reference_sequences, reference_residues = entry
         alignments = defaultdict()
         reference_residue_range = [x for x in range(reference_residues['fullRange'][0], reference_residues['fullRange'][-1] + 1)]
-        aligner = StructureAligner()
+        aligner = StructureAligner(self.alignment_backend)
         aligner.set_root_disk(self.root_disk)
         pdb_data_root = os.path.sep.join([self.root_disk, self.pdb_dataset_path])
         aligner.pdb_dataset_path = pdb_data_root
@@ -206,7 +235,7 @@ class MetaAnalysis:
                             entry = property_alignments[property_type][goId][alignment_level], row['pdbId'], row['chainId'], alignments[alignment_level], \
                                     sequences[alignment_level], reference_residue_range, total_residue_range, aligner
                             self.store_property_alignment(entry)
-        return property_alignments
+        return property_alignments, ['_'.join([row['pdbId'], row['chainId']]), alignments]
 
     def aggregate_go_information(self):
         # Perform alignments in parallel for each protein in the results
@@ -214,7 +243,7 @@ class MetaAnalysis:
         if (os.path.exists(self.go_output_path) is False):
             os.makedirs(self.go_output_path)
         pdb_dataset_path = os.path.sep.join([self.root_disk, self.pdb_dataset_path])
-        aligner = StructureAligner()
+        aligner = StructureAligner(self.alignment_backend)
         aligner.set_root_disk(self.root_disk)
         aligner.pdb_dataset_path = pdb_dataset_path
         for referenceSegment in self.reference_segments:
@@ -228,9 +257,11 @@ class MetaAnalysis:
             output_filepath = ''.join([self.go_output_path, os.path.sep, output_filename, '-go-aggregate.dict'])
             if (os.path.exists(output_filepath) is True):
                 print('GO information is already aggregated for the entry: ', output_filename,
-                      '. If you did not expect this outcome please delete this file and execute again:\n', output_filepath)
+                      '. If you did not expect this outcome please delete this file and execute again:\n',
+                      output_filepath)
                 continue
-            file_name = ''.join([self.output_path, os.path.sep, reference_protein[0] , '_', str(reference_protein[1]), naming_extension, '-merged-enriched.csv'])
+            file_name = ''.join([self.output_path, os.path.sep, reference_protein[0], '_', str(reference_protein[1]),
+                                 naming_extension, '-merged-enriched.csv'])
             data = pd.read_csv(file_name, sep='\t')
             results = []
             pdbhandler = PDBHandler()
@@ -248,19 +279,29 @@ class MetaAnalysis:
             else:
                 execution_handler = ExecutionHandler(self.cores, 30)
                 results = execution_handler.parallelize(self.align_candidate_by_property, input_entries)
+            go_alignment_info = defaultdict()
             alignment_info = defaultdict()
-            for result_index, result in enumerate(results):
-                for property_type in result:
-                    if (property_type not in alignment_info):
-                        alignment_info[property_type] = defaultdict()
-                    for go_id in result[property_type]:
-                        if (go_id not in alignment_info[property_type]):
-                            alignment_info[property_type][go_id] = defaultdict()
-                        for alignment_level in result[property_type][go_id]:
-                            if (alignment_level not in alignment_info[property_type][go_id]):
-                                alignment_info[property_type][go_id][alignment_level] = defaultdict(list)
-                            for key in result[property_type][go_id][alignment_level].keys():
-                                alignment_info[property_type][go_id][alignment_level][key].extend(result[property_type][go_id][alignment_level][key])
+            for result_index, entry_alignment in enumerate(results):
+                structured_result, raw_result = entry_alignment
+                # Connecting the proteins' alignments with their Gene Ontology data for future queries
+                for property_type in structured_result:
+                    if (property_type not in go_alignment_info):
+                        go_alignment_info[property_type] = defaultdict()
+                    for go_id in structured_result[property_type]:
+                        if (go_id not in go_alignment_info[property_type]):
+                            go_alignment_info[property_type][go_id] = defaultdict()
+                        for alignment_level in structured_result[property_type][go_id]:
+                            if (alignment_level not in go_alignment_info[property_type][go_id]):
+                                go_alignment_info[property_type][go_id][alignment_level] = defaultdict(list)
+                            for key in structured_result[property_type][go_id][alignment_level].keys():
+                                go_alignment_info[property_type][go_id][alignment_level][key].extend(structured_result[property_type][go_id][alignment_level][key])
+                # Keeping the raw results for further inspection
+                alignment_info[raw_result[0]] = raw_result[1]
+            # Store GO-connected alignments
+            with open(output_filepath, 'wb') as handle:
+                pickle.dump(go_alignment_info, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            # Store alignments
+            output_filepath = ''.join([self.go_output_path, os.path.sep, output_filename, '-alignments.dict'])
             with open(output_filepath, 'wb') as handle:
                 pickle.dump(alignment_info, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
@@ -342,25 +383,31 @@ class MetaAnalysis:
 
         # Plot unavailable residues
         unavailable_residues = [x for x in range(1, len(aggregated) + 1) if x not in available_residues['fullRange']]
-        plt.scatter(unavailable_residues, [0 for x in range(len(unavailable_residues))], color='black', marker='|')
+        plt.scatter(unavailable_residues, [0] * len(unavailable_residues), color='black', marker='|')
 
         # Create legends for the plot
         legend_elements = []
         legend_elements.append(
-            Line2D([], [], marker='o', color='w', label='Selected', markerfacecolor=color_palette[2], markeredgewidth=0.0, linewidth=0.0, markersize=10))
+            Line2D([], [], marker='o', color='w', label='Selected', markerfacecolor=color_palette[2],
+                   markeredgewidth=0.0, linewidth=0.0, markersize=10))
         if (known_mask is not None):
             legend_elements.append(
-                Line2D([], [], marker='o', color='w', label='Marked', markerfacecolor=color_palette[3], markeredgewidth=0.0, linewidth=0.0, markersize=10))
-        legend_elements.append(plt.Rectangle((0,0), 1, 1, label='EWMA', fc=color_palette[1]))
+                Line2D([], [], marker='o', color='w', label='Marked', markerfacecolor=color_palette[3],
+                       markeredgewidth=0.0, linewidth=0.0, markersize=10))
+        legend_elements.append(plt.Rectangle((0, 0), 1, 1, label='EWMA', fc=color_palette[1]))
         if(len(unavailable_residues) > 0):
-            legend_elements.append(plt.Rectangle((0,0), 1, 1, label='Missing', fc='black'))
-        plt.legend(handles=legend_elements, facecolor='white', framealpha=0.5,  loc='best', handlelength=1, handleheight=1.125)
+            legend_elements.append(plt.Rectangle((0, 0), 1, 1, label='Missing', fc='black'))
+        plt.legend(handles=legend_elements, facecolor='white', framealpha=0.5,  loc='best', handlelength=1,
+                   handleheight=1.125)
 
         # Store plots and related outputs
+        plt.savefig(''.join([self.go_output_path, os.path.sep, figure_filename, '.png']), format='png', dpi=300)
         ax = plt.gca()
         ax.set_rasterized(True)
-        plt.savefig(''.join([self.go_output_path, os.path.sep, figure_filename, '.png']), format='png', dpi=300)
-        plt.savefig(''.join([self.go_output_path, os.path.sep, figure_filename, '.eps']), format='eps', dpi=300)
+        if(self.vector_format_output is True):
+            plt.savefig(''.join([self.go_output_path, os.path.sep, figure_filename, '.eps']), format='eps', dpi=300)
+        if(self.tiff_format_output is True):
+            plt.savefig(''.join([self.go_output_path, os.path.sep, figure_filename, '.tiff']), format='tiff', dpi=300)
         plt.clf()
         plt.figure(figsize=plt.rcParams.get('figure.figsize'))
         if (known_mask is not None):
@@ -380,8 +427,57 @@ class MetaAnalysis:
         plt.figure(figsize=plt.rcParams.get('figure.figsize'))
         return ''.join(known_areas_report)
 
+    def find_batch_structure_matches(self, entry):
+        pdb_id, chain_id, naming_extension, plot_output_path = entry
+        pdbhandler = PDBHandler()
+        pdb_path = os.path.sep.join([self.root_disk, self.pdb_dataset_path, ''.join([pdb_id, '.pdb'])])
+        available_residues = pdbhandler.get_residue_range(pdb_path, chain_id)
+        pdbhandler.get_uniprot_accession_number(chain_id, pdb_id)
+        evaluator = Evaluator(self.alignment_backend)
+        evaluator.set_root_disk(self.root_disk)
+
+        # Retrieve protein sequence length
+        protein_sequence = evaluator.get_protein_sequence(pdbhandler.uniprot_accession_number)
+        sequence_length = len(protein_sequence)
+        aggregated_mask = np.array([0] * sequence_length)  # initialize mask
+
+        reference_structure_id = ''.join([pdb_id, '_', chain_id, naming_extension])
+        data_filepath = ''.join([self.go_output_path, os.path.sep, reference_structure_id, '-alignments.dict'])
+        if os.path.exists(data_filepath) is True:
+
+            with open(data_filepath, 'rb') as handle:
+                alignment_info = pickle.load(handle)
+
+            alignment_dict = {}
+
+            # Collect alignments
+            for structure_id in alignment_info:
+                if structure_id not in alignment_dict:
+                    if 'secondary' in alignment_info[structure_id]:
+                        if alignment_info[structure_id]['secondary']['mask'] is not None:
+                            alignment_frequencies = alignment_info[structure_id]['secondary']['mask']
+                            padded_mask = [alignment_frequencies[available_residues['fullRange'].index(index + 1)]
+                                           if (index + 1) in available_residues['fullRange']
+                                              and available_residues['fullRange'].index(index + 1) < len(
+                                           alignment_frequencies)  else 0 for index in range(sequence_length)]
+                            aggregated_mask = aggregated_mask + padded_mask
+
+            # Fetch unavailable residues
+            pdb_path = os.path.join(self.root_disk, self.pdb_dataset_path, ''.join([pdb_id, '.pdb']))
+            available_residues = pdbhandler.get_residue_range(pdb_path, chain_id)
+            unavailable_residues = [x for x in range(1, len(aggregated_mask) + 1) if x not in available_residues['fullRange']]
+
+            # Plot result
+            presenter = Presenter()
+            presenter.root_disk = self.root_disk
+            presenter.verbose = self.debugging
+            presenter.tiff_format_output = self.tiff_format_output
+            presenter.vector_format_output = self.vector_format_output
+            entry =  pdb_id, chain_id, naming_extension, aggregated_mask, unavailable_residues, plot_output_path
+            presenter.plot_2D_matches(entry)
+
     def perform_go_meta_analysis(self, entry):
-        pdb_id, chain_id, naming_extension, sequence_length, property_type, properties, search_term = entry
+        pdb_id, chain_id, naming_extension, property_type, properties, search_term = entry
         go_search = len(search_term) != 0
         if(go_search):
             go_types = ['biologicalProcess', 'molecularFunction', 'cellularComponent']
@@ -390,14 +486,22 @@ class MetaAnalysis:
         enricher = Enricher()
         enricher.set_root_disk(self.root_disk)
         enricher.load_go_cache()
-        average_span = int(0.3 * sequence_length)
+        pdbhandler = PDBHandler()
+        evaluator = Evaluator(self.alignment_backend)
+        evaluator.set_root_disk(self.root_disk)
         encountered = []
         alignment_frequencies = defaultdict()
-        aggregated = np.array([0] * sequence_length) # initialize mask
         pdb_path = os.path.sep.join([self.root_disk, self.pdb_dataset_path, ''.join([pdb_id, '.pdb'])])
-        pdbhandler = PDBHandler()
         available_residues = pdbhandler.get_residue_range(pdb_path, chain_id)
+        pdbhandler.get_uniprot_accession_number(chain_id, pdb_id)
 
+        # Retrieve protein sequence length
+        protein_sequence = evaluator.get_protein_sequence(pdbhandler.uniprot_accession_number)
+        sequence_length = len(protein_sequence)
+        average_span = int(0.3 * sequence_length)
+        aggregated = np.array([0] * sequence_length)  # initialize mask
+
+        # Set mask for residue positions with known properties
         known_mask = None
         known_sites = []
         if (len(self.known_areas)>0):
@@ -428,28 +532,36 @@ class MetaAnalysis:
                     checked_structure_ids.extend([structure_id for id_index, structure_id in enumerate(structure_ids) if id_index not in excluded_indices])
                     encountered.append(enricher.go_cache[go_id][0])
                     if (len(excluded_indices) != 0):
-                        alignment_frequencies[go_id] = np.sum(np.array(list(filter(None,[alignment_mask for mask_index, alignment_mask \
-                                                              in enumerate(alignment_info[property_type][go_id][self.go_alignment_level]['mask']) \
+                        alignment_frequencies[go_id] = np.sum(np.array(list(filter(None, [alignment_mask for mask_index, alignment_mask
+                                                              in enumerate(alignment_info[property_type][go_id][self.go_alignment_level]['mask'])
                                                               if mask_index not in excluded_indices]))), axis=0)
                     else:
                         alignment_frequencies[go_id] = np.sum(np.array(list(filter(None, alignment_info[property_type][go_id][self.go_alignment_level]['mask']))), axis=0)
                     # Log related information for further inspection
                     stats_output = 'Aggregated alignment statistics: \n'
                     for alignment_level in alignment_info[property_type][go_id]:
-                        stats_output = ''.join([stats_output, ' Median ', alignment_level.replace('secondary', 'secondary structure'), ' sequence identity: ',
-                               repr(round( np.median(np.array(alignment_info[property_type][go_id][alignment_level]['identity'])), 4)),'\n'])
-                    if(len(alignment_frequencies[go_id].shape) != 0):
-                        padded_mask = [alignment_frequencies[go_id][available_residues['fullRange'].index(index + 1)] if (index + 1) in available_residues['fullRange'] else 0
-                                       for index in range(sequence_length)]
-                        assertion_index = random.randint(0, len(available_residues['fullRange']) - 1)
-                        assert padded_mask[available_residues['fullRange'][assertion_index] - 1] == alignment_frequencies[go_id][
-                            assertion_index]
-                        aggregated = aggregated + padded_mask
-                        analysis_details_output.append(''.join(['********* ', enricher.go_cache[go_id][0], '\n\n', stats_output, '\n\n\nAlignment information: \n']))
-                        for alignment_level in self.alignment_levels:
-                            analysis_details_output.append(''.join(['\n****** ', alignment_level, '\n\n\n', \
-                            '\n\n\n'.join([x for x in alignment_info[property_type][go_id][alignment_level]['alignment'] if len(x) > 0]), '\n\n']))
-                # Terminate search if every property of interest is found or there are not more availabler properties to search for
+                        stats_output = ''.join([stats_output, ' Median ',
+                                                alignment_level.replace('secondary', 'secondary structure'),
+                                                ' sequence identity: ',
+                               repr(round(np.median(np.array(alignment_info[property_type][go_id][alignment_level]['identity'])), 4)), '\n'])
+                    if isinstance(alignment_frequencies[go_id], list) is False:
+                        if(len(alignment_frequencies[go_id].shape) != 0):
+                            padded_mask = [alignment_frequencies[go_id][available_residues['fullRange'].index(index + 1)]
+                                           if (index + 1) in available_residues['fullRange']
+                                           and available_residues['fullRange'].index(index + 1) < len(alignment_frequencies[go_id])
+                                           else 0
+                                           for index in range(sequence_length)]
+                            assertion_index = random.randint(0, len(available_residues['fullRange']) - 1)
+                            assert padded_mask[available_residues['fullRange'][assertion_index] - 1] == alignment_frequencies[go_id][
+                                assertion_index]
+                            aggregated = aggregated + padded_mask
+                            analysis_details_output.append(''.join(['********* ', enricher.go_cache[go_id][0], '\n\n',
+                                                                    stats_output, '\n\n\nAlignment information: \n']))
+                            for alignment_level in self.alignment_levels:
+                                analysis_details_output.append(''.join(['\n****** ', alignment_level, '\n\n\n',
+                                '\n\n\n'.join([x for x in alignment_info[property_type][go_id][alignment_level]['alignment'] if len(x) > 0]), '\n\n']))
+                # Terminate search if every property of interest is found or
+                # there are not more available properties to search for
                 if ((go_search is False and len(encountered) == len(properties)) or total == 0):
                     if(go_search is True):
                         if(go_analysis_filename == ''):
@@ -486,6 +598,8 @@ class MetaAnalysis:
             presenter = Presenter()
             presenter.root_disk = self.root_disk
             presenter.verbose = self.debugging
+            presenter.tiff_format_output = self.tiff_format_output
+            presenter.vector_format_output = self.vector_format_output
             presenter.create_report([pdb_id, chain_id, naming_extension], file_name=report_path)
         with open(os.path.join(self.go_output_path, ''.join([go_analysis_filename, '.log'])), 'w') as logFile:
             logFile.write('\n'.join(analysis_details_output))

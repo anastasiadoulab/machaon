@@ -10,7 +10,7 @@ Constructor
 <li data-search="file_name"><span class="attr-name">file_name [default: '']</span>: <span class="attr-description">
 CSV file path for the selected candidate entries. (string)
 </span></li>
-<li data-search="go_cache"><span class="attr-name">go_cache [default: {}]</span>: <span class="attr-description">
+<li data-search="go_cache"><span class="attr-name">go_cache [default: defaultdict()]</span>: <span class="attr-description">
 Gene Ontology cache. Its organization is based on a dictionary with GO term ID as key and a tuple (&lt;GO term&gt;, &lt;GO term type&gt;) as a value
 </span></li>
 <li data-search="_go_request_url"><span class="attr-name">_go_request_url [default: 'https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO:']</span>: <span class="attr-description">
@@ -43,7 +43,7 @@ RCSB enrichment data cache directory (see set_root_disk()) (string)
 <li data-search="_entrez_cache"><span class="attr-name">_entrez_cache [default: '']</span>: <span class="attr-description">
 NCBI Entez data cache directory (see set_root_disk()) (string)
 </span></li>
-<li data-search="_requesturl"><span class="attr-name">_uniprot_request_url [default: 'https://www.uniprot.org/uniprot/ACCESSION.xml']</span>: <span class="attr-description">
+<li data-search="_uniprot_request_url"><span class="attr-name">_uniprot_request_url [default: 'https://www.uniprot.org/uniprot/ACCESSION.xml']</span>: <span class="attr-description">
 UniProt request URL with placeholder ("ACCESSION")
 </span></li>
 <li data-search="cores"><span class="attr-name">cores [default: 1]</span>: <span class="attr-description">

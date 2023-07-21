@@ -1,19 +1,18 @@
 from src.pdbhandler import PDBHandler
-import numpy as np
 import pandas as pd
 import os
-import time
 import io
 from src.scanner import Scanner
 from src.executionhandler import ExecutionHandler
+from collections import defaultdict
+import numpy as np
 
 # Constrained mode of the comparison method (domain comparisons)
-
 class DomainScanner(Scanner):
 
     def __init__(self):
         super().__init__()
-        self._feature_filelist_header = '\t'.join(['structureId', 'chainId', 'metric', 'domain'])
+        self._feature_filelist_headers = ['structureId', 'chainId', 'domain']
 
     def extract_features(self, entry):
         result = True
@@ -49,17 +48,23 @@ class DomainScanner(Scanner):
                         name = pdbhandler.sanitize_domain_name(name)
                         residue_selection = list(range(int(start), int(end) + 1))
                         output_path = os.path.sep.join([store_data_path, pdb_path.replace('_', '-').replace('.pdb', ''.join(['_', chainID]))])
+                        feature_data = defaultdict()
+                        status = False
                         for feature_index, feature in enumerate(self._feature_file_suffixes):
-                            feature_output_path = ''.join([output_path, '_', name, '_',
-                                                           self._feature_file_suffixes[feature_index], '.pkl'])
+                            feature_output_path = ''.join([output_path, '_', name, self.store_format])
                             # Skip if this feature is not set to be recomputed when recomputing is enabled
                             if (len(self.update_features) > 0 and feature not in self.update_features):
                                 continue
                             # New extractions only
+                            if (os.path.exists(feature_output_path) is True):
+                                os.remove(feature_output_path)
                             if (self.extend_feature_data is True and os.path.exists(feature_output_path) is True):
                                 continue
-                            self.extract_feature(chainID, feature_output_path, full_pdbfile_path, feature,
-                                                 residueSelection=residue_selection)
+                            feature_data[feature], status = self.extract_feature(chainID, feature_output_path, full_pdbfile_path, feature, residue_selection=residue_selection)
+                            if(status is False):
+                                break
+                        if(status is not False):
+                            self.store_features(feature_data, feature_output_path)
         return result
 
     def scan_candidates(self):
@@ -79,38 +84,47 @@ class DomainScanner(Scanner):
             for domainInfo in pdbhandler.domains:
                 name, start, end = domainInfo
                 domain = pdbhandler.sanitize_domain_name(name)
+                print("Processing for: ", domain)
+                reference_metric_data = self.load_features(self.reference_pdb_id, self.reference_chain_id,
+                                                           naming_extension=domain)
+                if (reference_metric_data is False):
+                    print(''.join(
+                        ['Failed to extract data from ', self.reference_pdb_id, ' - ', self.reference_chain_id, ' - ', domain]))
+                    continue
+                self.metric_indices = []
+                output_result_paths = defaultdict()
                 for metric_index, metric in enumerate(self._feature_file_suffixes):
-                    print('*', self._column_headers[metric_index])
-                    output_result_path = ''.join([self.metrics_output_path, os.path.sep, self.reference_pdb_id,
+                    output_result_paths[metric_index] = ''.join([self.metrics_output_path, os.path.sep, self.reference_pdb_id,
                                                   '_', self.reference_chain_id, '_', domain, '_', self._column_headers[metric_index], '.csv'])
-                    if (os.path.exists(output_result_path) is True):
+                    if (os.path.exists(output_result_paths[metric_index]) is True):
                         print(''.join([self._column_headers[metric_index], ' is already computed. If you wish to recompute it, delete',
-                                       ' the following file and execute the method again:\n', output_result_path]))
+                                       ' the following file and execute the method again:\n', output_result_paths[metric_index]]))
                         continue
-                    final_results = []
-                    reference_metric_data = self.load_features(self.reference_pdb_id, self.reference_chain_id, metric_index, naming_extension=domain)
-                    if (reference_metric_data is False or
-                            reference_metric_data is None or
-                            (isinstance(reference_metric_data, np.ndarray) and len(reference_metric_data) < 2)):
-                        print(''.join(
-                            ['No data for ', self.reference_pdb_id, ' - ', self.reference_chain_id, ' - ', domain, ' -',
-                             self._column_headers[metric_index]]))
-                        continue
-                    # Compute the metrics for every domain in candidate set
-                    entries = [(reference_metric_data, comparisonInfo) for comparisonInfo in self.candidates[metric_index]]
-                    results = []
-                    if (self.debugging is False):
-                        execution_handler = ExecutionHandler(self.cores, 12 * 60)
-                        results = execution_handler.parallelize(self.compute_metrics, entries)
-                    else:
-                        for candidate in entries:
-                            result = self.compute_metrics(candidate)
-                            if(result is not False):
-                                results.append(result)
-                    final_results.extend(results)
+                    self.metric_indices.append(metric_index)
+                # Compute the metrics for every domain in candidate set
+                entries = [(reference_metric_data, comparisonInfo, self.metric_indices) for comparisonInfo in self.candidates]
+                results = []
+                if (self.debugging is False):
+                    execution_handler = ExecutionHandler(self.cores, 12 * 60)
+                    results = execution_handler.parallelize(self.compute_metrics, entries)
+                else:
+                    for candidate in entries:
+                        result = self.compute_metrics(candidate)
+                        if(result is not False):
+                            results.append(result)
+                # Output each metric in a csv file
+                if len(results) > 0:
+                    results = np.array(results)
+                    for metric_index in self.metric_indices:
+                        data = pd.read_csv(
+                            io.StringIO('\n'.join(['\t'.join(result) for result in results[:, [0, 1]+[metric_index+2]]])),
+                            names=['structureId', 'domain', self._column_headers[metric_index]], sep='\t')
+                        data.sort_values(by=[self._column_headers[metric_index]], ascending=[True]).to_csv(output_result_paths[metric_index], index=False)
 
-                    data = pd.read_csv(
-                        (io.StringIO('\n'.join(['\t'.join(result) for result in np.array(final_results)]))),
-                        names=['structureId', 'domain', self._column_headers[metric_index]], sep='\t')
-                    data.sort_values(by=[self._column_headers[metric_index]], ascending=[True]).to_csv(output_result_path, index=False)
-
+    # Handle different types of feature data filenames (e.g. whole structure vs domain based)
+    def parse_feature_filename(self, filename):
+        parts = filename.split('_')
+        parsed = []
+        if len(parts) > 2:
+            parsed = ['_'.join(parts[:-2]), parts[-2], parts[-1].replace(self.store_format, '')]
+        return parsed

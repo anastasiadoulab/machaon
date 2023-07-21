@@ -36,8 +36,26 @@ Display titles for radial plots. (dict) (see plot_results_polar())
 <li data-search="taxonomy_depth"><span class="attr-name">taxonomy_depth [default: 100]</span>: <span class="attr-description">
 The depth of the generated lineage tree. (int) (see display_taxonomy())
 </span></li>
-<li data-search="_uniprot_data_path"><span class="attr-name">_uniprot_data_path [default: None]</span>: <span class="attr-description">
-UniProt data cache directory (string) (see set_root_disk()) (string)
+<li data-search="report_styling"><span class="attr-name">report_styling</span>: <span class="attr-description">
+HTML template for reports. (string)
+</span></li>
+<li data-search="comparison_mode"><span class="attr-name">comparison_mode [default: '']</span>: <span class="attr-description">
+The comparison mode of the method: 'whole', 'domain' or 'segment'. (string)
+</span></li>
+<li data-search="fold_names"><span class="attr-name">fold_names [default: {'H': 'α-helix', 'B': 'β-bridge residue', 'b': 'β-bridge residue', 'E': 'extended strand', 'G': '3-helix', 'I': 'π-helix',]</span>: <span class="attr-description">
+Dictionary that maps 1-letter codes to 2D folds. (dict)
+</span></li>
+<li data-search="cores"><span class="attr-name">cores [default: 1]</span>: <span class="attr-description">
+Available cores for computations. (int)
+</span></li>
+<li data-search="debugging"><span class="attr-name">debugging [default: False]</span>: <span class="attr-description">
+Debugging mode. (boolean)
+</span></li>
+<li data-search="vector_format_output"><span class="attr-name">vector_format_output [default: False]</span>: <span class="attr-description">
+EPS format output for plots. (boolean)
+</span></li>
+<li data-search="tiff_format_output"><span class="attr-name">tiff_format_output [default: False]</span>: <span class="attr-description">
+TIFF format output for plots. (boolean)
 </span></li>
 </ul>
 </div>
@@ -137,6 +155,37 @@ Full path for enriched comparison results
 </span></li>
 </ul>
 </div>
+<div data-search="collect_words" class="method-section"><span class="method-name" data-search="collect_words">collect_words()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Collect names from organisms or genes (Home Sapiens only) in the results.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+A row of the results. (dict)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="words"><span class="return-name">words</span>: <span class="return-description">
+Collected names. (list of strings)
+</span></li>
+</ul>
+</div>
+<div data-search="display_structure_id" class="method-section"><span class="method-name" data-search="display_structure_id">display_structure_id()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Handle structure ids from data that derive from predictions (e.g. AlphaFold). 
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="structure_id"><span class="param-name">structure_id</span>: <span class="arg-description">
+Structure id (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="structure_link"><span class="return-name">structure_link</span>: <span class="return-description">
+Html link that connects to the origin of the data. (string)
+</span></li>
+<li data-search="identifier_label"><span class="return-name">identifier_label</span>: <span class="return-description">
+Label for the constructed link. (string)
+</span></li>
+</ul>
+</div>
 <div data-search="create_report_list_item" class="method-section"><span class="method-name" data-search="create_report_list_item">create_report_list_item()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
 Create a list item.
 </span><br/><br/>
@@ -161,7 +210,7 @@ HTML list item (string)
 </ul>
 </div>
 <div data-search="create_report" class="method-section"><span class="method-name" data-search="create_report">create_report()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
-Creates a printer-friendly, enriched HTML report about the finat results of the comparisons.
+Creates a printer-friendly, enriched HTML report about the final results of the comparisons.
 </span><br/><br/>
 <br/><span class="info-label">Arguments:</span><ul>
 <li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
@@ -169,6 +218,19 @@ Composite input: reference PDB ID, reference PDB chain ID, suffix (for constrain
 </span></li>
 <li data-search="file_name"><span class="param-name">file_name [default: '']</span>: <span class="arg-description">
 Full path for enriched comparison results 
+</span></li>
+</ul>
+</div>
+<div data-search="create_short_report_row" class="method-section"><span class="method-name" data-search="create_short_report_row">create_short_report_row()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Creates a limited info row of a HTML report. 
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+A row of the results. (dict)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="info"><span class="return-description"> HTML output (string)
 </span></li>
 </ul>
 </div>
@@ -237,6 +299,72 @@ The source data dictionary (see also get_information())
 </span></li>
 </ul>
 </div>
+<div data-search="create_list_float_item" class="method-section"><span class="method-name" data-search="create_list_float_item">create_list_float_item()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Short helper function on HTML printing.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="info"><span class="param-name">info</span>: <span class="arg-description">
+Dictionary with the third-party information. (see also get_information())
+</span></li>
+<li data-search="key"><span class="param-name">key</span>: <span class="arg-description">
+Section of the dictionary that will be printed
+</span></li>
+<li data-search="label"><span class="param-name">label</span>: <span class="arg-description">
+Label of list item
+</span></li> 
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li ><span class="return-description">
+HTML list item. (string)
+</span></li> 
+</ul>
+</div>
+<div data-search="create_list_item_link" class="method-section"><span class="method-name" data-search="create_list_item_link">create_list_item_link()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Short helper function on HTML printing.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="info"><span class="param-name">info</span>: <span class="arg-description">
+Dictionary with the third-party information. (see also get_information())
+</span></li>
+<li data-search="key"><span class="param-name">key</span>: <span class="arg-description">
+Section of the dictionary that will be printed
+</span></li>
+<li data-search="label"><span class="param-name">label</span>: <span class="arg-description">
+Label of list item
+</span></li>
+<li data-search="unit"><span class="param-name">unit [default: '']</span>: <span class="arg-description">
+Unit of measure
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li ><span class="return-description">
+HTML link for a list item. (string)
+</span></li> 
+</ul>
+</div>
+<div data-search="create_content_list_item" class="method-section"><span class="method-name" data-search="create_content_list_item">create_content_list_item()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Short helper function on HTML printing.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="info"><span class="param-name">info</span>: <span class="arg-description">
+Dictionary with the third-party information. (see also get_information())
+</span></li>
+<li data-search="key"><span class="param-name">key</span>: <span class="arg-description">
+Section of the dictionary that will be printed
+</span></li>
+<li data-search="label"><span class="param-name">label</span>: <span class="arg-description">
+Label of list item
+</span></li>
+<li data-search="unit"><span class="param-name">unit [default: '']</span>: <span class="arg-description">
+Unit of measure
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li ><span class="return-description">
+HTML list item. (string)
+</span></li> 
+</ul>
+</div>
 <div data-search="plot_results_polar" class="method-section"><span class="method-name" data-search="plot_results_polar">plot_results_polar()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
 Generates radial polar plots for evaluation results.
 </span><br/><br/>
@@ -246,6 +374,41 @@ Composite input: reference PDB ID, reference PDB chain ID, suffix (for constrain
 </span></li>
 <li data-search="file_name"><span class="param-name">file_name [default: '']</span>: <span class="arg-description">
 Full path for enriched comparison results (string)
+</span></li>
+</ul>
+</div>
+<div data-search="parse_content" class="method-section"><span class="method-name" data-search="parse_content">parse_content()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Safe evaluation of literals.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="row_value"><span class="param-name">row_value</span>: <span class="arg-description">
+A value of the row (string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="ast"><span class="return-name">ast</span>: <span class="return-description">
+The evaluated expression.
+</span></li>
+</ul>
+</div>
+<div data-search="plot_2d_coverage" class="method-section"><span class="method-name" data-search="plot_2D_coverage">plot_2D_coverage()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Plot the coverage of protein 2D fold types based on the protein secondary structure pairwise alignments between the reference and the finalist proteins in the results.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+ Composite input: reference PDB ID, reference PDB chain ID, suffix (for constrained mode results) (list of strings) 
+</span></li>
+<li data-search="file_name"><span class="param-name">file_name [default: '']</span>: <span class="arg-description">
+ Full path for enriched comparison results 
+</span></li>
+</ul>
+</div>
+<div data-search="plot_2d_matches" class="method-section"><span class="method-name" data-search="plot_2D_matches">plot_2D_matches()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Plot the total matches of protein secondary structure pairwise alignments between the reference and each protein in the results.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+ Composite input: reference PDB ID, reference PDB chain ID, suffix, aggregated mask of matches, unavailable residues, plot output path (list of strings / objects) 
 </span></li>
 </ul>
 </div>

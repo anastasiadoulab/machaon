@@ -15,9 +15,9 @@ import os
 
 def compute_tm(entry):
     reference_id, candidate_id, pdb_dataset_path = entry
-    evaluator = Evaluator(False)
-    evaluator.reference_data = {'pdb_id' : reference_id, 'chainIndex' : 0}
-    evaluator.candidate_data = {'pdb_id' : candidate_id, 'chainIndex' : 0}
+    evaluator = Evaluator('biopython', False)
+    evaluator.reference_data = {'pdb_id' : reference_id, 'chainIndex' : 0, 'fullPDBPath': os.path.join(pdb_dataset_path, ''.join([reference_id, '.pdb']))}
+    evaluator.candidate_data = {'pdb_id' : candidate_id, 'chainIndex' : 0, 'fullPDBPath': os.path.join(pdb_dataset_path, ''.join([candidate_id, '.pdb']))}
     evaluator.pdb_dataset_path = pdb_dataset_path
     result = evaluator.calculate_tm_score()
     return result[0], result[1]
@@ -27,8 +27,7 @@ if __name__ == '__main__':
     config_manager = ConfigurationManager()
     configuration = copy.deepcopy(config_manager._template_config)
     configuration['rootDisk'] = "structural-data"
-    configuration['referenceGeneID'] = "0"
-    configuration['referenceSequenceLength'] = 1
+    configuration['referenceGeneID'] = "0" 
     configuration['pdbDatasetPath'] = "PDBs_SHREC18"
     configuration['isReferenceViral'] = False
     configuration['noThirdPartyData'] = True

@@ -29,9 +29,6 @@ class ConfigurationManager:
         #  Provide the gene id (Entrez) of the reference PDB
         self._template_config['referenceGeneID'] = ''
 
-        #  Provide the protein sequence length of the reference protein
-        self._template_config['referenceSequenceLength'] = 0
-
         #  Choose 'whole', 'domain' or 'segment'
         self._template_config['comparisonMode'] = 'whole'
 
@@ -55,7 +52,10 @@ class ConfigurationManager:
 
         # Meta-analysis skips the search in viral genome data for the reference,
         # if it is not a viral protein
-        self._template_config['isReferenceViral'] = None
+        self._template_config['isReferenceViral'] = True
+
+        # Meta-analysis skips the search in viral genome data for the candidates
+        self._template_config['viralContentExists'] = True
 
         # Choose a term to be searched in all available GO Terms belonging to the results e.g. 'ubiquit' (could be a stem of a word)
         self._template_config['GOSearch'] = ''
@@ -72,7 +72,7 @@ class ConfigurationManager:
         # Do not use external local or online resources. PDB data only.
         self._template_config['noThirdPartyData'] = False
 
-        # Do not use external local or online resources. PDB data only.
+        # Enable for testing datasets
         self._template_config['isNonRedundantSet'] = False
 
         # Perform only GO Meta-analysis (for completed searches).
@@ -86,6 +86,15 @@ class ConfigurationManager:
 
         # Validation for PDB files (strict)
         self._template_config['pdbValidation'] = False
+
+        # EPS format for figures
+        self._template_config['epsOutput'] = True
+
+        # TIFF format for figures
+        self._template_config['tiffOutput'] = False
+
+        # Alignment backend selection : 'biopython', 'parasail'
+        self._template_config['alignmentBackend'] = 'parasail'
 
     def assign_default_root_folder(self, path):
         self._template_config['rootDisk'] = path
@@ -230,7 +239,6 @@ class ConfigurationManager:
     def verify_config(self, configuration, config_index):
         for key in configuration:
             condition = key in ['rootDisk', 'referencePDBID', 'referenceChainID', 'pdbDatasetPath', 'outputPath',] and len(configuration[key]) == 0
-            condition = condition or (key == 'referenceSequenceLength' and configuration[key] < 1)
             condition = condition or (key == 'isReferenceViral' and configuration[key] is None)
             if(condition):
                 print('A required field is missing in your job configuration: "', key, '" [Job No. ', config_index, ' in yaml list]')

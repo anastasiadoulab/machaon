@@ -47,7 +47,7 @@ class ExecutionHandler:
         if(total != len(final_results)):
             fail_log = [repr(entries[resultIndex]) for resultIndex, result in enumerate(results) if result is False]
             with open(os.path.join('logs', ''.join([time.strftime('%Y-%m-%d', time.localtime()), '.log'])), 'a', encoding='utf-8') as fail_log_file:
-                fail_log_file.write('\n'.join([repr(func)] + fail_log))
+                fail_log_file.write('\n'.join([repr(func)] + fail_log + ['\n']))
         sys.stdout.flush()
         print(''.join(['Execution time (seconds): ', repr(round(end - start, 3)), ' | fails: ', repr(total - len(final_results))]))
         return final_results

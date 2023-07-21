@@ -44,9 +44,9 @@ def compute_tm_scores(reference_pdb_id, output_path, pdb_dataset_path, structure
 
 def compute_tm(entry):
     reference_id, candidate_id, pdb_dataset_path = entry
-    evaluator = Evaluator(False)
-    evaluator.reference_data = {'pdbId' : reference_id, 'chainIndex' : 0}
-    evaluator.candidate_data = {'pdbId' : candidate_id, 'chainIndex' : 0}
+    evaluator = Evaluator('biopython', False)
+    evaluator.reference_data = {'pdbId' : reference_id, 'chainIndex' : 0, 'fullPDBPath': os.path.join(pdb_dataset_path, ''.join([reference_id, '.pdb']))}
+    evaluator.candidate_data = {'pdbId' : candidate_id, 'chainIndex' : 0, 'fullPDBPath': os.path.join(pdb_dataset_path, ''.join([candidate_id, '.pdb']))}
     evaluator.set_pdb_path(pdb_dataset_path)
     result = evaluator.calculate_tm_score()
     return result[0], result[1]
@@ -78,7 +78,7 @@ def compute_sec_struct_identity(entry):
     if(len(secondary_structure) > 0):
         score, alignment, alignment_result = aligner.align(reference_struct, secondary_structure, '2D', {'gapChars' : ['{', ' ']})
         if(alignment is not False):
-            identity, no_gap_identity, gaps = aligner.calculate_identity(alignment)
+            identity, no_gap_identity, gaps = aligner.calculate_identity(alignment_result)
     return (candidate_id, identity)
 
 def compute_sec_struct_identities(config):

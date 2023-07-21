@@ -248,34 +248,35 @@ class PDBHandler:
         if(len(parts) > 1):
             if(parts[0] == 'AF'):
                 self.uniprot_accession_number = parts[1]
+        return self.uniprot_accession_number
 
     # Retrieve a UniProt accession number connected with a PDB ID
     def get_uniprot_accession_number(self, chain_id, pdb_id='', pdb_path=''):
         if (pdb_id != ''):
             self.structure_id = pdb_id
-        self.uniprot_accession_number = ''
+        uniprot_accession_number = ''
         uniprot_map_path = os.path.join(self.root_disk, 'uniprotmap')
         if (os.path.exists(uniprot_map_path) is False):
             os.makedirs(uniprot_map_path)
         # Check if there was a previously cached retrieval of this identifier
         data_path = os.path.join(uniprot_map_path, ''.join([self.structure_id, '.', chain_id, '.log']))
-        if(self.uniprot_accession_number == ''):
+        if(uniprot_accession_number == ''):
             if (os.path.exists(data_path)):
                 with open(data_path) as dataFile:
-                    self.uniprot_accession_number = dataFile.readline().strip()
+                    uniprot_accession_number = dataFile.readline().strip()
             else:
-                self.get_uniprot_accession_by_alphafold_pdbid()
-                if (self.uniprot_accession_number == ''):
+                uniprot_accession_number = self.get_uniprot_accession_by_alphafold_pdbid()
+                if (uniprot_accession_number == ''):
                     # Extract the UniProt number from the PDB file
                     if (pdb_id != '' and pdb_path != ''):
-                        self.uniprot_accession_number = self.get_uniprot_accession_by_seqres(pdb_path, pdb_id, chain_id)
+                        uniprot_accession_number = self.get_uniprot_accession_by_seqres(pdb_path, pdb_id, chain_id)
 
                     # Search in the local mapping resources
-                    if (self.uniprot_accession_number == ''):
-                        self.uniprot_accession_number = self.read_uniprot_accession_number(chain_id)
+                    if (uniprot_accession_number == '' and len(pdb_id) == 4):
+                        uniprot_accession_number = self.read_uniprot_accession_number(chain_id)
 
                     # Query RCSB GraphQL service for the UniProt number
-                    if (self.uniprot_accession_number == ''):
+                    if (uniprot_accession_number == '' and len(pdb_id) == 4):
                         time.sleep(random.randint(10, 25))
                         request_url = ''.join(['https://data.rcsb.org/graphql'])
                         query = '''{
@@ -302,17 +303,18 @@ class PDBHandler:
                                         "rcsb_polymer_entity_container_identifiers"]['uniprot_ids'] is not None
                                     and len(json_data['data']['polymer_entity_instances'][0]['polymer_entity'][
                                                 "rcsb_polymer_entity_container_identifiers"]['uniprot_ids']) > 0):
-                                self.uniprot_accession_number = \
+                                uniprot_accession_number = \
                                     json_data['data']['polymer_entity_instances'][0]['polymer_entity'][
                                         "rcsb_polymer_entity_container_identifiers"]['uniprot_ids'][0]
                             else:
-                                self.uniprot_accession_number = ''
+                                uniprot_accession_number = ''
                         if (self.verbose is True):
                             print(response.text)
-        if (self.uniprot_accession_number != ''):
+        if (uniprot_accession_number != ''):
             with open(data_path, 'w') as outputFile:
-                outputFile.write(self.uniprot_accession_number)
-        return self.uniprot_accession_number
+                outputFile.write(uniprot_accession_number)
+        self.uniprot_accession_number = uniprot_accession_number
+        return uniprot_accession_number
 
     # Seek a UniProt-PDB mapping in ID mapping resource
     def read_uniprot_accession_number(self, chain_id):
@@ -322,8 +324,7 @@ class PDBHandler:
         uniprot_accession_number = ''
 
         try:
-            output = subprocess.run(['zgrep', '-i', pdb_id, '-m', '1', uniprot_dataset_path], capture_output=True,
-                                    timeout=30)
+            output = subprocess.run(['timeout', '30s', 'zgrep', '-i', pdb_id, '-m', '1', uniprot_dataset_path], capture_output=True)
             parts = output.stdout.decode("utf-8").split('\t')
 
             # 'parts' includes the following information:
@@ -445,17 +446,18 @@ class PDBHandler:
 
     # Extract UniProt accession number from a SEQRES entry for a specified PDB chain
     def get_uniprot_accession_by_seqres(self, pdb_path, pdb_id, chain_id):
-        self.uniprot_accession_number = ''
+        uniprot_accession_number = ''
         for record in SeqIO.parse(pdb_path, 'pdb-seqres'):
             if (record.id == ':'.join([pdb_id, chain_id])):
                 if (len(record.dbxrefs) > 0):
                     for db_reference in record.dbxrefs:
                         if ('UNP:' in db_reference):
-                            self.uniprot_accession_number = db_reference.split(':')[1].strip()
+                            uniprot_accession_number = db_reference.split(':')[1].strip()
                             break
-            if (self.uniprot_accession_number != ''):
+            if (uniprot_accession_number != ''):
                 break
-        return self.uniprot_accession_number
+        self.uniprot_accession_number = uniprot_accession_number
+        return uniprot_accession_number
 
     # Retrieve information on domains for a UniProt accession number
     def get_domain_information(self):
@@ -466,6 +468,7 @@ class PDBHandler:
                 parsed = json.load(jsonFile)
         else:
             # Attempt to retrieve domain information from UniProt
+            retries = 3
             while True:
                 time.sleep(random.randint(5, 15))
                 request_url = ''.join(['https://www.ebi.ac.uk/proteins/api/features?offset=0&size=100&accession=',
@@ -480,6 +483,9 @@ class PDBHandler:
                 else:
                     if (self.verbose is True):
                         print(response.text)
+                    retries -= 1
+                if retries == 0:
+                    break
         self.domains = []
         if (len(parsed) > 0):
             for domain in parsed[0]['features']:

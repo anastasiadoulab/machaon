@@ -5,20 +5,21 @@ from Bio.pairwise2 import format_alignment
 import traceback
 import subprocess
 from DSSPparser import parseDSSP
-import warnings
-
 from src.pdbhandler import PDBHandler
-
-warnings.filterwarnings("ignore", category=BiopythonDeprecationWarning)
-from Bio.SubsMat import MatrixInfo as matlist
 import re
 import pandas as pd
 import numpy as np
+from parasail import matrix_create
+import parasail
+import warnings
+warnings.filterwarnings("ignore", category=BiopythonDeprecationWarning)
+from Bio.SubsMat import MatrixInfo as matlist
+from Bio import Align
 
 
 class StructureAligner:
 
-    def __init__(self):
+    def __init__(self, backend='biopython'):
         self.root_disk = ''
         self.verbose = False
         self.structure_data_dir = ''
@@ -92,6 +93,23 @@ class StructureAligner:
             for hydropathy_index in range(7):
                 self._label_mix.append((notation, hydropathy_index))
 
+        self.backend = backend if backend != '' else 'biopython'
+        if(backend == 'biopython'):
+            self.perform_global_alignment = self.perform_global_alignment_b
+            self.perform_local_alignment = self.perform_local_alignment_b
+            self.get_reference_sequence_alignment = self.get_reference_sequence_alignment_b
+        elif(backend == 'biopython_new'):
+            self.perform_global_alignment = self.perform_global_alignment_bn
+            self.perform_local_alignment = self.perform_local_alignment_bn
+            self.get_reference_sequence_alignment = self.get_reference_sequence_alignment_bn
+            self.get_alignment_info = self.get_alignment_info_bn
+        elif (backend == 'parasail'):
+            self.perform_global_alignment = self.perform_global_alignment_p
+            self.perform_local_alignment = self.perform_local_alignment_p
+            self.get_reference_sequence_alignment = self.get_reference_sequence_alignment_p
+        else:
+            raise Exception('Unknown backend.')
+
     def set_root_disk(self, root_disk):
         self.root_disk = root_disk
         self.structure_data_dir = os.path.sep.join([self.root_disk, 'prot_sec'])
@@ -135,7 +153,7 @@ class StructureAligner:
         pdbhandler = PDBHandler(pdb_id)
         pdbhandler.root_disk = self.root_disk
         full_pdb_file_path = os.path.sep.join([self.pdb_dataset_path, ''.join([pdb_id, '.pdb'])])
-        residue_names =  pdbhandler.get_residues_names(full_pdb_file_path, chain_id)
+        residue_names = pdbhandler.get_residues_names(full_pdb_file_path, chain_id)
         for name in residue_names:
             if(name in self._lettercode):
                 sequence.append(self._lettercode[name])
@@ -190,8 +208,8 @@ class StructureAligner:
             else:
                 isoform_uniprot_id = ''.join([uniprot_id, '-', repr(i)])
             try:
-                output = subprocess.run(['grep', '-i', isoform_uniprot_id, '-m', '1', uniprot_dataset_path],
-                                        capture_output=True, timeout=30)
+                output = subprocess.run(['timeout', '30s', 'grep', '-i', isoform_uniprot_id, '-m', '1',
+                                         uniprot_dataset_path], capture_output=True)
                 parts = output.stdout.decode("utf-8").split('\t')
                 if (len(parts) > 1):
                     ref_seq_transcript_id = parts[-1].strip()
@@ -204,8 +222,8 @@ class StructureAligner:
             if (ref_seq_transcript_id == ''):
                 try:
                     uniprot_dataset_path = os.path.join(self.root_disk, 'refseq', 'refseq_xm_map.tsv')
-                    output = subprocess.run(['grep', '-i', isoform_uniprot_id, '-m', '1', uniprot_dataset_path],
-                                            capture_output=True, timeout=30)
+                    output = subprocess.run(['timeout', '30s', 'grep', '-i', isoform_uniprot_id, '-m', '1',
+                                             uniprot_dataset_path], capture_output=True)
                     parts = output.stdout.decode("utf-8").split('\t')
                     if (len(parts) > 1):
                         ref_seq_transcript_id = parts[-1].strip()
@@ -227,14 +245,11 @@ class StructureAligner:
         transcript_sequence = ''
         # Retrieve the transcript sequence belonging to the given RefSeq ID
         try:
+            command = ['awk', '\'BEGIN{RS=">";FS="\\n"}NR>1{if', ''.join(['($1~/', ref_seq_transcript_id, '/)']),
+                 'print ">"$0}\'', ''.join(['\'', refseq_dataset_path, '\''])]
             if (self.verbose is True):
-                print(' '.join(
-                    ['awk', '\'BEGIN{RS=">";FS="\\n"}NR>1{if', ''.join(['($1~/', ref_seq_transcript_id, '/)']),
-                     'print ">"$0}\'', ''.join(['\'', refseq_dataset_path, '\''])]))
-            output = subprocess.run(' '.join(
-                ['awk', '\'BEGIN{RS=">";FS="\\n"}NR>1{if', ''.join(['($1~/', ref_seq_transcript_id, '/)']),
-                 'print ">"$0}\'', ''.join(['\'', refseq_dataset_path, '\''])]), shell=True, capture_output=True,
-                                    timeout=80)
+                print(' '.join(command))
+            output = subprocess.run(' '.join(['timeout', '80s'] + command), shell=True, capture_output=True)
             parts = output.stdout.decode("utf-8").split('\n')
             if (len(parts) > 1):
                 transcript_sequence = ''.join(parts[1:])
@@ -250,10 +265,10 @@ class StructureAligner:
         refseq_annotation_path = os.path.join(self.root_disk, 'refseq', 'cdsinfo.gbff')
         cds_range = [-1, -1]
         try:
+            command = ['grep', '-A', '1', ref_seq_transcript_id, refseq_annotation_path]
             if (self.verbose is True):
-                print(' '.join(['grep', '-A', '1', ref_seq_transcript_id, refseq_annotation_path]))
-            output = subprocess.run(['grep', '-A', '1', ref_seq_transcript_id, refseq_annotation_path],
-                                    capture_output=True, timeout=30)
+                print(' '.join(command))
+            output = subprocess.run(['timeout', '30s'] + command, capture_output=True)
             lines = output.stdout.decode("utf-8").split('\n')
             if (len(lines) > 1 and 'CDS' in lines[1]):
                 parts = lines[1].split()
@@ -261,7 +276,6 @@ class StructureAligner:
                     parts = parts[1].split('.')
                     if (len(parts) > 2):
                         cds_range = [int(parts[0]), int(parts[2])]
-
         except:
             if (self.verbose is True):
                 print(''.join([ref_seq_transcript_id, ' not found in refseq annotations']))
@@ -282,7 +296,6 @@ class StructureAligner:
     def get_pdb_sequences(self, pdb_id, chain_id, available_residues):
         # Extract 1D, 2D sequences of a PDB chain from its PDB data
         dssp_data_path = os.path.sep.join([self.dssp_cache_dir, ''.join([pdb_id, '.dssp'])])
-        stride_data_path = os.path.sep.join([self.stride_cache_dir, ''.join([pdb_id, '.stride'])])
         secondary_structure = []
         primary_structure = []
         traversed_residues = []
@@ -291,15 +304,19 @@ class StructureAligner:
                 if (os.path.exists(dssp_data_path) is False):
                     self.call_dssp(pdb_id)
                 if (os.path.exists(dssp_data_path)):
-                    primary_structure, secondary_structure = self.parse_structures_by_dssp(dssp_data_path, chain_id, available_residues['fullRange'])
+                    primary_structure, secondary_structure = self.parse_structures_by_dssp(dssp_data_path,
+                                                             chain_id, available_residues['fullRange'])
 
                 # If DSSP failed, call STRIDE
                 if (len(secondary_structure) < 2):
-                    primary_structure, secondary_structure = self.get_structures_by_stride(pdb_id, chain_id, available_residues)
+                    primary_structure, secondary_structure = self.get_structures_by_stride(pdb_id, chain_id,
+                                                                                           available_residues)
                     if(len(secondary_structure) == 0):
                         raise Exception('Failed to calculate 2D.')
                     else:
-                        traversed_residues = [x for x in range(available_residues['fullRange'][0], available_residues['fullRange'][-1] + 1)] # assignment to trigger assertions
+                        # assignment to trigger assertions
+                        traversed_residues = [x for x in range(available_residues['fullRange'][0],
+                                                               available_residues['fullRange'][-1] + 1)]
 
                 if (len(primary_structure) < 2):
                     primary_structure = ['']
@@ -312,7 +329,8 @@ class StructureAligner:
 
             total_residue_range = []
             if (len(available_residues['fullRange']) > 1):
-                total_residue_range = [x for x in range(available_residues['fullRange'][0], available_residues['fullRange'][-1] + 1)]
+                total_residue_range = [x for x in range(available_residues['fullRange'][0],
+                                                        available_residues['fullRange'][-1] + 1)]
 
             # Tests for extracted sequences
             if (len(traversed_residues) > 0):
@@ -322,7 +340,8 @@ class StructureAligner:
                 assert len(secondary_structure) == len(primary_structure), ' | '.join([pdb_id, chain_id])
         return ''.join(secondary_structure), ''.join(primary_structure)
 
-    def parse_structures_by_dssp(self, dssp_data_path, chain_id, available_residues):
+    @staticmethod
+    def parse_structures_by_dssp(dssp_data_path, chain_id, available_residues):
         secondary_structure = []
         primary_structure = []
         traversed_residues = []
@@ -379,38 +398,56 @@ class StructureAligner:
                     secondary_structure.append('-')
         return primary_structure, secondary_structure
 
+    @staticmethod
+    def get_alignment_content(alignment):
+        # Find content of an alignment
+        content = defaultdict(int)
 
-    def get_alignment_info(self, alignment, gap_included=True):
-        # Find mismatches and matches of an alignment
-        matches = 0
-        mismatches = 0
-        gaps = 0
-
-        for i, (a, b) in enumerate(zip(alignment[0], alignment[1])):
-            if (a == '-' or b == '-'):
-                if (gap_included is True):
-                    mismatches += 1
-                gaps += 1
-                continue
+        for i, (a, b) in enumerate(zip(alignment[0], alignment[2])):
             if a == b:
-                matches += 1
-            else:
-                mismatches += 1
-        assert ((matches + mismatches) if gap_included is True else (matches + mismatches + gaps)) == max(len(alignment[0]),
-                                                                                                         len(alignment[1]))
+                content[a] += 1
+
+        if(len(content) > 0):
+            total = np.sum(list(content.values()))
+            content = {key: round((content[key] / total) * 100, 2) for key in content}
+        else:
+            content = '-'
+
+        return content
+
+    @staticmethod
+    def get_alignment_info(alignment, gap_included=True):
+        # Find mismatches and matches of an alignment
+        matches = alignment[1].count('|')
+        mismatches = alignment[1].count('.') + alignment[1].count(':')
+        gaps = alignment[1].count(' ')
+        if gap_included is True:
+            mismatches += gaps
+
+        assert ((matches + mismatches) if gap_included is True else (matches + mismatches + gaps)) == max(
+            len(alignment[0]),
+            len(alignment[2]))
         return matches, mismatches, gaps
 
-    def get_alignment_mask(self, alignment):
+    @staticmethod
+    def get_alignment_info_bn(alignment, gap_included=True):
+        # Find mismatches and matches of an alignment
+        matches = alignment[1].count('|')
+        mismatches = alignment[1].count('.') + alignment[1].count(':')
+        gaps = alignment[1].count('-')
+        if gap_included is True:
+            mismatches += gaps
+
+        assert ((matches + mismatches) if gap_included is True else (matches + mismatches + gaps)) == max(
+            len(alignment[0]),
+            len(alignment[2]))
+        return matches, mismatches, gaps
+
+    @staticmethod
+    def get_alignment_mask(alignment):
         # Construct a bit mask based on the matches of an alignment.
         # 1 for match or 0 for no match
-        mask = []
-        for i, (a, b) in enumerate(zip(alignment[0], alignment[1])):
-            if (a == '-'):
-                continue
-            if (a == b):
-                mask.append(1)
-            else:
-                mask.append(0)
+        mask = [1 if a == b else 0 for i, (a, b) in enumerate(zip(alignment[0], alignment[1])) if a != '-']
         return mask
 
     def calculate_identity(self, alignment):
@@ -421,6 +458,49 @@ class StructureAligner:
         total = (matches + mismatches)
         no_gap_identity = 0 if total == 0 else matches / total
         return identity, no_gap_identity, gaps
+
+    @staticmethod
+    def perform_global_alignment_b(data_type, reference_sequence, sequence):
+        score = False
+        alignment = False
+        alignment_result = ''
+        # EMBL-EBI EMBOSS Needle configurations are used
+        if (data_type == 'PROTEIN'):
+            # Use configuration for protein sequence alignments
+            alignments = pairwise2.align.globalds(reference_sequence, sequence, matlist.blosum62, -10, -0.5,
+                                                  penalize_end_gaps=False)
+        else:
+            alignments = pairwise2.align.globalms(reference_sequence, sequence, 5, -4, -10, -0.5,
+                                                  penalize_end_gaps=False)
+        if (len(alignments) > 0):
+            alignment = alignments[0]
+            alignment_result = format_alignment(*alignments[0]).split('\n')
+            score = alignment[2]
+
+        return score, alignment, alignment_result
+
+    @staticmethod
+    def perform_global_alignment_p(data_type, reference_sequence, sequence):
+        # EMBL-EBI EMBOSS Needle configuration except for gap extension penalty
+        # as parasail accepts only integers for scoring
+        if (data_type == 'PROTEIN'):
+            # Use configuration for protein sequence alignments
+            scoring_matrix = parasail.blosum62
+        else:
+            scoring_matrix = matrix_create(''.join(set(''.join([reference_sequence, sequence]))), 5, -4)
+        result = parasail.sg_qx_trace_striped_16(reference_sequence, sequence, 10, 1, scoring_matrix)
+        alignment_traceback = result.get_traceback()
+        score = False
+        alignment = []
+        alignment_result = []
+        if len(alignment_traceback.comp) != 0:  # if there is an alignment
+            cigar = result.get_cigar()
+            alignment = [alignment_traceback.query, alignment_traceback.ref, result.score, cigar.beg_ref,
+                         result.end_ref+1, cigar.beg_query, result.end_query+1]
+            alignment_result = [alignment_traceback.ref, alignment_traceback.comp, alignment_traceback.query]
+            score = result.score
+
+        return score, alignment, alignment_result
 
     def align(self, reference_sequence, sequence, data_type, config={}):
         score = False
@@ -445,19 +525,8 @@ class StructureAligner:
         try:
             # Skip long sequences that lead to long running processes
             if (len(sequence) < self._max_sequence_size):
-                # EMBL-EBI EMBOSS Needle configurations are used
-                if (data_type == 'PROTEIN'):
-                    # Use configuration for protein sequence alignments
-                    alignments = pairwise2.align.globalds(reference_sequence, sequence, matlist.blosum62, -10, -0.5,
-                                                          penalize_end_gaps=False)
-                else:
-                    alignments = pairwise2.align.globalms(reference_sequence, sequence, 5, -4, -10, -0.5,
-                                                          penalize_end_gaps=False)
-
-                if (len(alignments) > 0):
-                    alignment = alignments[0]
-                    alignment_result = format_alignment(*alignments[0])
-                    score = alignment[2]
+                score, alignment, alignment_result = self.perform_global_alignment(data_type,
+                                                                                   reference_sequence, sequence)
             elif (self.verbose is True):
                 raise Exception(''.join(['Sequence length: ', repr(len(sequence))]))
         except:
@@ -466,13 +535,14 @@ class StructureAligner:
 
         return score, alignment, alignment_result
 
-    def get_reference_sequence_alignment(self, alignment_result):
+    @staticmethod
+    def get_reference_sequence_alignment_b(alignment_result):
         # Find the aligned range and the number of gaps of the reference sequence
         # in the alignment result
-        reference_line = alignment_result.split('\n')[0].strip().split(' ')
+        reference_line = alignment_result[0].strip().split(' ')
         # If there are no position details in the alignment result, find the first aligned element
         if(len(reference_line) == 1):
-            alignment_line = alignment_result.split('\n')[1]
+            alignment_line = alignment_result[1]
             start = alignment_line.find('|')
             reference_line = reference_line[0]
         else:
@@ -483,10 +553,14 @@ class StructureAligner:
         aligned_range = [start, end]
         return aligned_range, gaps
 
+    @staticmethod
+    def get_reference_sequence_alignment_p(alignment_result):
+        gaps = alignment_result[0].count('-')
+        aligned_range = [alignment_result[3], alignment_result[4]]
+
+        return aligned_range, gaps
+
     def local_align(self, reference_sequence, sequence, gap_chars=[], compress_gaps=False):
-        score = False
-        alignment = False
-        alignment_result = False
         # Convert contiguous gap regions in the sequences to single gaps
         if (compress_gaps is True):
             if ('-' in reference_sequence):
@@ -499,12 +573,66 @@ class StructureAligner:
         if (len(gap_chars) > 0):
             reference_sequence = reference_sequence.replace('-', gap_chars[0])
             sequence = sequence.replace('-', gap_chars[1])
-        # EMBOSS Water configuration
+        return self.perform_local_alignment(reference_sequence, sequence)
+
+    @staticmethod
+    def perform_local_alignment_b(reference_sequence, sequence):
+        score = False
+        alignment = False
+        alignment_result = False
+        # EMBL-EBI EMBOSS Water configuration
         alignments = pairwise2.align.localms(reference_sequence, sequence, 5, -4, -10, -0.5)
         if (len(alignments) > 0):
             alignment = alignments[0]
-            alignment_result = format_alignment(*alignments[0])
+            alignment_result = format_alignment(*alignments[0]).split('\n')
             score = alignment[2]
+        return score, alignment, alignment_result
+
+    @staticmethod
+    def perform_local_alignment_bn(reference_sequence, sequence):
+        score = False
+        alignment = False
+        alignment_result = False
+        # EMBL-EBI EMBOSS Water configuration
+        aligner = Align.PairwiseAligner()
+        aligner.mode = 'local'
+        aligner.match_score = 5.0
+        aligner.mismatch_score = -4.0
+        aligner.open_gap_score = -10
+        aligner.extend_gap_score = -0.5
+        aligner.target_end_gap_score = 0.0
+        aligner.query_end_gap_score = 0.0
+        alignments = aligner.align(reference_sequence, sequence)
+        if (len(alignments) > 0):
+            alignment_path = alignments[0].path
+            alignment = [reference_sequence, sequence, alignments[0].score,
+                         alignment_path[0][0], alignment_path[0][1],
+                         alignment_path[1][0], alignment_path[1][1]]
+            alignment_result = alignments[0].format().split('\n')
+            score = alignments[0].score
+        return score, alignment, alignment_result
+
+    @staticmethod
+    def perform_local_alignment_p(reference_sequence, sequence):
+        # EMBL-EBI EMBOSS Water configuration except for gap extension penalty
+        # as parasail accepts only integers for scoring
+        scoring_matrix = matrix_create(''.join(set(''.join([reference_sequence, sequence]))), 10, -4)
+        result = parasail.sw_trace_striped_16(reference_sequence, sequence, 12, 2, scoring_matrix)
+        alignment_traceback = result.get_traceback()
+        score = False
+        alignment = []
+        alignment_result = []
+        if len(alignment_traceback.comp) != 0:  # if there is an alignment
+            end_ref = result.end_ref + 1
+            end_query = result.end_query + 1
+            # Parasail returns bounds of traversed parts of sequences
+            beg_ref = result.end_ref + 1 - len(alignment_traceback.ref.replace('-', ''))
+            beg_query = result.end_query + 1 - len(alignment_traceback.query.replace('-', ''))
+            alignment = [reference_sequence, sequence, result.score, beg_ref, end_ref, beg_query, end_query]
+            alignment_result = [alignment_traceback.query, alignment_traceback.comp,
+                                alignment_traceback.ref, beg_query, end_query]
+            score = result.score
+
         return score, alignment, alignment_result
 
     def call_dssp(self, pdb_id):
@@ -512,8 +640,9 @@ class StructureAligner:
         result = False
         try:
             output = subprocess.run(
-                [self.dssp_executable_path, '--output-format=dssp', os.path.sep.join([self.pdb_dataset_path,
-                 ''.join([pdb_id, '.pdb'])])], capture_output=True, cwd=os.getcwd())
+                ['timeout', '120s', self.dssp_executable_path, '--output-format=dssp',
+                 os.path.sep.join([self.pdb_dataset_path, ''.join([pdb_id, '.pdb'])])], capture_output=True,
+                cwd=os.getcwd())
             output = output.stdout.decode("utf-8")
             output = output.split('\n')
             if (len(output) > 2):
@@ -531,8 +660,9 @@ class StructureAligner:
         result = False
         try:
             output = subprocess.run(
-                [self.stride_executable_path, ''.join(['-r', chain_id]), '-o', os.path.sep.join([self.pdb_dataset_path,
-                 ''.join([pdb_id, '.pdb'])])], capture_output=True, cwd=os.getcwd())
+                ['timeout', '120s', self.stride_executable_path, ''.join(['-r', chain_id]), '-o',
+                 os.path.sep.join([self.pdb_dataset_path, ''.join([pdb_id, '.pdb'])])], capture_output=True,
+                cwd=os.getcwd())
             output = output.stdout.decode("utf-8")
             output = output.split('\n')
             if (len(output) > 2):
@@ -579,7 +709,8 @@ class StructureAligner:
                 prim_structure = prim_structure[residue_range['discardedStart']:last_residue]
 
                 # Add gaps between missing residues
-                for list_position, residue_number in enumerate(range(available_residues[0], available_residues[-1] + 1)):
+                for list_position, residue_number in enumerate(range(available_residues[0],
+                                                                     available_residues[-1] + 1)):
                     if (residue_number in available_residues and list_position < len(sec_structure)):
                         secondary_structure.append(sec_structure[list_position])
                         primary_structure.append(prim_structure[list_position])
@@ -589,20 +720,22 @@ class StructureAligner:
 
         return ''.join(primary_structure), ''.join(secondary_structure)
 
-    def get_alignment_positions(self, alignment, sequence_b, total_residue_range):
+    @staticmethod
+    def get_alignment_positions(alignment, sequence_b, total_residue_range, last_position=0):
         # alignment list variable containing:
         # [0] - sequence A
         # [1] - sequence B
         # [2] - score
         # [3] - sequence B alignment start
         # [4] - sequence B alignment end
+        # [5] - sequence A alignment start (parasail only)
+        # [6] - sequence A alignment end (parasail only)
 
         # Aligned range refers to the residues of the PDB sequence
-        aligned_range = [len(alignment[1][:alignment[3]].replace('-', '')),
-                         len(alignment[1][:alignment[4]].replace('-', ''))]
+        aligned_range = [len(alignment[1][:alignment[3]].replace('-', '')) + last_position,
+                         len(alignment[1][:alignment[4]].replace('-', '')) + last_position]
         aligned_sequence = sequence_b[aligned_range[0]:aligned_range[1]]
         range_length = len(aligned_sequence)
-        gaps = len(alignment[1][alignment[3]:alignment[4]]) - range_length
 
         # Actual range refers to the range in the whole known sequence
         actual_range = total_residue_range[aligned_range[0]:aligned_range[1]]
@@ -611,14 +744,15 @@ class StructureAligner:
         else:
             actual_range = []
 
-        return aligned_range, actual_range, gaps, range_length
+        return aligned_range, actual_range, range_length
 
     def get_all_sequences(self, structure_info, available_residues):
         # Extract all the available sequences for a PDB file (1D, 2D, hydrophobicity, mixed)
         sequences = defaultdict()
         sequences['secondary'], sequences['primary'] = self.get_structure(structure_info, available_residues)
-        if(len(sequences['secondary'])> 1):
-            sequences['mixed'], sequences['hydrophobicity'] = self.create_mixed_sequence( sequences['primary'], sequences['secondary'])
+        if(len(sequences['secondary']) > 1):
+            sequences['mixed'], sequences['hydrophobicity'] = self.create_mixed_sequence(sequences['primary'],
+                                                                                         sequences['secondary'])
         else:
             if (len(sequences['primary']) > 1):
                 sequences['hydrophobicity'] = self.create_hydrophobicity_sequence(sequences['primary'])

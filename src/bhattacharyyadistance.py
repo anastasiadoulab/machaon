@@ -22,3 +22,13 @@ class BhattacharyyaDistance:
 
         return (0.125 * mahalanobis_term) + (0.5 * np.log(det_term))
 
+    @staticmethod
+    def multivariate_compare_group(group_one, group_two):
+        if(group_one['det_cov'] <= 0 or group_two['det_cov'] <= 0):
+            return False
+        aggregate_cov = (group_one['cov'] + group_two['cov']) / 2
+        mean_difference = group_one['mean'] - group_two['mean']
+        mahalanobis_term = np.dot(np.dot(mean_difference.T, inv(aggregate_cov)), mean_difference)
+        det_term = det(aggregate_cov) / np.sqrt(group_one['det_cov'] * group_two['det_cov'])
+
+        return (0.125 * mahalanobis_term) + (0.5 * np.log(det_term))

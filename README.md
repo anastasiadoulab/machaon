@@ -41,6 +41,7 @@ post-processing  and target setup for constrained comparisons due to the require
 - docs: It contains programming-related documentation and diagrams.
    - docs/classes: Extensive API documentation for all the classes of this implementation.   
   Each class has a dedicated HTML file with thorough description.
+- logrotate: logging configuration for gRPC server
 - setup: Scripts for downloading and preparing some (optional) related data sources. 
 - src: source code 
 - test: It contains an integrity test with testing data and expected outputs.
@@ -304,14 +305,14 @@ are ignored. You could also consult with the example configurations used for the
     overridePDBID: ""
     referenceChainID: ""
     referenceGeneID: ""
-    referenceSequenceLength: 0
     comparisonMode: ""
     pdbDatasetPath: ""
     outputPath: ""
     excludedOrganisms: []
     excludedGeneNames: []
     excludedPDBIDs: []
-    isReferenceViral: False
+    isReferenceViral: True
+    viralContentExists: True
     GOProperty: ""
     GOTargetProperties: []
     GOSearch: ""
@@ -319,6 +320,10 @@ are ignored. You could also consult with the example configurations used for the
     noThirdPartyData: False
     pdbValidation: False
     GOAnalysisOnly: False 
+    epsOutput: False
+    tiffOutput: False
+    alignmentBackend: "parasail"
+
 </pre>
 All the options are presented below:
 <pre>
@@ -327,7 +332,6 @@ All the options are presented below:
 'overridePDBID': Override the reference PDBID for Uniprot ID retrieval (for renamed reference PDB files, e.g. 6VXX_processed.pdb)
 'referenceChainID': Choose the chain of the reference PDB
 'referenceGeneID': Provide the gene id (Entrez) of the reference PDB
-'referenceSequenceLength':  Provide the protein sequence length of the reference protein
 'comparisonMode':  Choose 'whole', 'domain' or 'segment'
 'alignmentLevel': Choose 'primary', 'secondary', 'mixed', 'hydrophobicity'. Default is 'mixed'. (Only from segment scans)
 'pdbDatasetPath': Relative path for PDB data folder
@@ -336,6 +340,7 @@ All the options are presented below:
 'excludedGeneNames': Filtering out structures originating from the same gene as the reference one
 'excludedPDBIDs': Exclude PDB IDs
 'isReferenceViral': Meta-analysis skips the search in viral genome data for the reference, if it is not a viral protein
+'viralContentExists': The existence of viral proteins in candidate set. This can be set to False for speeding up the process if there are no viral proteins present. 
 'GOProperty': Choose a property type for analysis: 'biologicalProcess', 'molecularFunction', 'cellularComponent'
 'GOTargetProperties': Choose properties for analysis
 'GOSearch': Choose a term to be searched in all available GO Terms belonging to the results e.g. 'ubiquit' (could be a stem of a word)
@@ -343,6 +348,9 @@ All the options are presented below:
 'noThirdPartyData': Do not use external local or online resources. PDB data only.
 'GOAnalysisOnly': Perform only GO Meta-analysis (for completed searches).
 'pdbValidation': Validation for PDB files. Every file assessed as invalid is skipped from the search (very strict and slow). 
+'epsOutput': Additional output format for plots (.eps).
+'tiffOutput': Additional output format output for plots (.tiff).
+'alignmentBackend': Backend method for sequence alignments: 'parasail' or 'biopython' are available.
 'ignore': If set to True, the configuration will be ignored. Useful for storing previous job details.
 '*whatever*': You can include fields of your own, like tags or notes (e.g. 'date' : 14-4-2003). These are not considered by the program. 
 </pre>
@@ -385,7 +393,9 @@ from 47 to 52 and 59 (duplicate definitions are removed).
         |__metrics/ (directory for the computed metrics for all structures in the dataset)
         |
         |__candidates/ (directory for the selected final set of candidate entries, 
-        |               the final report is saved here [HTML file])
+        |               the final report is saved here [HTML file]. There are also outputs
+        |               in CSV format that correspond to the various phases of the process.
+        |               The longer the filename, the more information is included.)
         |
         |__plots/ (directory for plots regarding the final set)
         |
@@ -396,6 +406,10 @@ from 47 to 52 and 59 (duplicate definitions are removed).
 "site&lt;segment index&gt;" that signify the results for a particular segment. The index comes from the   
 configuration order. In the "metrics" folder, there is a "*_site&lt;segment index&gt;-parts.csv" file that contains  
 the contiguous parts of the segment as determined by the method.
+
+<b>Note for current version</b>: The current version stores pre-computed features in <b>protobuf</b> format.
+There is also compatibility support for the previous format where the extracted raw data were stored in separate
+pickle-formatted files.
 
 
 #### Root folder (source data & cache), full structure
@@ -429,7 +443,6 @@ the contiguous parts of the segment as determined by the method.
 
 There is also a cache file that is generated besides the scripts in src folder (go_cache.csv) that holds  
 Gene Ontology data.   
-<br/>
 
 ## Output format
 <br/>
@@ -438,6 +451,18 @@ The outputs are human interpretable CSV files with headers:
 - metrics directory has comma separated CSV files
 - candidates directory has tab separated CSV files
 - outputs of constrained searches include columns with serialized list contents which can be parsed with eval()   
+
+## gRPC support
+
+Machaon is able to communicate with <b>MachaonWeb</b>, a distributed computing network, via gRPC.   
+Consult also its own repo's README: https://github.com/anastasiadoulab/machaonweb/blob/main/README.md
+
+You need to edit the ```src/server_mtls.py``` file with your own choices, taking also into account the   
+port configuration in the docker-compose.yml. Then, you only need to execute this script and the gRPC   
+server will start. 
+
+Of course, third-party applications that could potentially support  gRPC, should be able to 
+communicate with Machaon using the definitions in the proto files (```src/protos```).
 <br/>
 
 
@@ -447,9 +472,9 @@ The outputs are human interpretable CSV files with headers:
 - If you want to compare a polymer as a whole structure you could use pdb-tools :
 https://github.com/haddocking/pdb-tools   
 and combine multiple chains to one. You should remove any pre-computed features of the old PDB  
-(*_angles.pkl, *_distances.pkl, *_triangles.pkl) and the original PDB from the dataset (you could  
-keep these files in a separate location as back up). You need to decide which original &lt;PDB ID&gt; and  
-&lt;PDB chain ID&gt; you will use as a reference for the third-party resources.
+(*_angles.pkl, *_distances.pkl, *_triangles.pkl or *.proto) and the original PDB from the dataset    
+(you could keep these files in a separate location as back up). You need to decide which original   
+&lt;PDB ID&gt; and &lt;PDB chain ID&gt; you will use as a reference for the third-party resources.
 
 - In case you encounter warnings about empty chain identifiers or missing chains, use pdb_chain  
 command from pdb-tools: ```pdb_chain -A no_chains.pdb > corrected.pdb``` to put a dummy identifier
@@ -466,3 +491,4 @@ segments (default is 'mixed') or GO metanalysis (default is 2D).
 ### Trivia  
   
 https://en.wikipedia.org/wiki/Machaon_(mythology)
+

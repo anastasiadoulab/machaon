@@ -4,19 +4,34 @@ ADD ./environment.yml /opt
 ADD ./src /opt/src
 ADD ./setup /opt/setup
 ADD ./test /opt/test
+ADD ./logrotate/machaon /etc/logrotate.d
 
 WORKDIR /opt
 
 RUN apt-get update \
     && apt-get install -y  \
     build-essential \
-    cmake \
     libboost-all-dev \
     libbz2-dev \
     libgl1-mesa-dev \
     libpoppler-cpp-dev \
+    && LC_CTYPE=C wget https://github.com/Kitware/CMake/releases/download/v3.26.1/cmake-3.26.1-linux-x86_64.sh -O cmake-3.26.1-linux-x86_64.sh \
+	&& mkdir /opt/cmake \
+	&& sh cmake-3.26.1-linux-x86_64.sh --prefix=/opt/cmake --skip-license \
+    && ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake \
+	&& ln -s /opt/cmake/bin/ctest /usr/local/bin/ctest \
+	&& mkdir /root/.ssh && chmod 0700 /root/.ssh \
+	&& ssh-keyscan -H github.com >> /root/.ssh/known_hosts \
     && g++ -static -O3 -ffast-math -lm -o /opt/src/TMalign /opt/src/TMalign.cpp \
     && chmod 770 /opt/src/TMalign \
+	&& git clone https://github.com/mhekkel/libmcfp.git \
+	&& cd libmcfp \
+	&& mkdir build \
+	&& cd build \
+	&& cmake .. \
+	&& cmake --build . --config Release \
+	&& cmake --install . \
+	&& cd /opt \
     && git clone https://github.com/mhekkel/mrc.git \
     && cd mrc \
     && mkdir build \

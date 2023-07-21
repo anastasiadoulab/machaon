@@ -13,6 +13,9 @@ True : The method is executed in single core and verbose mode facilitating debug
 <li data-search="max_cores"><span class="attr-name">max_cores [default: 1]</span>: <span class="attr-description">
 This value should be set according to the current/expected workload on the side. The maximum value should be the number of the available system's cores minus one, for stability. 
 </span></li>
+<li data-search="meta_metrics"><span class="attr-name">meta_metrics [default: ['1D-identity', '2D-identity', '5UTR-identity', 'CDS-identity', '3UTR-identity', '3D-score']</span>: <span class="attr-description">
+The columns of the results that will be used for polar plots.
+</span></li>
 </ul>
 </div>
 <div data-search="get_scanner" class="method-section"><span class="method-name" data-search="get_scanner">get_scanner()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
@@ -21,6 +24,9 @@ Gets the appropriate Scanner class depending on the type of the comparison.
 <br/><span class="info-label">Arguments:</span><ul>
 <li data-search="mode"><span class="param-name">mode</span>: <span class="arg-description">
 options: 'whole', 'domain', 'segment'
+</span></li>
+<li data-search="alignment_backend"><span class="param-name">alignment_backend</span>: <span class="arg-description">
+Choose 'parasail' or 'biopython' alignment backend. (string)
 </span></li>
 <li data-search="alignment_level"><span class="param-name">alignment_level [default: None]</span>: <span class="arg-description">
 options: 'primary', 'secondary', 'hydrophobicity', 'mixed' (SegmentScanner only)
@@ -47,6 +53,23 @@ Update the set of candidates with new PDB files.
 <br/><span class="info-label">Arguments:</span><ul>
 <li data-search="job_config"><span class="param-name">job_config [default: None]</span>: <span class="arg-description">
 Job configuration (dict)
+</span></li>
+<li data-search="new_file_paths"><span class="param-name">new_file_paths [default: []]</span>: <span class="arg-description">
+Introduce new structures explicitly.
+</span></li>
+</ul>
+</div>
+<div data-search="manage_file_list" class="method-section"><span class="method-name" data-search="manage_file_list">manage_file_list()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Update an existing filelist with new structures or create a new filelist based on an existing one with modifications.
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data_folder_path"><span class="param-name">data_folder_path</span>: <span class="arg-description">
+The directory location of the target filelist
+</span></li>
+<li data-search="new_files"><span class="param-name">new_files</span>: <span class="arg-description">
+Introduce new structures explicitly. (list of strings)
+</span></li>
+<li data-search="mode"><span class="param-name">mode</span>: <span class="arg-description">
+Comparison mode - 'segment' or other. (string)
 </span></li>
 </ul>
 </div>

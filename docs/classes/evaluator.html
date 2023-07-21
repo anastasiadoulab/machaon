@@ -7,6 +7,9 @@ This is the evaluation module of Machaon.
 Constructor
 </span><br/><br/>
 <br/><span class="info-label">Arguments:</span><ul>
+<li data-search="alignment_backend"><span class="param-name">alignment_backend</span>: <span class="arg-description">
+Select between the available alignment backends: ['parasail', 'biopython']
+</span></li>
 <li data-search="viral"><span class="param-name">viral [default: False]</span>: <span class="arg-description">
 Whether the data for evaluation are viral or not (This is to prevent the search in the viral data part of local resources. Performance related.) (boolean)
 </span></li>
@@ -19,7 +22,7 @@ Evaluation data for the reference protein. (dict) (see load_data())
 Evaluation data for the candidate protein. (dict) (see load_data())
 </span></li>
 <li data-search="_aligner"><span class="attr-name">_aligner [default: StructureAligner()]</span>: <span class="attr-description">
-StructureAligner object
+StructureAligner object, alignment_backend argument is inserted here.
 </span></li>
 <li data-search="root_disk"><span class="attr-name">root_disk [default: '']</span>: <span class="attr-description">
 Current setting of root disk where the third-party data and the target dataset reside. (string)

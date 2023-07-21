@@ -6,6 +6,12 @@ This class is responsible for the retrieval of protein structures/sequences and 
 <div data-search="__init__" class="method-section"><span class="method-name" data-search="__init__">__init__()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
 Constructor
 </span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="backend"><span class="param-name">backend [default: 'biopython']</span>: <span class="arg-description">
+The backend engine for sequence alignments: 'parasail' or 'biopython'. 
+<br/>There is also the 'biopython_new' option that refers to BioPython's newer API, but it is not fully usable yet. 
+</span></li>
+</ul>
 <br/><span class="info-label">Class Attributes:</span><ul>
 <li data-search="root_disk"><span class="attr-name">root_disk [default: '']</span>: <span class="attr-description">
 Current setting of root disk where the third-party data and the target dataset reside. (string)
@@ -287,6 +293,84 @@ Number of gaps (int)
 </span></li>
 </ul>
 </div>
+<div data-search="perform_global_alignment_b" class="method-section"><span class="method-name" data-search="perform_global_alignment_b">perform_global_alignment_b()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Perform global alignment with BioPython.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data_type"><span class="param-name">data_type</span>: <span class="arg-description">
+If the variable's value equals to 'PROTEIN', the function treats the provided sequences as protein sequences. (string)
+</span></li>
+<li data-search="reference_sequence"><span class="param-name">reference_sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+<li data-search="sequence"><span class="param-name">sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="score"><span class="return-name">score</span>: <span class="return-description">
+Alignment score (float or False if there is a failure)
+</span></li>
+<li data-search="alignment"><span class="return-name">alignment</span>: <span class="return-description">
+Aligned sequences (list of string or False if there is a failure) 
+</span></li>
+<li data-search="alignment_result"><span class="return-name">alignment_result</span>: <span class="return-description">
+Formatted result of alignment (list of string or empty string if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="perform_global_alignment_bn" class="method-section"><span class="method-name" data-search="perform_global_alignment_bn">perform_global_alignment_bn()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Perform global alignment with BioPython's newer API. (This function is not implemented. There is only a placeholder assignment.)
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data_type"><span class="param-name">data_type</span>: <span class="arg-description">
+If the variable's value equals to 'PROTEIN', the function treats the provided sequences as protein sequences. (string)
+</span></li>
+<li data-search="reference_sequence"><span class="param-name">reference_sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+<li data-search="sequence"><span class="param-name">sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="score"><span class="return-name">score</span>: <span class="return-description">
+Alignment score (float or False if there is a failure)
+</span></li>
+<li data-search="alignment"><span class="return-name">alignment</span>: <span class="return-description">
+Aligned sequences (list of string or False if there is a failure) 
+</span></li>
+<li data-search="alignment_result"><span class="return-name">alignment_result</span>: <span class="return-description">
+Formatted result of alignment (list of string or empty string if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="perform_global_alignment_p" class="method-section"><span class="method-name" data-search="perform_global_alignment_p">perform_global_alignment_p()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Perform global alignment with Parasail.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="data_type"><span class="param-name">data_type</span>: <span class="arg-description">
+If the variable's value equals to 'PROTEIN', the function treats the provided sequences as protein sequences. (string)
+</span></li>
+<li data-search="reference_sequence"><span class="param-name">reference_sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+<li data-search="sequence"><span class="param-name">sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="score"><span class="return-name">score</span>: <span class="return-description">
+Alignment score (float or False if there is a failure)
+</span></li>
+<li data-search="alignment"><span class="return-name">alignment</span>: <span class="return-description">
+Aligned sequences (list of string or False if there is a failure) 
+</span></li>
+<li data-search="alignment_result"><span class="return-name">alignment_result</span>: <span class="return-description">
+Formatted result of alignment (list of string or empty string if there is a failure)
+</span></li>
+</ul>
+</div>
 <div data-search="align" class="method-section"><span class="method-name" data-search="align">align()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
 Performs global sequence alignment: match score=5, mismatch score=-4 similar to EDNAMAT scoring matrix, open gap penalty=-10, gap extension penalty=-0,5,  <br/>
 no end-gap penalty, for protein sequence alignment type, BLOSUM62 matrix is used.
@@ -339,6 +423,40 @@ Number of gaps (int)
 </span></li>
 </ul>
 </div>
+<div data-search="get_reference_sequence_alignment_b" class="method-section"><span class="method-name" data-search="get_reference_sequence_alignment_b">get_reference_sequence_alignment_b()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+BioPython output specific caclulations for get_reference_sequence_alignment()
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="alignment_result"><span class="param-name">alignment_result</span>: <span class="arg-description">
+Formatted result of alignment (list of string) 
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="aligned_range"><span class="return-name">aligned_range</span>: <span class="return-description">
+original start and end indices of the aligned part (list of int)
+</span></li>
+<li data-search="gaps"><span class="return-name">gaps</span>: <span class="return-description">
+Number of gaps (int)
+</span></li>
+</ul>
+</div>
+<div data-search="get_reference_sequence_alignment_p" class="method-section"><span class="method-name" data-search="get_reference_sequence_alignment_p">get_reference_sequence_alignment_p()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Parasail output specific caclulations for get_reference_sequence_alignment()
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="alignment_result"><span class="param-name">alignment_result</span>: <span class="arg-description">
+Formatted result of alignment (list of string) 
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="aligned_range"><span class="return-name">aligned_range</span>: <span class="return-description">
+original start and end indices of the aligned part (list of int)
+</span></li>
+<li data-search="gaps"><span class="return-name">gaps</span>: <span class="return-description">
+Number of gaps (int)
+</span></li>
+</ul>
+</div>
 <div data-search="local_align" class="method-section"><span class="method-name" data-search="local_align">local_align()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
 Performs local sequence alignment: match score=5, mismatch score=-4, open gap penalty=-10, gap extension penalty=-0,5
 </span><br/><br/>
@@ -354,6 +472,75 @@ Replace gap char "-" with 2 different characters of choice before alignment (lis
 </span></li>
 <li data-search="compress_gaps"><span class="param-name">compress_gaps [default: False]</span>: <span class="arg-description">
 Multiple contiguous gaps are squeezed to a single one before alignment
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="score"><span class="return-name">score</span>: <span class="return-description">
+Alignment score (float or False if there is a failure)
+</span></li>
+<li data-search="alignment"><span class="return-name">alignment</span>: <span class="return-description">
+Aligned sequences (list of string or False if there is a failure) 
+</span></li>
+<li data-search="alignment_result"><span class="return-name">alignment_result</span>: <span class="return-description">
+Formatted result of alignment (list of string or empty string if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="perform_local_alignment_b" class="method-section"><span class="method-name" data-search="perform_local_alignment_b">perform_local_alignment_b()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Local alignment using BioPython
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="reference_sequence"><span class="param-name">reference_sequence</span>: <span class="arg-description">
+(string) 
+</span></li>
+<li data-search="sequence"><span class="param-name">sequence</span>: <span class="arg-description">
+(string) 
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="score"><span class="return-name">score</span>: <span class="return-description">
+Alignment score (float or False if there is a failure)
+</span></li>
+<li data-search="alignment"><span class="return-name">alignment</span>: <span class="return-description">
+Aligned sequences (list of string or False if there is a failure) 
+</span></li>
+<li data-search="alignment_result"><span class="return-name">alignment_result</span>: <span class="return-description">
+Formatted result of alignment (list of string or empty string if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="perform_local_alignment_bn" class="method-section"><span class="method-name" data-search="perform_local_alignment_bn">perform_local_alignment_bn()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Perform local alignment using BioPython's newer API. (experimental)
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="reference_sequence"><span class="param-name">reference_sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+<li data-search="sequence"><span class="param-name">sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="score"><span class="return-name">score</span>: <span class="return-description">
+Alignment score (float or False if there is a failure)
+</span></li>
+<li data-search="alignment"><span class="return-name">alignment</span>: <span class="return-description">
+Aligned sequences (list of string or False if there is a failure) 
+</span></li>
+<li data-search="alignment_result"><span class="return-name">alignment_result</span>: <span class="return-description">
+Formatted result of alignment (list of string or empty string if there is a failure)
+</span></li>
+</ul>
+</div>
+<div data-search="perform_local_alignment_p" class="method-section"><span class="method-name" data-search="perform_local_alignment_p">perform_local_alignment_p()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Perform local alignment using Parasail.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="reference_sequence"><span class="param-name">reference_sequence</span>: <span class="arg-description">
+(string)
+</span></li>
+<li data-search="sequence"><span class="param-name">sequence</span>: <span class="arg-description">
+(string)
 </span></li>
 </ul>
 <span class="info-label">Returns:</span><ul>

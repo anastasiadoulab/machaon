@@ -1,6 +1,6 @@
 import random
 import sys
-
+import traceback
 import matplotlib.pyplot as plt
 import numpy as np
 from src.pdbhandler import PDBHandler
@@ -9,11 +9,10 @@ import requests
 import os
 import json
 import subprocess
-import urllib.parse
-import urllib.request
 from tqdm import tqdm
 from multiprocessing import Pool
 from collections import defaultdict
+import re
 
 class Enricher:
 
@@ -25,7 +24,7 @@ class Enricher:
 
         self._go_request_url = 'https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO:'
         self._enriched_headers = ['pdbId', 'chainId', 'chainLength', 'resolution', 'geneId', 'taxonomy',
-                                 'molecularFunction', 'cellularComponent', 'biologicalProcess']
+                                 'molecularFunction', 'cellularComponent', 'biologicalProcess', 'uniprotId']
         self._request_chunk_size = 100
 
         self.root_disk = ''
@@ -137,6 +136,7 @@ class Enricher:
         pdbhandler = PDBHandler()
         pdbhandler.root_disk = self.root_disk
         pdbhandler.verbose = self.verbose
+        pdb_to_uniprot = defaultdict()
 
         enriched_filename = self.file_name.replace('.csv', '-enriched.csv')
         if os.path.exists(enriched_filename):
@@ -165,11 +165,14 @@ class Enricher:
                 pdb_info[chunked_pdb_id] = [pdb_details[0], pdb_details[1]]
 
         for index, pdb_id in enumerate(tqdm(data_pdb_ids, file=sys.stdout)):
-            if (pdb_id in enrichment):
-                continue
+            pdbhandler.uniprot_accession_number = ''
             parts = pdb_id.split('_')
             structure_id, chain_id = '_'.join(parts[:-1]), parts[-1]
-            if('AF-' not in pdb_id):
+            pdb_to_uniprot[pdb_id] = pdbhandler.get_uniprot_accession_number(chain_id, structure_id)
+            if (pdb_id in enrichment):
+                continue
+            esm_matched = re.findall("MGYP[0-9]{12}", pdb_id)
+            if('AF-' not in pdb_id and len(esm_matched) == 0):
                 ids_for_request.append(pdb_id)
                 if (len(ids_for_request) == self._request_chunk_size or index + 1 == total_pdb_ids):
                     chunks += 1
@@ -185,22 +188,26 @@ class Enricher:
                     if (len(ids_never_requested) > 0):
                         requested_info = self.get_enrichment_info(ids_never_requested)
                         for id_index, requested_id in enumerate(ids_never_requested):
-                            enrichmentinfo[requested_id] = requested_info[id_index]
+                            info = '#,#,#,#'
+                            if id_index < len(requested_info):
+                                info = requested_info[id_index]
+                            enrichmentinfo[requested_id] = info
                             data_path = os.path.join(self._rcsb_enrichment_cache, ''.join([requested_id, '.log']))
                             with open(data_path, 'w') as dataFile:
-                                dataFile.write(requested_info[id_index])
+                                dataFile.write(info)
                         ids_for_request = []
             accession_ids = []
             predicted_pdb_ids = []
             if (pdb_id not in entrez):
                 if ('AF-' not in pdb_id):
                     chunk_pdb_ids.append([structure_id, chain_id])
-                else:
+                elif 'AF-' in pdb_id:
                     # AlphaFold PDBs
                     predicted_pdb_ids.append([structure_id, chain_id])
                     pdbhandler.structure_id = structure_id
                     pdbhandler.get_uniprot_accession_by_alphafold_pdbid()
                     accession_ids.append(pdbhandler.uniprot_accession_number)
+                    pdb_to_uniprot[pdb_id] = pdbhandler.uniprot_accession_number
             # Retrieve Entrez information
             if (len(predicted_pdb_ids) == self._request_chunk_size or index + 1 == total_pdb_ids):
                 print("Fetching Uniprot accession numbers...")
@@ -225,43 +232,48 @@ class Enricher:
                 print(''.join(['Requesting ENTREZ entries [chunk:', repr(chunks), ']']))
                 accession_ids = []
                 for key in chunk_pdb_ids:
-                    accession_ids.append(ids_for_entrez_mapping[key])
-                entrez_mappings = self.map_uniprot_to_entrez(accession_ids)
-                for keyIndex, key in enumerate(chunk_pdb_ids):
-                    entrez[key] = entrez_mappings[keyIndex]
+                    if ids_for_entrez_mapping[key] != '':
+                        accession_ids.append(ids_for_entrez_mapping[key])
+                    else:
+                        ids_for_entrez_mapping[key] = '#'
+                        entrez[key] = '#'
+                if len(accession_ids) > 0:
+                    entrez_mappings = self.map_uniprot_to_entrez(accession_ids)
+                    for keyIndex, key in enumerate(chunk_pdb_ids):
+                        if keyIndex < len(entrez_mappings):
+                            entrez[key] = entrez_mappings[keyIndex]
+                        else:
+                            entrez[key] = '#'
+                pdb_to_uniprot.update(ids_for_entrez_mapping)
                 ids_for_entrez_mapping = defaultdict()
                 chunk_pdb_ids = []
 
         # Store the enriched version
         with open(enriched_filename, 'w', encoding='utf-8') as output_file:
-            output_line = []
-            output_line.append('\t'.join(self._enriched_headers))
-            output_line.append('\t')
-            output_line.append('\t'.join(column_headers))
-            output_line.append('\n')
-            output_file.write(''.join(output_line))
+            output_file.write(''.join(['\t'.join(self._enriched_headers), '\t', '\t'.join(column_headers), '\n']))
             for chunked_index, chunked_pdb_id in enumerate(data_pdb_ids):
-                output_line = []
                 if (chunked_pdb_id in enrichmentinfo):
                     enrichment[chunked_pdb_id] = ','.join(
                         [entrez[chunked_pdb_id] if chunked_pdb_id in entrez else '#', enrichmentinfo[chunked_pdb_id]])
                     data_path = os.path.join(self._enrichment_cache, ''.join([chunked_pdb_id, '.log']))
                     with open(data_path, 'w') as dataFile:
                         dataFile.write(enrichment[chunked_pdb_id])
+                if chunked_pdb_id in pdb_to_uniprot:
+                    if len(pdb_to_uniprot[chunked_pdb_id]) == 0:
+                        pdb_to_uniprot[chunked_pdb_id] = '#'
                 parts = chunked_pdb_id.split('_')
-                output_line.append('\t'.join(['_'.join(parts[:-1]), parts[-1]]))
-                output_line.append('\t')
-                output_line.append('\t'.join([repr(x) for x in pdb_info[chunked_pdb_id]]))
-                output_line.append('\t')
-                output_line.append(
-                    enrichment[chunked_pdb_id].replace(',', '\t') if chunked_pdb_id in enrichment else '\t'.join(
-                        ['#'] * 5))
-                output_line.append('\t')
-                output_line.append('\t'.join(
-                    [repr(x) if isinstance(x, np.floating) or isinstance(x, float) else x for x in
-                     data_values[chunked_index]]))
-                output_line.append('\n')
-                output_file.write(''.join(output_line))
+                output_file.write(''.join(['\t'.join(['_'.join(parts[:-1]), parts[-1]]),
+                '\t',
+                '\t'.join([repr(x) for x in pdb_info[chunked_pdb_id]]),
+                '\t',
+                enrichment[chunked_pdb_id].replace(',', '\t') if chunked_pdb_id in enrichment else '\t'.join(
+                        ['#'] * 5),
+                '\t',
+                '#' if chunked_pdb_id not in pdb_to_uniprot else pdb_to_uniprot[chunked_pdb_id],
+                '\t',
+                '\t'.join([repr(x) if isinstance(x, np.floating) or isinstance(x, float) else x for x in
+                     data_values[chunked_index]]),
+                '\n']))
 
     def read_enrichment(self, pdb_id):
         pdbhandler = PDBHandler()
@@ -289,38 +301,43 @@ class Enricher:
                 if('AF-' in pdb_id):
                     pdbhandler.get_uniprot_accession_by_alphafold_pdbid()
                     pattern = pdbhandler.uniprot_accession_number
-                output = subprocess.run(
-                    ['zgrep', '-i', pattern, '-m', '1', uniprot_dataset_path],
-                    capture_output=True,
-                    timeout=30)
-                parts = output.stdout.decode("utf-8").split('\t')
+                else:
+                    pdb_parts = pdb_id.split("_")
+                    pattern = '' if len(pdb_parts[0]) != 4 else pattern
+                if pattern != '':
+                    output = subprocess.run(
+                        ['timeout', '30s', 'zgrep', '-i', pattern, '-m', '1', uniprot_dataset_path],
+                        capture_output=True)
+                    parts = output.stdout.decode("utf-8").split('\t')
 
-                # 1. UniProtKB-AC
-                # 2. UniProtKB-ID
-                # 3. GeneID (EntrezGene)
-                # 4. RefSeq
-                # 5. GI
-                # 6. PDB
-                # 7. GO
-                # 8. UniRef100
-                # 9. UniRef90
-                # 10. UniRef50
-                # 11. UniParc
-                # 12. PIR
-                # 13. NCBI-taxon
-                # 14. MIM
-                # 15. UniGene
-                # 16. PubMed
-                # 17. EMBL
-                # 18. EMBL-CDS
-                # 19. Ensembl
-                # 20. Ensembl_TRS
-                # 21. Ensembl_PRO
-                # 22. Additional PubMed
-                # NCBI taxon id 9606, homosapiens
-                enrichment.append(parts[2] if len(parts[2]) > 0 else '#')
-                enrichment.append(parts[12] if len(parts[12]) > 0 else '#')
-                enrichment.append(','.join(self.split_go_annotations(parts[6].split(';'))))
+                    # 1. UniProtKB-AC
+                    # 2. UniProtKB-ID
+                    # 3. GeneID (EntrezGene)
+                    # 4. RefSeq
+                    # 5. GI
+                    # 6. PDB
+                    # 7. GO
+                    # 8. UniRef100
+                    # 9. UniRef90
+                    # 10. UniRef50
+                    # 11. UniParc
+                    # 12. PIR
+                    # 13. NCBI-taxon
+                    # 14. MIM
+                    # 15. UniGene
+                    # 16. PubMed
+                    # 17. EMBL
+                    # 18. EMBL-CDS
+                    # 19. Ensembl
+                    # 20. Ensembl_TRS
+                    # 21. Ensembl_PRO
+                    # 22. Additional PubMed
+                    # NCBI taxon id 9606, homosapiens
+                    enrichment.append(parts[2] if len(parts[2]) > 0 else '#')
+                    enrichment.append(parts[12] if len(parts[12]) > 0 else '#')
+                    enrichment.append(','.join(self.split_go_annotations(parts[6].split(';'))))
+                else:
+                    enrichment.extend(['#', '#', '#', '#', '#'])
             except:
                 if (self.verbose is True):
                     print(''.join(['\n', pdb_id, ' not found in idmapping']))
@@ -388,6 +405,8 @@ class Enricher:
 
         # Cache the retrieved information
         for accession_id in accession_ids:
+            if (accession_id == ''):
+                continue
             entrez_id = entrez_ids[accession_id] if (accession_id in entrez_ids) else '#'
             data_path = os.path.join(self._entrez_cache, ''.join([accession_id, '.log']))
             if (os.path.exists(data_path) is False):

@@ -12,17 +12,17 @@ from rdkit import DataStructs
 
 class Evaluator:
 
-    def __init__(self, viral=False):
+    def __init__(self, alignment_backend, viral=False):
         self.reference_data = defaultdict
         self.candidate_data = defaultdict
         self.reference_pdb_path = ''
         self.candidate_pdb_path = ''
-        self._aligner = StructureAligner()
+        self._aligner = StructureAligner(alignment_backend)
         self.root_disk = ''
         self.pdb_dataset_path = ''
         self.viral = viral
         self.verbose = True
-        self._max_secondary_structure_length = 1500 # alignments involving greater lengths require great amount of time
+        self._max_secondary_structure_length = 2000 # alignments involving greater lengths require great amount of time
         self.override_pdb_id = ''
 
     def set_root_disk(self, root_disk):
@@ -150,6 +150,7 @@ class Evaluator:
             no_gap_identity = -1
             gaps = -1
             score = 0
+            content = '-'
             if (self.reference_data[section] != '' and
                 section in self.candidate_data and
                 self.candidate_data[section] != ''):
@@ -171,10 +172,11 @@ class Evaluator:
                                                                              alignment_type,
                                                                              config)
                     if (score is not False):
-                        identity, no_gap_identity, gaps = self._aligner.calculate_identity(alignment)
+                        identity, no_gap_identity, gaps = self._aligner.calculate_identity(alignment_result)
+                        content = self._aligner.get_alignment_content(alignment_result)
                     else:
                         score = 0
-            result[section] = (score, identity, no_gap_identity, gaps)
+            result[section] = (score, identity, no_gap_identity, gaps, content)
         return result
 
     def compare_gene_ontology(self):
@@ -194,8 +196,8 @@ class Evaluator:
         result = (-1, -1, -1) # initialization of result: (TM-Score normalized by first structure, normalized score by second, chain length of second)
         try:
             output = subprocess.run(
-                ['./TMalign', self.reference_data['fullPDBPath'], self.candidate_data['fullPDBPath'], '-split', '2', '-ter', '1', '-outfmt',
-                 '2', '-chain1_id', str(self.reference_data['chainIndex']), '-chain2_id',
+                ['timeout', '60s', './TMalign', self.reference_data['fullPDBPath'], self.candidate_data['fullPDBPath'], '-split', '2', '-ter', '1',
+                 '-outfmt', '2', '-chain1_id', str(self.reference_data['chainIndex']), '-chain2_id',
                  str(self.candidate_data['chainIndex'])], capture_output=True, cwd=os.getcwd())
             output = output.stdout.decode("utf-8").replace('PDBs/', '').replace('PDBs_vir/', '').replace('.pdb:', '_')
             output = output.split('\t')

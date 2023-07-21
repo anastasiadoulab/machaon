@@ -24,28 +24,28 @@ with open('SHREC2018_ref.cla', 'r', encoding='utf-8') as groundtruth_file:
                     current_protein = parts[0]
         line_index += 1
 
-# with open('shrec.log', 'w', encoding='utf-8') as log_file:
-#     log_file.write('\t'.join(['filename', 'found', 'in_top', 'missed', 'median-3D', 'in_top20']))
-#     log_file.write('\n')
-#     for protein in conformations:
-#         if (len(conformations[protein]) > 1):
-#             for filename in conformations[protein]:
-#                 file_path = os.path.join(results_path, '_'.join([filename, 'A', 'whole']), 'candidates', ''.join([filename, '_A-merged-noenriched_shrec.csv']))
-#                 results = pd.read_csv(file_path, sep='\t')
-#                 results['filename'] = results['filename'].apply(str)
-#                 found = 0
-#                 lines_read = 0
-#                 found_in_top = 0
-#                 for index, row in results.iterrows():
-#                     if(index == 20):
-#                         found_in_top = (found / 20) * 100
-#                     if row['filename'] in conformations[protein]:
-#                         found += 1
-#                         lines_read = index
-#
-#                 missed = len(conformations[protein]) - 1 - found
-#                 log_file.write('\t'.join([filename, repr(found), repr(lines_read + 1), repr(missed), repr(results['3D'].median()), repr(found_in_top)]))
-#                 log_file.write('\n')
+with open('shrec.log', 'w', encoding='utf-8') as log_file:
+    log_file.write('\t'.join(['filename', 'found', 'in_top', 'missed', 'median-3D', 'in_top20']))
+    log_file.write('\n')
+    for protein in conformations:
+        if (len(conformations[protein]) > 1):
+            for filename in conformations[protein]:
+                file_path = os.path.join(results_path, '_'.join([filename, 'A', 'whole']), 'candidates', ''.join([filename, '_A-merged-noenriched_shrec.csv']))
+                results = pd.read_csv(file_path, sep='\t')
+                results['filename'] = results['filename'].apply(str)
+                found = 0
+                lines_read = 0
+                found_in_top = 0
+                for index, row in results.iterrows():
+                    if(index == 20):
+                        found_in_top = (found / 20) * 100
+                    if row['filename'] in conformations[protein]:
+                        found += 1
+                        lines_read = index
+
+                missed = len(conformations[protein]) - 1 - found
+                log_file.write('\t'.join([filename, repr(found), repr(lines_read + 1), repr(missed), repr(results['3D'].median()), repr(found_in_top)]))
+                log_file.write('\n')
 
 logged = pd.read_csv('shrec.log', sep='\t')
 print('\nmean values:\n')

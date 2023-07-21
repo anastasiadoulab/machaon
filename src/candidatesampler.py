@@ -49,8 +49,9 @@ class CandidateSampler:
         self._extra_merging_columns = []
         self.keep_duplicates = False
         self.maximum_unsampled_dataset = 10000
-        self.min_clustering_probability = 0.1
         self.override_pdb_id = ''
+        self.vector_format_output = True
+        self.tiff_format_output = True
 
     # Filter an enriched entry by user specified criteria
     def filter_enriched_entry(self, entry):
@@ -71,7 +72,9 @@ class CandidateSampler:
         filtered = False
         # Exclude PDB IDs except for the reference PDB ID (if it was included in exclusions)
         if(len(self.excluded_pdb_ids) > 0):
-            samples['excluded'] = [1 if (x[0] in self.excluded_pdb_ids and x[0] not in self.reference_pdb_id) else 0 for x in samples['compositeId'].to_list()]
+            samples['excluded'] = [1 if (x[0] in self.excluded_pdb_ids
+                                   and x!= [self.reference_pdb_id, self.reference_chain_id])
+                                   else 0 for x in samples['compositeId'].to_list()]
             samples = samples[samples['excluded'] < 1].copy()
             del samples['excluded']
             filtered = True
@@ -136,8 +139,7 @@ class CandidateSampler:
             if filtered is None:
                 filtered = data.sort_values(by=column_header, ascending=True).head(top_samples).copy()
             else:
-                filtered = filtered.append(
-                    data.sort_values(by=column_header, ascending=column_header).head(top_samples).copy())
+                filtered = pd.concat([filtered, data.sort_values(by=column_header, ascending=True).head(top_samples).copy()])
         filtered = self.rank_samples(filtered, ['structureId'])
         filtered.drop_duplicates(subset=['structureId'], keep='first', inplace=True)
         return filtered
@@ -282,12 +284,18 @@ class CandidateSampler:
                             # Visualize clusters
                             self.plot_clusters(samples, embedded, clustering_info, '-initial')
 
+                            # Find thresholds for outlier scores and clustering probabilities
+                            outlier_threshold = pd.Series(samples['outlierScores']).quantile(0.9)
+                            probability_threshold = pd.Series(samples['probabilities']).quantile(0.1)
+
                             # Treat entries clustered with low probability as noise
+                            # and mark outliers by threshold
+                            clustering_info['probabilities'] = np.array([0.0 if clustering_info['outlierScores'][index] > outlier_threshold
+                                                                         else x for index, x in enumerate(samples['probabilities'])])
                             labels = clustering_info['labels'].tolist()
                             clustering_info['labels'] = np.array(
-                                [-1 if clustering_info['probabilities'][
-                                           index] < self.min_clustering_probability and x > 0 else x for index, x in
-                                 enumerate(labels)])
+                                [-1 if clustering_info['probabilities'][index] < probability_threshold
+                                       and x > 0 else x for index, x in enumerate(labels)])
 
                             # Traverse the candidates starting with the one of the highest order (sorted list)
                             # and check their cluster labels. Pick the first positive cluster label (not noise)
@@ -357,9 +365,14 @@ class CandidateSampler:
         plt.savefig(''.join([self.plots_output_path, os.path.sep, self._suffixed_filename, '-UMAP.png']),
                     format='png',
                     dpi=300, bbox_inches='tight')
-        plt.savefig(''.join([self.plots_output_path, os.path.sep, self._suffixed_filename, '-UMAP.eps']),
-                    format='eps',
-                    dpi=300, bbox_inches='tight')
+        if (self.vector_format_output is True):
+            plt.savefig(''.join([self.plots_output_path, os.path.sep, self._suffixed_filename, '-UMAP.eps']),
+                        format='eps',
+                        dpi=300, bbox_inches='tight')
+        if (self.tiff_format_output is True):
+            plt.savefig(''.join([self.plots_output_path, os.path.sep, self._suffixed_filename, '-UMAP.tiff']),
+                        format='tiff',
+                        dpi=300, bbox_inches='tight')
         plt.clf()
         plt.figure(figsize=plt.rcParams.get('figure.figsize'))
         return embedding
@@ -426,8 +439,12 @@ class CandidateSampler:
                     format='png', dpi=300)
         ax = plt.gca()
         ax.set_rasterized(True)
-        plt.savefig(''.join([self.plots_output_path, os.path.sep, self._suffixed_filename, '-clusters', file_suffix, '.eps']),
+        if (self.vector_format_output is True):
+            plt.savefig(''.join([self.plots_output_path, os.path.sep, self._suffixed_filename, '-clusters', file_suffix, '.eps']),
                     format='eps', dpi=300)
+        if (self.tiff_format_output is True):
+            plt.savefig(''.join([self.plots_output_path, os.path.sep, self._suffixed_filename, '-clusters', file_suffix, '.tiff']),
+                    format='tiff', dpi=300)
         plt.clf()
         plt.figure(figsize=plt.rcParams.get('figure.figsize'))
 
@@ -436,32 +453,53 @@ class CandidateSampler:
         self._enricher.load_go_cache()
         self._enricher.file_name = ''.join([self.output_path, os.path.sep, self._suffixed_filename, '-merged.csv'])
         self._enricher.cores = self.cores
+
         if(len(self.override_pdb_id) > 0):
             # Use a different PDB ID for enrichment (custom PDBs)
             overriden_reference = reference_entry.copy()
-            overriden_reference['structureId'].iloc[0] = '_'.join([self.override_pdb_id, self.reference_chain_id])
+            overriden_reference['structureId'] = overriden_reference['structureId'].replace([overriden_reference['structureId'].iloc[0]],
+                                                                                    '_'.join([self.override_pdb_id, self.reference_chain_id]))
             samples = pd.concat([overriden_reference, samples])
         else:
             samples = pd.concat([reference_entry, samples])
         self._enricher.fetch_enrichment(samples, column_headers)
 
         enriched = pd.read_csv(self._enricher.file_name.replace('.csv', '-enriched.csv'), sep='\t')
+        enriched.to_csv(self._enricher.file_name.replace('.csv', '-enriched_full.csv'), index=False, sep='\t')
 
         # Get ennriched reference entry (restore reference PDB ID if an alternative was used for enrichment)
-        reference_entry = enriched[(enriched['pdbId'] == (self.override_pdb_id if(len(self.override_pdb_id) > 0) else self.reference_pdb_id)) &
+        reference_identifier = self.reference_pdb_id
+        if reference_identifier.startswith('AF-'):
+            reference_identifier = reference_identifier.replace('_', '-')
+        reference_entry = enriched[(enriched['pdbId'] == (self.override_pdb_id if(len(self.override_pdb_id) > 0) else reference_identifier)) &
                                    (enriched['chainId'] == self.reference_chain_id)].copy()
+        reference_entry = reference_entry.drop_duplicates(subset=['pdbId'], keep='first')
         if (len(self.override_pdb_id) > 0):
             pd.options.mode.chained_assignment = None
-            reference_entry['pdbId'].iloc[0] = self.reference_pdb_id
+            reference_entry['pdbId'].iloc[0] = reference_identifier
             pd.options.mode.chained_assignment = 'warn'
 
         if(self.keep_duplicates is False):
             # Exclude reference gene and remove multiple rows for each gene (keep the best one)
             # Filtering ignores the entries without gene ids
+            reference_gene_id = reference_entry['geneId'].iloc[0]
             if(self.reference_gene_id != ''):
-                enriched = enriched[(enriched['geneId'] != self.reference_gene_id)]
-                enriched = enriched[(enriched['geneId'] != int(self.reference_gene_id))]
+                reference_gene_id = self.reference_gene_id
+            #Handle multiple gene ids
+            if isinstance(reference_gene_id, str):
+                reference_gene_id = [x.strip() for x in reference_gene_id.split(";")]
+            else:
+                reference_gene_id = repr(reference_gene_id)
+            for gene_id in reference_gene_id:
+                if gene_id != '' and gene_id != '#':
+                    enriched = enriched[(enriched['geneId'] != gene_id)]
+                    enriched = enriched[(enriched['geneId'] != int(gene_id))]
+                    enriched = enriched[(enriched['geneId'] != repr(gene_id))]
             enriched = pd.concat([enriched[enriched['geneId'] == '#'], enriched[enriched['geneId'] != '#'].drop_duplicates(subset=['geneId'], keep='first')])
+
+            # Remove multiple rows for each uniprot accession number (keep the best one)
+            # Filtering ignores the entries without uniprot ids
+            enriched = pd.concat([enriched[enriched['uniprotId'] == '#'], enriched[enriched['uniprotId'] != '#'].drop_duplicates(subset=['uniprotId'], keep='first')])
 
         # Remove duplicate reference entry if an alternative PDB ID was used during enrichment
         if (len(self.override_pdb_id) > 0):
@@ -469,8 +507,14 @@ class CandidateSampler:
 
         # Rank and prune entries. Include reference entry in the results as the first entry.
         enriched = self.rank_samples(enriched, ['pdbId', 'chainId'])
+
+        # Keep top 100 human entries
+        if len(enriched[(enriched['taxonomy'] == 9606) | (enriched['taxonomy'] == '9606')].index) > 0 :
+            enriched[(enriched['taxonomy'] == 9606) | (enriched['taxonomy'] == '9606')].head(self._maximum_candidates_limit).to_csv(self._enricher.file_name.replace('.csv', '-h-enriched.csv'), index=False, sep='\t')
+
+        # Keep top 100 entries
         enriched = enriched.head(self._maximum_candidates_limit)
-        if(len(enriched[(enriched['pdbId'] == self.reference_pdb_id) & (enriched['chainId'] == self.reference_chain_id)].index) == 0):
+        if(len(enriched[(enriched['pdbId'] == reference_identifier) & (enriched['chainId'] == self.reference_chain_id)].index) == 0):
             enriched = pd.concat([reference_entry, enriched])
 
         enriched.to_csv(self._enricher.file_name.replace('.csv', '-enriched.csv'), index=False, sep='\t')

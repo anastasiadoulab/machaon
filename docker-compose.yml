@@ -3,6 +3,9 @@ services:
     build: .
     volumes:
        - ./config:/opt/config
+       - SELF_SIGNED_CERTS_PATH:/etc/machaon_certs
        - MY_BIG_STORAGE_PATH:/opt/storage # select the data root folder for Machaon (the location of source and cache data)
     image: machaon:v1
+    ports:
+       - "55555:55555"
     tty: true

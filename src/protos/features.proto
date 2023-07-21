@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message Angles {
+    repeated float mean = 1;
+    repeated float cov = 2; // 0,0 0,1 1,0 1,1
+    float det_cov = 3;
+}
+
+message Features {
+    Angles phipsi = 1;
+    repeated float distances = 2; 
+    float triangles = 3;
+}

@@ -30,7 +30,7 @@ def calculate_accuracy_metrics(true_positive, false_positive, true_negative, fal
 
 def compute_tm(entry):
     reference_id, candidate_id, pdb_dataset_path = entry
-    evaluator = Evaluator(False)
+    evaluator = Evaluator('biopython', False)
     evaluator.reference_data = {'pdbId' : reference_id, 'chainIndex' : 0}
     evaluator.candidate_data = {'pdbId' : candidate_id, 'chainIndex' : 0}
     evaluator.set_pdb_path(pdb_dataset_path)
@@ -64,7 +64,7 @@ def compute_sec_struct_identity(entry):
     if(len(secondary_structure) > 0):
         score, alignment, alignment_result = aligner.align(reference_struct, secondary_structure, '2D', {'gapChars' : ['{', ' ']})
         if(alignment is not False):
-            identity, no_gap_identity, gaps = aligner.calculate_identity(alignment)
+            identity, no_gap_identity, gaps = aligner.calculate_identity(alignment_result)
     return (candidate_id, identity)
 
 def compute_tm_scores(reference_pdb_id, output_path, pdb_dataset_path, structure_ids):
@@ -103,8 +103,7 @@ if __name__ == '__main__':
     config_manager = ConfigurationManager()
     configuration = copy.deepcopy(config_manager._template_config)
     configuration['rootDisk'] = "structural-data"
-    configuration['referenceGeneID'] = "0"
-    configuration['referenceSequenceLength'] = 1
+    configuration['referenceGeneID'] = "0" 
     configuration['pdbDatasetPath'] = "pdb70b"
     configuration['isReferenceViral'] = False
     configuration['noThirdPartyData'] = True

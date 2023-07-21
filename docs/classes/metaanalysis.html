@@ -22,7 +22,7 @@ PDB Chain ID (string)
 <li data-search="reference_segments"><span class="attr-name">reference_segments [default: []]</span>: <span class="attr-description">
 Reference segment names (list of strings)
 </span></li>
-<li data-search="is_reference_viral"><span class="attr-name">is_reference_viral [default: []]</span>: <span class="attr-description">
+<li data-search="is_reference_viral"><span class="attr-name">is_reference_viral [default: True]</span>: <span class="attr-description">
 Whether the reference is viral or not. (boolean)
 </span></li>
 <li data-search="output_path"><span class="attr-name">output_path [default: '']</span>: <span class="attr-description">
@@ -52,6 +52,18 @@ The user-specified segments (list of lists, each list contains residue positions
 <li data-search="known_areas"><span class="attr-name">known_areas [default: []]</span>: <span class="attr-description">
 The user-specified resdiue positions that correspond to known areas like binding sites(list of lists, each list contains residue positions [one-based indexing]).<br/>
 This is used for highlighting correlated peaks with different color on Gene Ontology meta-analysis plots.
+</span></li>
+<li data-search="viral_content"><span class="attr-name">viral_content [default: True]</span>: <span class="attr-description">
+Whether the candidate list includes viral proteins or not.(boolean)
+</span></li>
+<li data-search="vector_format_output"><span class="attr-name">vector_format_output [default: False]</span>: <span class="attr-description">
+Toggle EPS format output for plots. (boolean)
+</span></li>
+<li data-search="tiff_format_output"><span class="attr-name">tiff_format_output [default: False]</span>: <span class="attr-description">
+Toggle TIFF format output for plots. (boolean)
+</span></li>
+<li data-search="alignment_backend"><span class="attr-name">alignment_backend [default: '']</span>: <span class="attr-description">
+Choose alignment backend: 'parasail' or 'biopython' (string)
 </span></li>
 </ul>
 </div>

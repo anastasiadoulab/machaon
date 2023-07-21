@@ -8,7 +8,7 @@ from src.executionhandler import ExecutionHandler
 
 def evaluate(entry):
     referenceProtein, idParts, isViral = entry
-    evaluator = Evaluator(isViral)
+    evaluator = Evaluator('biopython', isViral)
     rootDisk = 'structural-data'
     evaluator.set_root_disk(rootDisk)
     pdbDatasetPath = 'PDBs_vir'

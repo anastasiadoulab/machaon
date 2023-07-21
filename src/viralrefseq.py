@@ -28,9 +28,9 @@ class ViralRefSeq:
         genomic_sequence = ''
         try:
             output = subprocess.run(' '.join(
-                ['awk', '\'BEGIN{RS=">";FS="\\n"}NR>1{if', ''.join(['($1~/', self.refseq_id, '/)']),
+                ['timeout', '80s', 'awk', '\'BEGIN{RS=">";FS="\\n"}NR>1{if', ''.join(['($1~/', self.refseq_id, '/)']),
                  'print ">"$0}\'',
-                 ''.join(['\'', self.refseq_dataset_path, '\''])]), shell=True, capture_output=True, timeout=80)
+                 ''.join(['\'', self.refseq_dataset_path, '\''])]), shell=True, capture_output=True)
             parts = output.stdout.decode("utf-8").split('\n')
             if (len(parts) > 1):
                 genomic_sequence = ''.join(parts[1:])
@@ -44,7 +44,7 @@ class ViralRefSeq:
         lines = []
         try:
             pattern = ''.join(['/', self.refseq_id, '/,/\/\//p'])
-            output = subprocess.run(['sed', '-n', pattern, self.refseq_annotation_path], capture_output=True, timeout=30)
+            output = subprocess.run(['timeout', '30s', 'sed', '-n', pattern, self.refseq_annotation_path], capture_output=True)
             lines = output.stdout.decode("utf-8").split('\n')
         except:
             print(''.join([self.refseq_id, ' not found in refseq annotations']))

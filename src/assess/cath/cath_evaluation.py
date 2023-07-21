@@ -14,7 +14,7 @@ import os
 
 def compute_tm(entry):
     reference_id, candidate_id, pdb_dataset_path = entry
-    evaluator = Evaluator(False)
+    evaluator = Evaluator('biopython', False)
     evaluator.reference_data = {'pdbId' : reference_id, 'chainIndex' : 0}
     evaluator.candidate_data = {'pdbId' : candidate_id, 'chainIndex' : 0}
     evaluator.pdb_dataset_path = pdb_dataset_path
@@ -25,8 +25,7 @@ if __name__ == '__main__':
     config_manager = ConfigurationManager()
     configuration = copy.deepcopy(config_manager._template_config)
     configuration['rootDisk'] = "structural-data"
-    configuration['referenceGeneID'] = "0"
-    configuration['referenceSequenceLength'] = 1
+    configuration['referenceGeneID'] = "0" 
     configuration['pdbDatasetPath'] = "PDBs_CATH"
     configuration['isReferenceViral'] = False
     configuration['noThirdPartyData'] = True

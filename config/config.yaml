@@ -4,7 +4,6 @@ configurations:
     referencePDBID: "6VXX"
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_vir"
     outputPath: "../output/6VXX_A_whole"
@@ -22,7 +21,6 @@ configurations:
     referencePDBID: "6VXX"
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_COV"
     outputPath: "../output_latest/6VXX_A_cov"
@@ -32,7 +30,6 @@ configurations:
     referencePDBID: "6VXX"
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "segment"
     pdbDatasetPath: "PDBs_vir"
     outputPath: "../output/6VXX_A_segment"
@@ -49,7 +46,6 @@ configurations:
     referencePDBID: "6VXX"
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_test"
     outputPath: "../output/6VXX_A_whole_test"
@@ -67,7 +63,6 @@ configurations:
     referenceChainID: "A"
     referenceGeneID: "0"
     comparisonMode: "segment"
-    referenceSequenceLength: 1
     pdbDatasetPath: "PDBs_SHREC18"
     outputPath: "../output_shrec/1982_A_segment"
     isReferenceViral: False
@@ -80,7 +75,6 @@ configurations:
     referencePDBID: "7T9K"
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_vir"
     outputPath: "../output/7T9K_A_whole"
@@ -98,7 +92,6 @@ configurations:
     referencePDBID: "7V7Q"
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_vir"
     outputPath: "../output/7V7Q_A_whole"
@@ -116,7 +109,6 @@ configurations:
     referencePDBID: "7T9K"
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_vir"
     outputPath: "../output/7T9K_A_whole"
@@ -129,7 +121,6 @@ configurations:
     referencePDBID: "7V7Q"
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_vir"
     outputPath: "../output/7V7Q_A_whole"
@@ -143,7 +134,6 @@ configurations:
     overridePDBID: '6VXX'
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_vir"
     outputPath: "../output/6VXXp_A_whole"
@@ -179,7 +169,6 @@ configurations:
     referencePDBID: "6VXX"
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_vir"
     outputPath: "../output/6VXX_A_whole"
@@ -198,7 +187,6 @@ configurations:
     referencePDBID: "7T9K"
     referenceChainID: "A"
     referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_vir"
     outputPath: "../output/7T9K_A_whole"

@@ -12,7 +12,6 @@ if __name__ == '__main__':
     parser.add_argument('pdbDatasetPath', type=str, help='The directory for the target dataset of PDB files (reference PDB included).')
     parser.add_argument('outputPath', type=str, help='The directory for the outputs of searches')
     parser.add_argument('referencePDBChain', type=str, help='Provide PDB ID and Chain ID separated by a dot: <PDB ID>.<CHAIN ID> e.g. ""6VXX.A".',)
-    parser.add_argument('referenceSequenceLength', type=int, help='Provide protein sequence length of the reference protein.')
     parser.add_argument('isReferenceViral', type=int, help='1 if reference protein is a viral one else 0.', choices=[0,1])
     parser.add_argument('--segmentResidues', type=str, help='Provide residue positions (optional).', default='')
     parser.add_argument('--segmentResidueRanges', type=str, help='Provide residue ranges (optional).', default='')

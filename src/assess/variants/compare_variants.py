@@ -59,8 +59,6 @@ pdbhandler = PDBHandler()
 pdbhandler.root_disk = 'structural-data'
 pdb_dataset_path = 'structural-data/PDBs_vir'
 
-sequence_length = 1273
-
 # Get residue ranges, sequences
 residue_range_N = pdbhandler.get_residue_range(os.path.sep.join([pdb_dataset_path, '6VXX.pdb']), 'A')
 sec_N, pri_N = aligner.get_pdb_sequences('6VXX', 'A', residue_range_N)
@@ -115,8 +113,7 @@ job_configs = []
 config_manager = ConfigurationManager()
 configuration = copy.deepcopy(config_manager._template_config)
 configuration['rootDisk'] = "structural-data"
-configuration['referenceChainID'] = 'A'
-configuration['referenceSequenceLength'] = sequence_length
+configuration['referenceChainID'] = 'A' 
 configuration['referenceGeneID'] = 43740568
 configuration['excludedOrganisms'] = ['severe acute respiratory syndrome coronavirus2',
                                       'severe acute respiratory syndrome coronavirus 2',

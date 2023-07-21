@@ -22,6 +22,7 @@ class SegmentScanner(Scanner):
                                 'referenceSegmentIndex', 'referenceRange', 'alignedSequences']
         self.selected_alignment_level = 'mixed'
         self.alignment_levels = ['primary', 'secondary', 'mixed', 'hydrophobicity']
+        self.alignment_backend = ''
         self.segments = []
 
     # Not applicable for this use case: features are extracted on the fly
@@ -63,8 +64,7 @@ class SegmentScanner(Scanner):
                     angle_data, residue_distances, triangle_metric = features
                     # Compute metrics for the specified segments
                     if (len(angle_data) > 1):
-                        analyzer = BhattacharyyaDistance()
-                        bphipsi = analyzer.multivariate_compare(reference_angle_data, angle_data)
+                        bphipsi = BhattacharyyaDistance.multivariate_compare(reference_angle_data, angle_data)
 
                     if (len(residue_distances) > 1):
                         wrdist = wasserstein_distance(reference_distances, residue_distances)
@@ -72,9 +72,11 @@ class SegmentScanner(Scanner):
                     if (triangle_metric > 0 and reference_triangle_metric > 0):
                         talpha = np.exp(abs(reference_triangle_metric - triangle_metric)) - 1
                 except:
+                    raise
                     residue_range_selection = []
                     reference_segments = []
                     reference_segment_alignments = []
+                    aligned_sequences = []
                     print(''.join([pdb_id, '|', chainID, '\n', traceback.format_exc(), '\n']))
                 results.append(['_'.join([pdb_id, chainID]), bphipsi, wrdist, talpha, repr(residue_range_selection),
                                 repr(reference_segments),
@@ -103,16 +105,21 @@ class SegmentScanner(Scanner):
             if (len(residue_selection) < self.minimum_residue_range):
                 continue
             participating_residues.extend(residue_selection)
-            angles = self.extract_feature(chain_id, '', pdb_path, 'angles', residueSelection=residue_selection, noStore=True)
-            if (angles is not False):
-                angle_data.extend(angles['phiPsiPairs'])
-            distances = self.extract_feature(chain_id, '', pdb_path, 'distances', residueSelection=residue_selection, noStore=True)
-            if (distances is not False):
+            angles, status = self.extract_feature(chain_id, '', pdb_path, 'angles', residue_selection=residue_selection, raw_data=True)
+            if (status is not False):
+                angle_data.extend(angles)
+            else:
+                raise Exception('Bad reference data (angles).')
+            distances, status = self.extract_feature(chain_id, '', pdb_path, 'distances', residue_selection=residue_selection)
+            if (status is not False):
                 residue_distances.extend(list(distances))
+            else:
+                raise Exception('Bad reference data (distances).')
         if (len(participating_residues) > 0):
             pdbhandler.residue_selection = participating_residues
-            triangle_metric = self.extract_feature(chain_id, '', pdb_path, 'triangles',
-                                                   residueSelection=participating_residues, noStore=True)
+            triangle_metric, status = self.extract_feature(chain_id, '', pdb_path, 'triangles', residue_selection=participating_residues)
+            if (status is False):
+                raise Exception('Bad reference data (triangles).')
         return parts, np.array(angle_data), np.array(residue_distances), triangle_metric
 
     def remove_overlaps(self, ranges):
@@ -171,12 +178,18 @@ class SegmentScanner(Scanner):
                 reference_start = reference_segment_parts[label][0] - reference_structure['residues'][0]
                 reference_end = reference_segment_parts[label][-1] - reference_structure['residues'][0] + 1
                 reference_part = reference_structure[self.selected_alignment_level][reference_start:reference_end]
+                gap_substitutes = ['{', ' ']
                 score, alignment, alignment_result = aligner.local_align(reference_part, candidate_sequences[
-                    self.selected_alignment_level], ['{', ' '])
+                    self.selected_alignment_level], gap_substitutes)
                 if (score is False):
                     continue
-                aligned_range, actual_range, gaps, range_length = aligner.get_alignment_positions(alignment, candidate_sequences[self.selected_alignment_level],
+                gaps = alignment_result[2].count('-')
+                aligned_range, actual_range, range_length = aligner.get_alignment_positions(alignment, candidate_sequences[self.selected_alignment_level],
                                                                                                   total_residue_range)
+                # Check whether the validity of the aligned positions that are extracted from the alignment
+                if(aligner.backend == 'parasail'):
+                    assert alignment_result[2].replace('-', '') == \
+                           candidate_sequences[self.selected_alignment_level][aligned_range[0]:aligned_range[1]].replace('-', gap_substitutes[1])
                 if(len(aligned_range) < 2):
                     continue
                 aligned_parts = []
@@ -187,8 +200,11 @@ class SegmentScanner(Scanner):
                     residue_range_selection.append(actual_range)
                     aligned_reference_segment_indices.append(label)
                     # Retrieve aligned reference parts for logging
-                    reference_relative_range, reference_gaps = aligner.get_reference_sequence_alignment(
-                        alignment_result)
+                    reference_relative_range, reference_gaps = aligner.get_reference_sequence_alignment(alignment_result)
+                    if (aligner.backend == 'parasail'):
+                        assert alignment_result[0].replace('-', '') == \
+                           reference_structure[self.selected_alignment_level][reference_start+reference_relative_range[0]:
+                                                                              reference_start+reference_relative_range[1]].replace('-', gap_substitutes[0])
                     for alignment_level in self.alignment_levels:
                         if alignment_level in candidate_sequences:
                             aligned_parts.append(reference_structure[alignment_level][reference_start+reference_relative_range[0]:reference_start+reference_relative_range[1]])
@@ -197,33 +213,42 @@ class SegmentScanner(Scanner):
                                               reference_start:reference_end]
                     reference_residue_range = reference_residue_range[
                                               reference_relative_range[0]:reference_relative_range[1]]
-                    assert gaps >= 0 and reference_gaps >= 0 and (
-                                (range_length + gaps) == (len(reference_residue_range) + reference_gaps)), \
-                        ''.join(['different total alignment lengths: ', repr(range_length + gaps), ' | ',
-                                 repr(len(reference_residue_range) + reference_gaps)])
+                    # Sanity check of alignment's details
+                    candidate_part_length = range_length + gaps
+                    reference_part_length = len(reference_residue_range) + reference_gaps
+                    assert gaps >= 0 and reference_gaps >= 0 and (candidate_part_length == reference_part_length), \
+                        ''.join(['different total alignment lengths: ', repr(candidate_part_length), ' | ', repr(reference_part_length)])
                     reference_segments_alignments.append([reference_residue_range[0], reference_residue_range[-1]])
                     aligned_sequences.append(aligned_parts)
             # Extract features and compute metrics between the aligned parts of the compared proteins
             if (len(residue_range_selection) > 0):
                 aligned_range_selection = residue_range_selection.copy()
                 residue_range_selection = self.remove_overlaps(residue_range_selection)
+                status = True
                 for residue_range in residue_range_selection:
                     residue_selection = list(range(residue_range[0], residue_range[1]))
                     if (len(residue_selection) < self.minimum_residue_range):
                         continue
                     participating_residues.extend(residue_selection)
-                    angles = self.extract_feature(chain_id, '', full_pdb_file_path, 'angles',
-                                                  residueSelection=residue_selection, noStore=True)
-                    if (angles is not False):
-                        angle_data.extend(angles['phiPsiPairs'])
-                    distances = self.extract_feature(chain_id, '', full_pdb_file_path, 'distances',
-                                                     residueSelection=residue_selection, noStore=True)
-                    if (distances is not False):
+                    angles, status = self.extract_feature(chain_id, '', full_pdb_file_path, 'angles',
+                                                  residue_selection=residue_selection, raw_data=True)
+                    if (status is not False):
+                        angle_data.extend(angles)
+                    else:
+                        break
+                    distances, status = self.extract_feature(chain_id, '', full_pdb_file_path, 'distances',
+                                                     residue_selection=residue_selection)
+                    if (status is not False):
                         residue_distances.extend(list(distances))
-                if (len(participating_residues) > 0):
+                    else:
+                        break
+                if (status is False):
+                    angle_data = []
+                    residue_distances = []
+                elif (len(participating_residues) > 0):
                     pdbhandler.residue_selection = participating_residues
-                    triangle_metric = self.extract_feature(chain_id, '', full_pdb_file_path, 'triangles',
-                                                           residueSelection=participating_residues, noStore=True)
+                    triangle_metric, status = self.extract_feature(chain_id, '', full_pdb_file_path, 'triangles',
+                                                           residue_selection=participating_residues)
         # Construct output with full information on the alignments
         output.append(aligned_sequences)
         output.append(aligned_range_selection)

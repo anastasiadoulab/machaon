@@ -1,0 +1,66 @@
+
+syntax = "proto3";
+package jobreceiver;
+
+service JobReceiver {
+
+    rpc StartJob(JobRequest) returns (JobStatus) {}
+    
+    rpc GetStatus(StatusRequest) returns (ServerStatus) {}
+
+    rpc DownloadResult(ResultRequest) returns (stream JobResult) {}
+
+    rpc Synchronize(stream UncachedData) returns (ServerStatus) {}
+}
+
+message JobRequest {
+    string reference_id = 1;
+    int64 request_id = 2;
+    string listname = 3;
+    repeated string structure_ids = 4;
+    bool meta_analysis = 5;
+    string go_term = 6;
+    string hash = 7;
+    int32 comparison_mode = 8;
+    int32 segment_start = 9;
+    int32 segment_end = 10;
+    int32 alignment_level = 11;
+}
+
+message ServerStatus {
+    int32 status_code = 1;
+}
+
+message StatusRequest {}
+
+
+message JobStatus {
+    int64 request_id = 1;
+    int32 status_code = 2;
+}
+
+message ResultRequest {
+    int64 request_id = 1;
+    string hash = 2;
+}
+
+message JobDetails {
+    int64 request_id = 1;
+    string hash = 2;
+    string secure_hash = 3;
+    int32 status_code = 4;
+}
+
+message  JobResult {
+    oneof job_data {
+        JobDetails file_info = 1;
+        bytes chunk_data = 2;
+    }
+}
+
+message UncachedData {
+    oneof sync_data {
+        string secure_hash = 1;
+        bytes chunk_data = 2;
+    }
+}

@@ -1,0 +1,14 @@
+/opt/storage/src/logs/grpc.log
+/var/log/machaon.log
+{
+        weekly
+        rotate 4
+        maxsize 300M
+        create
+        compress
+        delaycompress
+        missingok
+        notifempty
+        copytruncate
+        create 644 root root
+}

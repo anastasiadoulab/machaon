@@ -16,7 +16,7 @@ for item in os.listdir(root_disk):
 
 # Set Machaon's console arguments
 os.makedirs('output', exist_ok=True)
-sys.argv = ['', '1', root_disk, 'PDBs_test', os.path.join(root_disk, 'output'), '6VXX.A', '1273', '1', '--noThirdPartyData']
+sys.argv = ['', '1', root_disk, 'PDBs_test', os.path.join(root_disk, 'output'), '6VXX.A', '1', '--noThirdPartyData']
 
 # Call Machaon
 working_directory = root_disk.replace('/test', '/src')

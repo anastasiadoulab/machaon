@@ -71,6 +71,15 @@ An option to extract features for new PDB files in the candidate set  (boolean)
 Extract PDB chains using RDKit instead of BioPython: it includes a validation of the PDB file contents' integrity (like bond information from CONECT records) <br/>
 [Note: RDKit is used for fingerprint calculations on meta-analysis step where PDB validation is a fortunate side effect.]
 </span></li>
+<li data-search="store_format"><span class="attr-name">store_format [default: '.proto']</span>: <span class="attr-description">
+Storage format for extracted features. Legacy support for Pickle format used in earlier versions. (string)
+</span></li>
+<li data-search="metric_indices"><span class="attr-name">metric_indices [default: []]</span>: <span class="attr-description">
+List for collecting numbers that correspond to metrics. (list of ints)
+</span></li>
+<li data-search="execution_cutoff"><span class="attr-name">execution_cutoff [default: 12 * 60]</span>: <span class="attr-description">
+A time interval for stopping execution of a parallel running process. 
+</span></li>
 </ul>
 </div>
 <div data-search="load_features" class="method-section"><span class="method-name" data-search="load_features">load_features()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
@@ -93,6 +102,23 @@ A suffix for the resulting filename (placeholder for other uses: see SegmentScan
 <span class="info-label">Returns:</span><ul>
 <li data-search="metric_data"><span class="return-name">metric_data</span>: <span class="return-description">
 The loaded value(s) of the feature.
+</span></li>
+</ul>
+</div>
+<div data-search="wasserstein_distance" class="method-section"><span class="method-name" data-search="wasserstein_distance">wasserstein_distance()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Computes the Wasserstein distance (a stripped version of the equivalent SciPy function).
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="u_values"><span class="param-name">u_values</span>: <span class="arg-description">
+Values from the first distribution (numpy array, float)
+</span></li>
+<li data-search="v_values"><span class="param-name">v_values</span>: <span class="arg-description">
+Values from the second distribution (numpy array, float)
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="np"><span class="return-description">
+The distribution distance. (float)
 </span></li>
 </ul>
 </div>
