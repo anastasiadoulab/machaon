@@ -44,6 +44,9 @@ class ConfigurationManager:
         # Filtering out structures originating from the same organism as the reference one
         self._template_config['excludedOrganisms'] = []
 
+        # Filtering out structures not originating from the specified organisms
+        self._template_config['selectedOrganisms'] = []
+
         # Filtering out structures originating from the same gene as the reference one
         self._template_config['excludedGeneNames'] = []
 
@@ -58,7 +61,7 @@ class ConfigurationManager:
         self._template_config['viralContentExists'] = True
 
         # Choose a term to be searched in all available GO Terms belonging to the results e.g. 'ubiquit' (could be a stem of a word)
-        self._template_config['GOSearch'] = ''
+        self._template_config['GOSearch'] = []
 
         # Choose a property type for analysis: 'biologicalProcess', 'molecularFunction', 'cellularComponent'
         self._template_config['GOProperty'] = ''
@@ -88,7 +91,7 @@ class ConfigurationManager:
         self._template_config['pdbValidation'] = False
 
         # EPS format for figures
-        self._template_config['epsOutput'] = True
+        self._template_config['epsOutput'] = False
 
         # TIFF format for figures
         self._template_config['tiffOutput'] = False

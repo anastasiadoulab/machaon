@@ -17,7 +17,7 @@ from src.executionhandler import ExecutionHandler
 import uuid
 from matplotlib.lines import Line2D
 from collections import Counter
-
+import subprocess
 
 plt.rcParams.update({'font.size': 8})
 random.seed(42)
@@ -46,6 +46,7 @@ class MetaAnalysis:
         self.vector_format_output = False
         self.tiff_format_output = False
         self.alignment_backend = ''
+        self.verbose = False
 
     def evaluate(self, entry):
         # Extended comparisons of a finalist protein with the reference.
@@ -477,8 +478,8 @@ class MetaAnalysis:
             presenter.plot_2D_matches(entry)
 
     def perform_go_meta_analysis(self, entry):
-        pdb_id, chain_id, naming_extension, property_type, properties, search_term = entry
-        go_search = len(search_term) != 0
+        pdb_id, chain_id, naming_extension, property_type, properties, search_terms = entry
+        go_search = len(search_terms) != 0
         if(go_search):
             go_types = ['biologicalProcess', 'molecularFunction', 'cellularComponent']
         else:
@@ -493,7 +494,7 @@ class MetaAnalysis:
         alignment_frequencies = defaultdict()
         pdb_path = os.path.sep.join([self.root_disk, self.pdb_dataset_path, ''.join([pdb_id, '.pdb'])])
         available_residues = pdbhandler.get_residue_range(pdb_path, chain_id)
-        pdbhandler.get_uniprot_accession_number(chain_id, pdb_id)
+        pdbhandler.get_uniprot_accession_number(chain_id, pdb_id if self.override_pdb_id == '' else self.override_pdb_id)
 
         # Retrieve protein sequence length
         protein_sequence = evaluator.get_protein_sequence(pdbhandler.uniprot_accession_number)
@@ -523,10 +524,20 @@ class MetaAnalysis:
             analysis_details_output.append(''.join(['###########', property_type, '\n']))
             for go_id in alignment_info[property_type]:
                 total -= 1
+                # if the cache does not include this GO id
+                # fetch its associated term
                 if (go_id not in enricher.go_cache):
                     term_info = enricher.get_go_term(go_id)
                     enricher.update_go_cache(go_id, term_info)
-                if (enricher.go_cache[go_id][0] in properties or (go_search and search_term in enricher.go_cache[go_id][0])):
+                search_condition = False
+                # Compare user defined partial/full GO terms
+                # with current GO term
+                if go_search:
+                    for search_term in search_terms:
+                        if search_term in enricher.go_cache[go_id][0]:
+                            search_condition = True
+                            break
+                if (enricher.go_cache[go_id][0] in properties or search_condition):
                     structure_ids = alignment_info[property_type][go_id][self.go_alignment_level]['structure_id']
                     excluded_indices = [id_index for id_index, structure_id in enumerate(structure_ids) if structure_id in checked_structure_ids]
                     checked_structure_ids.extend([structure_id for id_index, structure_id in enumerate(structure_ids) if id_index not in excluded_indices])
@@ -565,7 +576,10 @@ class MetaAnalysis:
                 if ((go_search is False and len(encountered) == len(properties)) or total == 0):
                     if(go_search is True):
                         if(go_analysis_filename == ''):
-                            go_analysis_filename = ''.join([pdb_id, '_', chain_id, naming_extension, '_', search_term.replace(os.path.sep, ''), '_', uuid.uuid4().hex])
+                            go_analysis_filename = ''.join([pdb_id, '_', chain_id, naming_extension, '_',
+                                                            '_'.join([search_term.replace(os.path.sep, '')
+                                                                      for search_term in search_terms]), '_',
+                                                            uuid.uuid4().hex])
                     else:
                         go_analysis_filename = ''.join([pdb_id, '_', chain_id, naming_extension, '_', properties[0].replace(' ', '_'),  '_', uuid.uuid4().hex])
                     entry = aggregated, average_span, len(known_sites), known_mask, go_analysis_filename, available_residues
@@ -601,5 +615,88 @@ class MetaAnalysis:
             presenter.tiff_format_output = self.tiff_format_output
             presenter.vector_format_output = self.vector_format_output
             presenter.create_report([pdb_id, chain_id, naming_extension], file_name=report_path)
+
+            # Output protein-protein interactions
+            if os.path.exists(os.path.join(self.go_output_path, ''.join([go_analysis_filename, '_common_interactions.tsv']))) is False:
+                self.retrieve_ppi(pdbhandler.uniprot_accession_number, results['uniprotId'].to_list(), go_analysis_filename)
+
         with open(os.path.join(self.go_output_path, ''.join([go_analysis_filename, '.log'])), 'w') as logFile:
             logFile.write('\n'.join(analysis_details_output))
+
+    def retrieve_ppi(self, reference_uniprot_id, candidate_uniprot_ids, go_analysis_filename):
+        input_entries = [[reference_uniprot_id, candidate_uniprot_id] for candidate_uniprot_id in candidate_uniprot_ids]
+        results = []
+
+        # Collect the interactions
+        if (self.debugging is False):
+            execution_handler = ExecutionHandler(self.cores, 12 * 60)
+            results = execution_handler.parallelize(self.fetch_common_interactors, input_entries)
+        else:
+            for entry in input_entries:
+                results.append(self.fetch_common_interactors(entry))
+
+        # Convert the output into a pandas DataFrame
+        data = [line.split("\t") for output in results for line in output.split('\n') if len(line)> 0]
+        # if there are any interactors
+        if len(data) > 0:
+            df = pd.DataFrame(data, columns=["ID", "ProteinA", "ProteinB"])
+
+            # Make sure the main proteins are in the second column
+            main_proteins = [reference_uniprot_id] + candidate_uniprot_ids
+            df["Protein"] = df.apply(
+                lambda row: row["ProteinB"] if row["ProteinB"] in main_proteins else row["ProteinA"], axis=1)
+            df["CommonInteractor"] = df.apply(
+                lambda row: row["ProteinA"] if row["Protein"] == row["ProteinB"] else row["ProteinB"], axis=1)
+
+            # Drop the original columns and rearrange
+            df = df[["ID", "Protein", "CommonInteractor"]]
+
+            # Sort by the CommonInteractor
+            df = df.sort_values(by=["CommonInteractor", "Protein"])
+
+            df.to_csv(os.path.join(self.go_output_path, ''.join([go_analysis_filename, '_common_interactions.tsv'])), sep="\t", index=False)
+
+            df = df.drop_duplicates(subset=['Protein', 'CommonInteractor'], keep='first')
+            df = df[df['Protein'] != reference_uniprot_id]
+
+
+            # Create a dictionary that counts appearances of each common interactor
+            interactor_count = df['CommonInteractor'].value_counts().to_dict()
+            sorted_interactor_count = dict(sorted(interactor_count.items(), key=lambda item: item[1], reverse=True))
+
+            # Save the dictionary to a TSV file
+            with open(os.path.join(self.go_output_path, ''.join([go_analysis_filename, '_interactor_count.tsv'])), 'w') as file:
+                file.write('CommonInteractor\tCount\n')
+                for k, v in sorted_interactor_count.items():
+                    file.write(f"{k}\t{v}\n")
+
+    def fetch_common_interactors(self, entry):
+        reference_uniprot_id, candidate_uniprot_id = entry
+        biogrid_data_path = os.path.join(self.root_disk, 'uniprot-interactors.tsv')
+        interactions = ''
+
+        # if there is a BioGrid dataset available
+        if os.path.exists(biogrid_data_path):
+            # Retrieve common interactors
+            try:
+                # Construct the command
+                awk_script = f"""awk '
+                  NR==FNR {{ 
+                    if ($2=="{reference_uniprot_id}" && $3!="{candidate_uniprot_id}") proteins[$3]++; 
+                    else if ($3=="{reference_uniprot_id}" && $2!="{candidate_uniprot_id}") proteins[$2]++;
+                    else if ($2=="{candidate_uniprot_id}" && $3!="{reference_uniprot_id}") proteins2[$3]++;
+                    else if ($3=="{candidate_uniprot_id}" && $2!="{reference_uniprot_id}") proteins2[$2]++;
+                    next; 
+                  }} 
+                  ($2 in proteins && $2 in proteins2 && ($3=="{reference_uniprot_id}" || $3=="{candidate_uniprot_id}")) || 
+                  ($3 in proteins && $3 in proteins2 && ($2=="{reference_uniprot_id}" || $2=="{candidate_uniprot_id}"))
+                ' {biogrid_data_path} {biogrid_data_path} """
+                command = f"timeout 80s {awk_script}"
+                if (self.verbose is True):
+                    print(' '.join(command))
+                output = subprocess.run(command, shell=True, capture_output=True)
+                interactions = output.stdout.decode("utf-8")
+            except:
+                if (self.verbose is True):
+                    print(traceback.format_exc())
+        return interactions

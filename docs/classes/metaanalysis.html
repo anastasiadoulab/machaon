@@ -143,4 +143,33 @@ Composite input: list [PDB ID, PDB chain ID, suffix (for constrained mode result
 </span></li>
 </ul>
 </div>
+<div data-search="retrieve_ppi" class="method-section"><span class="method-name" data-search="retrieve_ppi">retrieve_ppi()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Find common protein interactions of reference and a list of candidate proteins.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="reference_uniprot_id"><span class="param-name">reference_uniprot_id</span>: <span class="arg-description">
+Reference UniProt identifier (string)
+</span></li>
+<li data-search="candidate_uniprot_ids"><span class="param-name">candidate_uniprot_ids</span>: <span class="arg-description">
+UniProt identifiers of candidate proteins (list of strings)
+</span></li>
+<li data-search="go_analysis_filename"><span class="param-name">go_analysis_filename</span>: <span class="arg-description">
+Output filename prefix (string)
+</span></li>
+</ul>
+</div>
+<div data-search="fetch_common_interactors" class="method-section" style="width: 70%"><span class="method-name" data-search="fetch_common_interactors">fetch_common_interactors()</span><br/><br/><span class="info-label">Description:</span><br/><br/><span class="method-description">
+Find common protein interactions of reference and candidate proteins.
+</span><br/><br/>
+<br/><span class="info-label">Arguments:</span><ul>
+<li data-search="entry"><span class="param-name">entry</span>: <span class="arg-description">
+Composite input: list [Reference UniProt identifier, candidate UniProt identifier]
+</span></li>
+</ul>
+<span class="info-label">Returns:</span><ul>
+<li data-search="result"><span class="return-name">result</span>: <span class="return-description">
+Tab-separated lines (list of strings)
+</span></li>
+</ul>
+</div>
 </div></body>

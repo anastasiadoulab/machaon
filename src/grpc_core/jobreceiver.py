@@ -179,7 +179,7 @@ class JobReceiver(jobreceiver_pb2_grpc.JobReceiverServicer):
         configuration['referencePDBID'] = entry['pdb_id']
         configuration['referenceChainID'] = entry['chain_id']
         configuration['noThirdPartyData'] = not entry['meta']
-        configuration['GOSearch'] = entry['go']
+        configuration['GOSearch'] = [entry['go']]
         configuration['outputPath'] = entry['output_path']
         configuration['alignmentLevel'] = entry['alignment_level']
         configuration['alignmentBackend'] = 'parasail'

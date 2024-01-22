@@ -23844,3 +23844,571 @@
 0097048	dendritic cell apoptotic process	biological_process
 0050883	musculoskeletal movement, spinal reflex action	biological_process
 0019812	type I site-specific deoxyribonuclease complex	cellular_component
+0043157	response to cation stress	biological_process
+1902687	glucosidase complex	cellular_component
+0015926	glucosidase activity	molecular_function
+0047450	(3R)-hydroxybutanoyl-[acyl-carrier-protein] hydratase activity	molecular_function
+0047450	(3R)-hydroxybutanoyl-[acyl-carrier-protein] hydratase activity	molecular_function
+0047450	(3R)-hydroxybutanoyl-[acyl-carrier-protein] hydratase activity	molecular_function
+0047450	(3R)-hydroxybutanoyl-[acyl-carrier-protein] hydratase activity	molecular_function
+0047450	(3R)-hydroxybutanoyl-[acyl-carrier-protein] hydratase activity	molecular_function
+0032559	adenyl ribonucleotide binding	molecular_function
+0160072	ubiquitin ligase complex scaffold activity	molecular_function
+0098552	side of membrane	cellular_component
+0044725	epigenetic programming in the zygotic pronuclei	biological_process
+0007056	spindle assembly involved in female meiosis	biological_process
+0180012	co-transcriptional RNA 3'-end processing, cleavage and polyadenylation pathway	biological_process
+0047450	(3R)-hydroxybutanoyl-[acyl-carrier-protein] hydratase activity	molecular_function
+0180012	co-transcriptional RNA 3'-end processing, cleavage and polyadenylation pathway	biological_process
+0120199	cone photoreceptor outer segment	cellular_component
+0170014	ankyrin-1 complex	cellular_component
+0160072	ubiquitin ligase complex scaffold activity	molecular_function
+0160072	ubiquitin ligase complex scaffold activity	molecular_function
+0160072	ubiquitin ligase complex scaffold activity	molecular_function
+0044725	epigenetic programming in the zygotic pronuclei	biological_process
+0044725	epigenetic programming in the zygotic pronuclei	biological_process
+0007056	spindle assembly involved in female meiosis	biological_process
+0044725	epigenetic programming in the zygotic pronuclei	biological_process
+0007056	spindle assembly involved in female meiosis	biological_process
+0007056	spindle assembly involved in female meiosis	biological_process
+0019185	snRNA-activating protein complex	cellular_component
+0035282	segmentation	biological_process
+0140613	P-type manganese transporter activity	molecular_function
+0016894	endonuclease activity, active with either ribo- or deoxyribonucleic acids and producing 3'-phosphomonoesters	molecular_function
+0061696	pituitary gonadotropin complex	cellular_component
+0140822	NAD+-histone H2BE35 glutamate ADP-ribosyltransferase activity	molecular_function
+0051674	localization of cell	biological_process
+0140822	NAD+-histone H2BE35 glutamate ADP-ribosyltransferase activity	molecular_function
+0051674	localization of cell	biological_process
+0140816	NAD+-histone H2BS6 serine ADP-ribosyltransferase activity	molecular_function
+0140822	NAD+-histone H2BE35 glutamate ADP-ribosyltransferase activity	molecular_function
+0140822	NAD+-histone H2BE35 glutamate ADP-ribosyltransferase activity	molecular_function
+0051674	localization of cell	biological_process
+0051674	localization of cell	biological_process
+0051674	localization of cell	biological_process
+0140816	NAD+-histone H2BS6 serine ADP-ribosyltransferase activity	molecular_function
+0140816	NAD+-histone H2BS6 serine ADP-ribosyltransferase activity	molecular_function
+0051674	localization of cell	biological_process
+0140817	NAD+-histone H3S10 serine ADP-ribosyltransferase activity	molecular_function
+0051674	localization of cell	biological_process
+0051674	localization of cell	biological_process
+0051674	localization of cell	biological_process
+0140816	NAD+-histone H2BS6 serine ADP-ribosyltransferase activity	molecular_function
+0140817	NAD+-histone H3S10 serine ADP-ribosyltransferase activity	molecular_function
+1905051	regulation of base-excision repair	biological_process
+0140817	NAD+-histone H3S10 serine ADP-ribosyltransferase activity	molecular_function
+0140817	NAD+-histone H3S10 serine ADP-ribosyltransferase activity	molecular_function
+1905051	regulation of base-excision repair	biological_process
+1905051	regulation of base-excision repair	biological_process
+1905051	regulation of base-excision repair	biological_process
+0090183	regulation of kidney development	biological_process
+0090183	regulation of kidney development	biological_process
+1902608	positive regulation of large conductance calcium-activated potassium channel activity	biological_process
+0042478	regulation of eye photoreceptor cell development	biological_process
+0141006	piRNA-mediated retrotransposon silencing by heterochromatin formation	biological_process
+0141005	retrotransposon silencing by heterochromatin formation	biological_process
+0033550	MAP kinase tyrosine phosphatase activity	molecular_function
+0002197	xanthine dehydrogenase complex	cellular_component
+0060827	regulation of canonical Wnt signaling pathway involved in neural plate anterior/posterior pattern formation	biological_process
+0045251	electron transfer flavoprotein complex	cellular_component
+0051728	cell cycle switching, mitotic to meiotic cell cycle	biological_process
+0010308	acireductone dioxygenase (Ni2+-requiring) activity	molecular_function
+0140990	primary piRNA processing	biological_process
+0061135	endopeptidase regulator activity	molecular_function
+0006173	dADP biosynthetic process	biological_process
+0018729	propionate CoA-transferase activity	molecular_function
+0098548	cytoplasmic side of Golgi membrane	cellular_component
+0140965	secondary piRNA processing	biological_process
+2000053	regulation of Wnt signaling pathway involved in dorsal/ventral axis specification	biological_process
+0090079	translation regulator activity, nucleic acid binding	molecular_function
+0060792	sweat gland development	biological_process
+0102149	farnesylcysteine lyase activity	molecular_function
+1903367	positive regulation of fear response	biological_process
+0046496	nicotinamide nucleotide metabolic process	biological_process
+0097598	sperm cytoplasmic droplet	cellular_component
+0106106	cold-induced thermogenesis	biological_process
+0017192	N-terminal peptidyl-glutamine acetylation	biological_process
+2000314	negative regulation of fibroblast growth factor receptor signaling pathway involved in neural plate anterior/posterior pattern formation	biological_process
+0004239	initiator methionyl aminopeptidase activity	molecular_function
+0006735	NADH regeneration	biological_process
+0090301	negative regulation of neural crest formation	biological_process
+0061172	regulation of establishment of bipolar cell polarity	biological_process
+2000493	negative regulation of interleukin-18-mediated signaling pathway	biological_process
+0008812	choline dehydrogenase activity	molecular_function
+0062136	low-density lipoprotein receptor complex	cellular_component
+0048319	axial mesoderm morphogenesis	biological_process
+1903569	positive regulation of protein localization to ciliary membrane	biological_process
+0140852	histone ubiquitin ligase activity	molecular_function
+0004621	glycosylphosphatidylinositol phospholipase D activity	molecular_function
+0023051	regulation of signaling	biological_process
+1903775	regulation of DNA double-strand break processing	biological_process
+0004611	phosphoenolpyruvate carboxykinase activity	molecular_function
+0030604	1-deoxy-D-xylulose-5-phosphate reductoisomerase activity	molecular_function
+1990700	nucleolar chromatin organization	biological_process
+0006931	substrate-dependent cell migration, cell attachment to substrate	biological_process
+0030226	apolipoprotein receptor activity	molecular_function
+0033696	heterochromatin boundary formation	biological_process
+0044736	acid-sensing ion channel activity	molecular_function
+0098964	anterograde dendritic transport of messenger ribonucleoprotein complex	biological_process
+0047305	(R)-3-amino-2-methylpropionate-pyruvate transaminase activity	molecular_function
+0046340	diacylglycerol catabolic process	biological_process
+0035600	tRNA methylthiolation	biological_process
+0106399	acyl-coenzyme A diphosphatase activity	molecular_function
+0030662	coated vesicle membrane	cellular_component
+1904300	positive regulation of transcytosis	biological_process
+1990972	multimerin complex	cellular_component
+0071401	cellular response to triglyceride	biological_process
+0140972	negative regulation of AIM2 inflammasome complex assembly	biological_process
+0140970	AIM2 inflammasome complex assembly	biological_process
+0016237	lysosomal microautophagy	biological_process
+0072393	microtubule anchoring at microtubule organizing center	biological_process
+0048133	male germ-line stem cell asymmetric division	biological_process
+0003142	cardiogenic plate morphogenesis	biological_process
+0008783	agmatinase activity	molecular_function
+0098876	vesicle-mediated transport to the plasma membrane	biological_process
+0019481	L-alanine catabolic process, by transamination	biological_process
+1903131	mononuclear cell differentiation	biological_process
+0006404	RNA import into nucleus	biological_process
+0140852	histone ubiquitin ligase activity	molecular_function
+0061886	negative regulation of mini excitatory postsynaptic potential	biological_process
+0006507	GPI anchor release	biological_process
+1900737	negative regulation of phospholipase C-activating G protein-coupled receptor signaling pathway	biological_process
+0061886	negative regulation of mini excitatory postsynaptic potential	biological_process
+0062037	D-loop DNA binding	molecular_function
+0032429	regulation of phospholipase A2 activity	biological_process
+0070310	ATR-ATRIP complex	cellular_component
+0007493	endodermal cell fate determination	biological_process
+1905332	positive regulation of morphogenesis of an epithelium	biological_process
+0061031	endodermal digestive tract morphogenesis	biological_process
+0047971	guanidinobutyrase activity	molecular_function
+1903353	regulation of nucleus organization	biological_process
+1900276	regulation of proteinase activated receptor activity	biological_process
+1903353	regulation of nucleus organization	biological_process
+0047972	guanidinopropionase activity	molecular_function
+0001828	inner cell mass cellular morphogenesis	biological_process
+0000217	DNA secondary structure binding	molecular_function
+0097055	agmatine biosynthetic process	biological_process
+2000043	regulation of cardiac cell fate specification	biological_process
+0072189	ureter development	biological_process
+0033389	putrescine biosynthetic process from arginine, using agmatinase	biological_process
+0140824	thioredoxin-dependent peroxiredoxin activity	molecular_function
+0044771	meiotic cell cycle phase transition	biological_process
+0140261	BCOR complex	cellular_component
+1903703	enterocyte differentiation	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+1903703	enterocyte differentiation	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+1903703	enterocyte differentiation	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0031841	neuropeptide Y receptor binding	molecular_function
+1903281	positive regulation of calcium:sodium antiporter activity	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+1903479	mitotic actomyosin contractile ring assembly actin filament organization	biological_process
+0032100	positive regulation of appetite	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0090274	positive regulation of somatostatin secretion	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0061736	engulfment of target by autophagosome	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+1900461	positive regulation of pseudohyphal growth by positive regulation of transcription from RNA polymerase II promoter	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0061736	engulfment of target by autophagosome	biological_process
+0071211	protein targeting to vacuole involved in autophagy	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0071211	protein targeting to vacuole involved in autophagy	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0061987	negative regulation of transcription from RNA polymerase II promoter by glucose	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0061753	substrate localization to autophagosome	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0019964	type II interferon binding	molecular_function
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+1905091	positive regulation of parkin-mediated stimulation of mitophagy in response to mitochondrial depolarization	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0061753	substrate localization to autophagosome	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+1903703	enterocyte differentiation	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0036337	Fas signaling pathway	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0019964	type II interferon binding	molecular_function
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0075342	symbiont-mediated disruption of host cell PML body	biological_process
+0060620	regulation of cholesterol import	biological_process
+0031448	positive regulation of fast-twitch skeletal muscle fiber contraction	biological_process
+0140978	mitochondrial large ribosomal subunit binding	molecular_function
+0031448	positive regulation of fast-twitch skeletal muscle fiber contraction	biological_process
+0031448	positive regulation of fast-twitch skeletal muscle fiber contraction	biological_process
+0031448	positive regulation of fast-twitch skeletal muscle fiber contraction	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0031448	positive regulation of fast-twitch skeletal muscle fiber contraction	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0031448	positive regulation of fast-twitch skeletal muscle fiber contraction	biological_process
+0031448	positive regulation of fast-twitch skeletal muscle fiber contraction	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0031448	positive regulation of fast-twitch skeletal muscle fiber contraction	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+1990788	GLI-SUFU complex	cellular_component
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0050124	N-acylneuraminate-9-phosphatase activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+1990787	negative regulation of hh target transcription factor activity	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0046380	N-acetylneuraminate biosynthetic process	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0047840	dCTP diphosphatase activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0006253	dCTP catabolic process	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0031448	positive regulation of fast-twitch skeletal muscle fiber contraction	biological_process
+0140912	membrane destabilizing activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0031448	positive regulation of fast-twitch skeletal muscle fiber contraction	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+0086075	gap junction channel activity involved in cardiac conduction electrical coupling	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0032277	negative regulation of gonadotropin secretion	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0055077	gap junction hemi-channel activity	molecular_function
+0055077	gap junction hemi-channel activity	molecular_function
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0032277	negative regulation of gonadotropin secretion	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+1905772	positive regulation of mesodermal cell differentiation	biological_process
+0048160	primary follicle stage	biological_process
+0043993	histone H3K18 acetyltransferase activity	molecular_function
+0043993	histone H3K18 acetyltransferase activity	molecular_function
+0051718	DNA (cytosine-5-)-methyltransferase activity, acting on CpG substrates	molecular_function
+0043993	histone H3K18 acetyltransferase activity	molecular_function
+0140973	positive regulation of AIM2 inflammasome complex assembly	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0051718	DNA (cytosine-5-)-methyltransferase activity, acting on CpG substrates	molecular_function
+0048160	primary follicle stage	biological_process
+0160002	ADP-D-ribose modification-dependent protein binding	molecular_function
+0043992	histone H3K9 acetyltransferase activity	molecular_function
+0048160	primary follicle stage	biological_process
+0002577	regulation of antigen processing and presentation	biological_process
+0002577	regulation of antigen processing and presentation	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0043992	histone H3K9 acetyltransferase activity	molecular_function
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0043993	histone H3K18 acetyltransferase activity	molecular_function
+0036004	GAF domain binding	molecular_function
+0048160	primary follicle stage	biological_process
+0140973	positive regulation of AIM2 inflammasome complex assembly	biological_process
+1902688	regulation of NAD metabolic process	biological_process
+0030397	membrane disassembly	biological_process
+0048160	primary follicle stage	biological_process
+0002398	MHC class Ib protein complex assembly	biological_process
+0140639	positive regulation of pyroptosis	biological_process
+0043992	histone H3K9 acetyltransferase activity	molecular_function
+0048160	primary follicle stage	biological_process
+0140639	positive regulation of pyroptosis	biological_process
+0043992	histone H3K9 acetyltransferase activity	molecular_function
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0052403	negative regulation by host of symbiont catalytic activity	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0050823	peptide antigen stabilization	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0140928	inhibition of non-skeletal tissue mineralization	biological_process
+1990506	mitotic DNA-templated DNA replication	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+1990506	mitotic DNA-templated DNA replication	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+0048160	primary follicle stage	biological_process
+1990506	mitotic DNA-templated DNA replication	biological_process
+0140694	non-membrane-bounded organelle assembly	biological_process
+0140973	positive regulation of AIM2 inflammasome complex assembly	biological_process
+0140639	positive regulation of pyroptosis	biological_process
+0140999	histone H3K4 trimethyltransferase activity	molecular_function
+0140999	histone H3K4 trimethyltransferase activity	molecular_function
+0140999	histone H3K4 trimethyltransferase activity	molecular_function
+0051658	maintenance of nucleus location	biological_process
+1903490	positive regulation of mitotic cytokinesis	biological_process
+0051658	maintenance of nucleus location	biological_process
+0140939	histone H4 methyltransferase activity	molecular_function
+1902424	negative regulation of attachment of mitotic spindle microtubules to kinetochore	biological_process
+0140939	histone H4 methyltransferase activity	molecular_function
+1904595	positive regulation of termination of RNA polymerase II transcription	biological_process
+1902424	negative regulation of attachment of mitotic spindle microtubules to kinetochore	biological_process
+0140939	histone H4 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0002071	glandular epithelial cell maturation	biological_process
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0140938	histone H3 methyltransferase activity	molecular_function
+0042309	homoiothermy	biological_process
+0002443	leukocyte mediated immunity	biological_process
+1904705	regulation of vascular associated smooth muscle cell proliferation	biological_process
+0097384	cellular lipid biosynthetic process	biological_process
+0036446	myofibroblast differentiation	biological_process
+0030421	defecation	biological_process
+0140354	lipid import into cell	biological_process
+0140962	multicellular organismal-level chemical homeostasis	biological_process
+1903409	reactive oxygen species biosynthetic process	biological_process
+0071830	triglyceride-rich lipoprotein particle clearance	biological_process
+0140674	ATP-dependent histone chaperone activity	molecular_function
+0002780	antibacterial peptide biosynthetic process	biological_process
+0002780	antibacterial peptide biosynthetic process	biological_process
+0002780	antibacterial peptide biosynthetic process	biological_process
+0050220	prostaglandin-E synthase activity	molecular_function
+0002780	antibacterial peptide biosynthetic process	biological_process
+0002870	T cell anergy	biological_process
+0002870	T cell anergy	biological_process
+0004994	somatostatin receptor activity	molecular_function
+0051908	double-stranded DNA 5'-3' exodeoxyribonuclease activity	molecular_function
+0051908	double-stranded DNA 5'-3' exodeoxyribonuclease activity	molecular_function
+1902349	response to chloroquine	biological_process

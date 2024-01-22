@@ -122,12 +122,20 @@ downloaded files' integrity and then execute:
 #### Uniprot mapping:
 
 - It is recommended to use a dedicated FTP transferring program than a browser for the following large  
-downloads (e.g. FileZilla: https://filezilla-project.org/download.php)
-- Visit the following directory : https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping
-- Download the following files: idmapping_selected.tab.gz, idmapping.dat.gz (Be sure to have enough space for the downloads)
-- Execute ``` ./prepare_uniprot_resources.sh ```   
-<br/>
+downloads (e.g. FileZilla: https://filezilla-project.org/download.php).
+- Visit the following directory : https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping 
+- Download the following files: idmapping_selected.tab.gz, idmapping.dat.gz (Be sure to have enough space for the downloads).
+- Execute ``` ./prepare_uniprot_resources.sh ```.
 
+
+#### BioGRID protein-protein interactions (PPI) [optional]:
+
+- Download the latest version of BioGRID data: https://downloads.thebiogrid.org/BioGRID/ .
+  Choose "Current-Release" and download the BIOGRID-ALL-&lt;VERSION&gt;.tab3.zip .
+- Place the archive in the root folder and decompress it.
+- Execute: ``` awk -F'\t' 'NR==1 || ($24 != "-" && $27 != "-" && NF>=27) {print $1 "\t" $24 "\t" $27}' BIOGRID-ALL-<VERSION>.tab3.txt > uniprot-interactors.tsv  ```
+- Remove the archive and the decompressed file.
+<br/>
 
 
 ### Installation (Containers)
@@ -298,7 +306,7 @@ This will display all the available options and their descriptions.
 ### Batch jobs (recommended):
 Edit <b>config.yaml</b> file in the src folder and run <b> batch_run.py</b>. Below is an example entry with the default  
 values. You could copy it and modify it according to your needs. Configurations with "ignore : True" field  
-are ignored. You could also consult with the example configurations used for the Spike protein of SARS-CoV-2.
+are ignored. You could also consult with the example configurations in the yaml files inside the config folder.
 <pre>
   - rootDisk: "" 
     referencePDBID: ""
@@ -309,13 +317,14 @@ are ignored. You could also consult with the example configurations used for the
     pdbDatasetPath: ""
     outputPath: ""
     excludedOrganisms: []
+    selectedOrganisms: []
     excludedGeneNames: []
     excludedPDBIDs: []
     isReferenceViral: True
     viralContentExists: True
     GOProperty: ""
     GOTargetProperties: []
-    GOSearch: ""
+    GOSearch: "" or []
     GOAlignmentLevel: "secondary"
     noThirdPartyData: False
     pdbValidation: False
@@ -337,13 +346,14 @@ All the options are presented below:
 'pdbDatasetPath': Relative path for PDB data folder
 'outputPath': The location of the outputs (can be relative or full path)
 'excludedOrganisms': Filtering out structures originating from the same organism as the reference one
+'selectedOrganisms': Filtering out structures not originating from the specified organisms
 'excludedGeneNames': Filtering out structures originating from the same gene as the reference one
 'excludedPDBIDs': Exclude PDB IDs
 'isReferenceViral': Meta-analysis skips the search in viral genome data for the reference, if it is not a viral protein
 'viralContentExists': The existence of viral proteins in candidate set. This can be set to False for speeding up the process if there are no viral proteins present. 
 'GOProperty': Choose a property type for analysis: 'biologicalProcess', 'molecularFunction', 'cellularComponent'
 'GOTargetProperties': Choose properties for analysis
-'GOSearch': Choose a term to be searched in all available GO Terms belonging to the results e.g. 'ubiquit' (could be a stem of a word)
+'GOSearch': Choose a term or provide multiple ones to be searched in all available GO Terms belonging to the results e.g. 'ubiquit' (could be a stem of a word)
 'GOAlignmentLevel': Choose target alignment level : ['primary', 'secondary', 'mixed', 'hydrophobicity'. Default is 'secondary']
 'noThirdPartyData': Do not use external local or online resources. PDB data only.
 'GOAnalysisOnly': Perform only GO Meta-analysis (for completed searches).
@@ -399,7 +409,8 @@ from 47 to 52 and 59 (duplicate definitions are removed).
         |
         |__plots/ (directory for plots regarding the final set)
         |
-        |__go/ (directory for GO meta-analysis, mini reports and related visualizations)
+        |__go/ (directory for GO meta-analysis, mini reports, common protein-protein 
+                interactors and related visualizations)
 </pre>
 
 <b>Note for constrained mode search on segments</b>:The corresponding output files contain a suffix   
@@ -439,6 +450,9 @@ pickle-formatted files.
     |--(user created PDB folders, <b>each folder corresponds to a target dataset for a search</b>)
     |
     |__idmapping_selected.tab.gz (UniProt idmapping resources)
+    |
+    |__uniprot_interactors.tsv (BioGrid dataset)
+
 </pre>
 
 There is also a cache file that is generated besides the scripts in src folder (go_cache.csv) that holds  

@@ -31,6 +31,7 @@ class CandidateSampler:
         # e.g. binding sites: self.referenceSegments = [[''.join(['_site', repr(x)]) for x in range(0, 5)]]
         self.no_enrichment = False
         self.excluded_organisms = []
+        self.selected_organisms = []
         self.excluded_gene_names = []
         self.excluded_pdb_ids = []
         self._suffixed_filename = ''
@@ -59,7 +60,14 @@ class CandidateSampler:
         condition = 0
         if (organisms != '-'):
             organisms = [x.strip() for x in organisms.lower().split(',')]
-            condition = min(len([x for x in self.excluded_organisms if x.lower() in organisms]), 1)
+            if (condition == 0 and len(self.excluded_organisms) > 0):
+                condition = min(len([x for x in self.excluded_organisms if x.lower() in organisms]), 1)
+            if (condition == 0 and len(self.selected_organisms) > 0):
+                condition = 1
+                for organism in organisms:
+                    if organism.lower() in self.selected_organisms:
+                        condition = 0
+                        break
         if (condition == 0 and genes != '-'):
             genes = [x.strip() for x in genes.lower().split(',')]
             condition = min(len([x for x in self.excluded_gene_names if x.lower() in genes]), 1)
@@ -79,7 +87,7 @@ class CandidateSampler:
             del samples['excluded']
             filtered = True
         # Exclude organisms or genes
-        if (len(self.excluded_organisms) > 0 or len(self.excluded_gene_names) > 0):
+        if (len(self.excluded_organisms) > 0 or len(self.excluded_gene_names) > 0 or len(self.selected_organisms) > 0):
             results = []
             input_set = samples['compositeId'].to_list()
             if (self.debugging is False):
@@ -112,8 +120,8 @@ class CandidateSampler:
             pdbhandler.root_disk = self.root_disk
             pdbhandler.verbose = self.debugging
             pdbhandler.structure_id = self.reference_pdb_id
-            pdb_path = ''.join([self.root_disk, os.path.sep, self.pdb_dataset_path, self.reference_pdb_id, '.pdb'])
-            pdbhandler.get_uniprot_accession_number(self.reference_chain_id, self.reference_pdb_id, pdb_path)
+            pdb_path = os.path.join(self.root_disk, self.pdb_dataset_path, ''.join([self.reference_pdb_id, '.pdb']))
+            pdbhandler.get_uniprot_accession_number(self.reference_chain_id, self.reference_pdb_id if self.override_pdb_id == '' else self.override_pdb_id, pdb_path)
             if (pdbhandler.uniprot_accession_number != ''):
                 pdbhandler.get_domain_information()
                 for domainInfo in pdbhandler.domains:
@@ -241,7 +249,7 @@ class CandidateSampler:
 
                 # Filter entries
                 if (len(self.excluded_organisms) > 0 or len(self.excluded_gene_names) > 0 or len(
-                        self.excluded_pdb_ids) > 0):
+                        self.excluded_pdb_ids) > 0 or len(self.selected_organisms) > 0):
                     merged_data = self.filter_out(merged_data)
 
                 # Get top samples per metric

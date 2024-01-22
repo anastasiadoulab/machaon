@@ -18,6 +18,7 @@ class DomainScanner(Scanner):
         result = True
         store_data_path = os.path.sep.join([self.root_disk, self.features_path])
         pdb_path = entry
+        override_pdbid = ''
         pdbhandler = PDBHandler()
         pdbhandler.root_disk = self.root_disk
         full_pdbfile_path = os.path.sep.join([self.root_disk, self.pdb_dataset_path, pdb_path])
@@ -36,7 +37,7 @@ class DomainScanner(Scanner):
                 available_residues = pdbhandler.get_residue_range(full_pdbfile_path, chainID)
                 residue_range = available_residues['fullRange']
                 pdbhandler.verbose = self.debugging
-                pdbhandler.get_uniprot_accession_number(chainID, pdb_path.split('.')[0], full_pdbfile_path)
+                pdbhandler.get_uniprot_accession_number(chainID, pdb_path.split('.')[0] if override_pdbid == '' else override_pdbid, full_pdbfile_path)
                 if (pdbhandler.uniprot_accession_number != ''):
                     pdbhandler.get_domain_information()
                     # If there is domain information available, determine the residue positions
@@ -76,7 +77,9 @@ class DomainScanner(Scanner):
         pdbhandler.verbose = self.debugging
         pdb_dataset_path = os.path.sep.join([self.root_disk, self.pdb_dataset_path])
         full_pdbfile_path = ''.join([pdb_dataset_path, os.path.sep, self.reference_pdb_id, '.pdb'])
-        pdbhandler.get_uniprot_accession_number(self.reference_chain_id, self.reference_pdb_id, full_pdbfile_path)
+        pdbhandler.get_uniprot_accession_number(self.reference_chain_id,
+                                                self.reference_pdb_id if self.override_pdb_id == '' else self.override_pdb_id,
+                                                full_pdbfile_path)
         # Get domain information for each candidate and load its corresponding features
         if (pdbhandler.uniprot_accession_number != ''):
             # For each reference domain
@@ -101,25 +104,26 @@ class DomainScanner(Scanner):
                                        ' the following file and execute the method again:\n', output_result_paths[metric_index]]))
                         continue
                     self.metric_indices.append(metric_index)
-                # Compute the metrics for every domain in candidate set
-                entries = [(reference_metric_data, comparisonInfo, self.metric_indices) for comparisonInfo in self.candidates]
-                results = []
-                if (self.debugging is False):
-                    execution_handler = ExecutionHandler(self.cores, 12 * 60)
-                    results = execution_handler.parallelize(self.compute_metrics, entries)
-                else:
-                    for candidate in entries:
-                        result = self.compute_metrics(candidate)
-                        if(result is not False):
-                            results.append(result)
-                # Output each metric in a csv file
-                if len(results) > 0:
-                    results = np.array(results)
-                    for metric_index in self.metric_indices:
-                        data = pd.read_csv(
-                            io.StringIO('\n'.join(['\t'.join(result) for result in results[:, [0, 1]+[metric_index+2]]])),
-                            names=['structureId', 'domain', self._column_headers[metric_index]], sep='\t')
-                        data.sort_values(by=[self._column_headers[metric_index]], ascending=[True]).to_csv(output_result_paths[metric_index], index=False)
+                if len(self.metric_indices) > 0:
+                    # Compute the metrics for every domain in candidate set
+                    entries = [(reference_metric_data, comparisonInfo, self.metric_indices) for comparisonInfo in self.candidates]
+                    results = []
+                    if (self.debugging is False):
+                        execution_handler = ExecutionHandler(self.cores, 12 * 60)
+                        results = execution_handler.parallelize(self.compute_metrics, entries)
+                    else:
+                        for candidate in entries:
+                            result = self.compute_metrics(candidate)
+                            if(result is not False):
+                                results.append(result)
+                    # Output each metric in a csv file
+                    if len(results) > 0:
+                        results = np.array(results)
+                        for metric_index in self.metric_indices:
+                            data = pd.read_csv(
+                                io.StringIO('\n'.join(['\t'.join(result) for result in results[:, [0, 1]+[metric_index+2]]])),
+                                names=['structureId', 'domain', self._column_headers[metric_index]], sep='\t')
+                            data.sort_values(by=[self._column_headers[metric_index]], ascending=[True]).to_csv(output_result_paths[metric_index], index=False)
 
     # Handle different types of feature data filenames (e.g. whole structure vs domain based)
     def parse_feature_filename(self, filename):

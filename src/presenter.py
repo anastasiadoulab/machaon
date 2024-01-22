@@ -636,9 +636,11 @@ class Presenter:
                                       ''.join([pdb_id, '_', chain_id, naming_extension, '_', section]))
         figure.write_image(''.join([output_filename, '.png']), format='png', scale=5)
         if (self.vector_format_output is True):
-            figure.write_image(''.join([output_filename, '.eps']), format='eps', scale=5)
-        if (self.tiff_format_output is True):
-            figure.write_image(''.join([output_filename, '.tiff']), format='tiff', scale=5)
+            try:
+                figure.write_image(''.join([output_filename, '.eps']), format='eps', scale=5)
+            except:
+                pass
+            figure.write_image(''.join([output_filename, '.pdf']), format='pdf', scale=5)
         plt.figure(figsize=plt.rcParams.get('figure.figsize'))
 
     @staticmethod

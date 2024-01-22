@@ -19,6 +19,7 @@ if __name__ == '__main__':
     parser.add_argument('--comparisonMode', type=str, help='Choose between "whole", "domain" or "segment" options. Default is "whole".', default='whole', choices=['whole', 'domain', 'segment'])
     parser.add_argument('--alignmentLevel', type=str, help='This is used for "segment" mode. Choose between "1D" (protein sequence), "2D" (protein secondary structure) "hydrophobicity", "mixed". Default is "mixed".', default='mixed', choices=['1D', '2D', 'hydrophobicity', 'mixed'])
     parser.add_argument('--excludedOrganisms', type=str, help='Exclude organisms (as shown in the metadata of PDB files) from the search. Separate names by commas. (optional)', default='')
+    parser.add_argument('--selectedOrganisms', type=str, help='Explicit define the organisms (as shown in the metadata of PDB files) that will be included into the search. Separate names by commas. (optional)', default='')
     parser.add_argument('--excludedGeneNames', type=str, help='Exclude genes (as shown in the metadata of PDB files) from the search. Separate names by commas. (optional)', default='')
     parser.add_argument('--excludedPDBIDs', type=str, help='Exclude PDB IDs from the search. Separate IDs by commas.', default='')
     parser.add_argument('--GOProperty', type=str, help='Choose a property type for analysis: "biologicalProcess", "molecularFunction", "cellularComponent". (optional)', default='', choices=['biologicalProcess', 'molecularFunction', 'cellularComponent'])

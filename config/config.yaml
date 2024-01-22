@@ -18,6 +18,22 @@ configurations:
     ignore: True
     GOAnalysisOnly: True
   - rootDisk: "/structural-data"
+    referencePDBID: "4Z4Dp"
+    overridePDBID: "4Z4D"
+    referenceChainID: "A"
+    comparisonMode: "whole"
+    pdbDatasetPath: "PDBs"
+    selectedOrganisms:
+      - "homo sapiens"
+    outputPath: "../output_agos/4Z4Dp_A_mdwhole_PDBs"
+    isReferenceViral: False
+    GOSearch:
+      - "mitot"
+      - "mitosis"
+    ignore: True
+    epsOutput: True
+    tiffOutput: True
+  - rootDisk: "/structural-data"
     referencePDBID: "6VXX"
     referenceChainID: "A"
     referenceGeneID: "43740568"
@@ -149,8 +165,7 @@ configurations:
   - rootDisk: "/structural-data"
     referencePDBID: "7V7Q"
     referenceChainID: "A"
-    referenceGeneID: "43740568"
-    referenceSequenceLength: 1273
+    referenceGeneID: "43740568" 
     comparisonMode: "whole"
     pdbDatasetPath: "PDBs_vir"
     outputPath: "../output/7V7Q_A_whole"

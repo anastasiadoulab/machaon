@@ -54,6 +54,7 @@ class Machaon:
                 scanner.debugging = self.debugging
                 scanner.verbose = self.debugging
                 scanner.reference_pdb_id = pdb_id
+                scanner.override_pdb_id = configuration['overridePDBID']
                 scanner.reference_chain_id = configuration['referenceChainID']
                 scanner.root_disk = configuration['rootDisk']
                 scanner.pdb_dataset_path = configuration['pdbDatasetPath']
@@ -86,7 +87,8 @@ class Machaon:
                 candidatesampler.reference_pdb_id = scanner.reference_pdb_id
                 candidatesampler.reference_chain_id = scanner.reference_chain_id
                 candidatesampler.reference_gene_id = configuration['referenceGeneID']
-                candidatesampler.excluded_organisms = configuration['excludedOrganisms']
+                candidatesampler.excluded_organisms = [x.lower() for x in configuration['excludedOrganisms']]
+                candidatesampler.selected_organisms = [x.lower() for x in configuration['selectedOrganisms']]
                 candidatesampler.excluded_gene_names = configuration['excludedGeneNames']
                 candidatesampler.excluded_pdb_ids = configuration['excludedPDBIDs']
                 candidatesampler.no_enrichment = configuration['noThirdPartyData']
@@ -139,7 +141,7 @@ class Machaon:
                                 naming_extension = ''.join([naming_extension, '-metrics'])
                             entry = pdb_id, scanner.reference_chain_id, \
                                     naming_extension,candidatesampler.plots_output_path
-                            # metaanalysis.find_batch_structure_matches(entry)
+                            metaanalysis.find_batch_structure_matches(entry)
 
                 # Presenting the results
                 if (configuration['GOAnalysisOnly'] is False):
@@ -160,25 +162,24 @@ class Machaon:
                         presenter.plots_output_path = candidatesampler.plots_output_path
                         # create report for final cluster
                         print('Creating report for the final cluster...')
-                        # presenter.create_report([pdb_id, scanner.reference_chain_id, naming_extension],
-                        #                         reduced_data=True)
+                        presenter.create_report([pdb_id, scanner.reference_chain_id, naming_extension],
+                                                reduced_data=True)
                         if (configuration['noThirdPartyData'] is False):
                             # Create report for top 100
                             print('Creating report for top 100...')
-                            # presenter.create_report([pdb_id, scanner.reference_chain_id, naming_extension])
+                            presenter.create_report([pdb_id, scanner.reference_chain_id, naming_extension])
                             # Create report for top 100 human entries if exist
                             human_report_path =  ''.join([configuration['outputPath'], os.path.sep, 'candidates',
                                                           os.path.sep, pdb_id, '_', configuration['referenceChainID'],
                                                           naming_extension, '-merged-h-enriched.csv'])
                             if os.path.exists(human_report_path) is True:
                                 print('Creating report for top 100 of human proteins...')
-                                # presenter.create_report([pdb_id, scanner.reference_chain_id, naming_extension],
-                                #                         file_name=human_report_path,  reduced_data=True)
+                                presenter.create_report([pdb_id, scanner.reference_chain_id, naming_extension],
+                                                        file_name=human_report_path,  reduced_data=True)
 
                             # Create various data visualizations
                             print('Creating taxonomy trees..')
                             presenter.display_taxonomy([pdb_id, scanner.reference_chain_id, naming_extension])
-                            exit()
                             print('Creating word clouds..')
                             presenter.create_word_cloud([pdb_id, scanner.reference_chain_id, naming_extension])
                             print('Creating polar plots..')
@@ -220,6 +221,8 @@ class Machaon:
         else:
             # For every reference in configuration
             for reference_index, configuration in enumerate(job_config):
+                if configuration['comparisonMode'] == 'segment':
+                    continue
                 # Collect features from new PDBs
                 pdb_id = configuration['referencePDBID']
                 print(' '.join(['--- Reference PDB ID: ', pdb_id, ' chain: ', configuration['referenceChainID'], ' mode:', configuration['comparisonMode']]))
@@ -241,6 +244,7 @@ class Machaon:
 
                 print('Completed.\n\n')
 
+    # Update an existing filelist or create a new instance of a modified filelist
     def manage_file_list(self, data_folder_path, new_files, mode):
         list_path = ''.join([data_folder_path, '.csv'])
         if mode != 'segment':

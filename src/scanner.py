@@ -24,6 +24,7 @@ class Scanner:
         self.debugging = False
         self.verbose = False
         self.reference_pdb_id = ''
+        self.override_pdb_id = ''
         self.reference_chain_id = ''
         self.chunk_size = 100000
         self.candidates = defaultdict
